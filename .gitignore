@@ -283,3 +283,6 @@ config.toml
 testing/
 /.idea/ruff.xml
 /.idea/GitlabLint.xml
+
+# Per-version test environments (just test-all)
+.venvs/
