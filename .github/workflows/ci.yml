@@ -27,12 +27,12 @@ jobs:
 
   typecheck:
     runs-on: ubuntu-latest
-    # Temporary: the legacy v5/v6 code fails strict mypy. Make this blocking once Phase 3 of the v7 upgrade lands.
+    # Temporary: the legacy v5/v6 code fails ty. Make this blocking once Phase 3 of the v7 upgrade lands.
     continue-on-error: true
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10
-      - run: uv run mypy
+      - run: uv run ty check
 
   test:
     name: test (${{ matrix.os }}, ${{ matrix.python }})

@@ -55,9 +55,9 @@ fmt:
     uv run ruff check --fix .
     uv run ruff format .
 
-# Type-check the package
+# Type-check the package and tests
 typecheck:
-    uv run mypy
+    uv run ty check
 
 # Lint, type-check and test
 check: lint typecheck test
@@ -77,5 +77,5 @@ bump:
 
 # Remove build, test and cache artifacts
 clean:
-    rm -rf dist .venvs .pytest_cache .mypy_cache .ruff_cache .coverage htmlcov
+    rm -rf dist .venvs .pytest_cache .ruff_cache .coverage htmlcov
     find . -name __pycache__ -type d -prune -not -path "./.venv/*" -exec rm -rf {} +

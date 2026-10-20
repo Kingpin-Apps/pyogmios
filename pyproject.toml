@@ -47,8 +47,8 @@ dev = [
     "pre-commit>=4.3",
 ]
 lint = [
-    "mypy>=1.18",
     "ruff>=0.14",
+    "ty>=0.0.90",
 ]
 test = [
     "faker>=37",
@@ -105,15 +105,14 @@ ignore = ["E501"]
 "src/pyogmios/ouroboros_mini_protocols/tx_submission/*_errors.py" = ["UP007"]
 "tests/**" = ["PT012"]
 
-[tool.mypy]
-python_version = "3.11"
-strict = true
-plugins = ["pydantic.mypy"]
-files = ["src/pyogmios"]
+[tool.ty.environment]
+python-version = "3.11"
 
-[[tool.mypy.overrides]]
-module = ["nanoid", "promise", "websocket", "websocket.*"]
-ignore_missing_imports = true
+[tool.ty.src]
+include = ["src", "tests"]
+
+[tool.ty.terminal]
+error-on-warning = true
 
 [tool.commitizen]
 name = "cz_conventional_commits"
