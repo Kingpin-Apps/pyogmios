@@ -1,25 +1,30 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
+# See https://pre-commit.com for more information.
+# ruff and commitizen run from the uv environment, so uv.lock is the only place their versions are pinned.
+default_install_hook_types: [pre-commit, commit-msg]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-toml
       - id: check-added-large-files
-  - repo: https://github.com/psf/black
-    rev: 22.12.0
+        exclude: ^uv\.lock$
+  - repo: local
     hooks:
-      - id: black
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v2.39.1
-    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run --frozen ruff check --fix --exit-non-zero-on-fix
+        language: system
+        types_or: [python, pyi]
+      - id: ruff-format
+        name: ruff format
+        entry: uv run --frozen ruff format
+        language: system
+        types_or: [python, pyi]
       - id: commitizen
-      - id: commitizen-branch
-        stages: [ push ]
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.261
-    hooks:
-      - id: ruff
-        args: [ --fix, --exit-non-zero-on-fix ]
+        name: commitizen check
+        entry: uv run --frozen cz check --allow-abort --commit-msg-file
+        language: system
+        stages: [commit-msg]
