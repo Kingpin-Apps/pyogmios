@@ -2,6 +2,11 @@
 
 Python implementation of Ogmios Client
 
+> [!NOTE]
+> This branch is the in-progress 1.0 rewrite for **Ogmios v7**. The import name is now `pyogmios` (it was
+> `pyogmios_client`), and the usage examples below still show the 0.7 API. The released 0.7.x on PyPI speaks
+> Ogmios v5 only.
+
 ## What is PyOgmios?
 
 **PyOgmios** is based on [Ogmios](https://github.com/CardanoSolutions/ogmios) JSON/RPC lightweight bridge interface
@@ -195,3 +200,21 @@ if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
 ```
+
+## Development
+
+PyOgmios uses [uv](https://docs.astral.sh/uv/) and [just](https://just.systems/). It supports Python 3.11 to 3.15,
+including the free-threaded builds.
+
+```shell
+just sync                # install the project and all development groups
+just test                # unit tests on the default Python
+just test-all            # unit tests on Python 3.11, 3.12, 3.13, 3.14 and 3.15
+just test-free-threaded  # unit tests on 3.14t and 3.15t
+just test-integration    # live tests against Ogmios (OGMIOS_URL, default ws://localhost:1337)
+just check               # lint, type-check and test
+```
+
+Run `uv run pre-commit install` once to lint and format on commit and check commit messages
+([Conventional Commits](https://www.conventionalcommits.org/)). Releases are cut with `just bump`, and pushing the
+`v*` tag publishes to PyPI.
