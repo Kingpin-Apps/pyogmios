@@ -1,0 +1,67 @@
+{
+  "id": "queryLedgerState/utxo:by-address",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/utxo",
+  "result": [
+    {
+      "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+      "index": 0,
+      "transaction": {
+        "id": "045791851b3e9bad64d0929d64ebb00295f5a514ea2733a8e3cb29f62dc3612e"
+      },
+      "value": {
+        "ada": {
+          "lovelace": 1180940
+        },
+        "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+          "444a4544": 1000,
+          "5348454e": 1000
+        }
+      }
+    },
+    {
+      "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+      "index": 0,
+      "transaction": {
+        "id": "604a7f2efe8dee45bfa69ae57f4d9bc68098a7bb82d142e84e00449ff6d0b013"
+      },
+      "value": {
+        "ada": {
+          "lovelace": 10000000
+        }
+      }
+    },
+    {
+      "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+      "index": 1,
+      "transaction": {
+        "id": "76dc9eeebdd10fc72ac96b7c252b9d7ac53bdea4b624151bd2caa32b9781e70d"
+      },
+      "value": {
+        "919d4c2c9455016289341b1a14dedf697687af31751170d56a31466e": {
+          "7441474958": 100000000000,
+          "74434f5049": 1000000000,
+          "74444149": 1000000000,
+          "74444a4544": 1000000000,
+          "74455247": 1000000000000,
+          "74494147": 529000000,
+          "7449555344": 1000000000,
+          "744d494e": 1000000000,
+          "745348454e": 1000000000,
+          "74534e454b": 1000,
+          "7453554e444145": 1000000000,
+          "7455534441": 1000000000,
+          "7455534443": 100000000000,
+          "7455534454": 100000000000,
+          "74574d54": 1000000000
+        },
+        "ada": {
+          "lovelace": 2047250
+        },
+        "c610592d48f1ad8cdb7e68cad2566e94e5286bf9d398fc5cf3cd05cd": {
+          "": 17908025303
+        }
+      }
+    }
+  ]
+}

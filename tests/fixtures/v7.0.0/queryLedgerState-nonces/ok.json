@@ -1,0 +1,11 @@
+{
+  "id": "queryLedgerState/nonces:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/nonces",
+  "result": {
+    "candidateNonce": "eb044722f14d854e17ed97b3a1661d2a240e8658d78fffc7d21b5943a0cc3fc9",
+    "epochNonce": "cea07fc434cb75afaa3d05c8af2b77bcf4ddbba33be80efb859a213db10dbbf1",
+    "evolvingNonce": "f5c22aafab40fa881da6a4fe54c73fc69e0b6d2356cc15d380b04bb2b12ab1f5",
+    "lastEpochLastAncestor": "a6a555df1b4eb164f0934c59d53fd7c6e466a0af01a9b75cebc4ff922b3335e5"
+  }
+}

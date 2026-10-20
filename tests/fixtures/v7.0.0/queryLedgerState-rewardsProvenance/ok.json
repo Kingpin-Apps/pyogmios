@@ -1,0 +1,169 @@
+{
+  "id": "queryLedgerState/rewardsProvenance:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/rewardsProvenance",
+  "result": {
+    "activeStake": {
+      "ada": {
+        "lovelace": 1563615257517241
+      }
+    },
+    "efficiency": "34/45",
+    "fees": {
+      "ada": {
+        "lovelace": 1498602648
+      }
+    },
+    "incentives": {
+      "ada": {
+        "lovelace": 16914464688623
+      }
+    },
+    "stakePools": {
+      "pool1p9xu88dzmpp5l8wmjd6f5xfs9z89mky6up86ty2wz4aavmm8f3m": {
+        "blocksMade": 38,
+        "delegators": [
+          {
+            "credential": "02cff4a7388a338f71938c18f5aaa7ee94b3193446d2d3df9b8b0aec",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 101811524
+              }
+            }
+          },
+          {
+            "credential": "0317765a9d45091aaf80708df85f5568f3e1c5b1188ddef23bff69a6",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 280056199478
+              }
+            }
+          },
+          {
+            "credential": "0d5b5fd1115f1ceef95e6b96b04419ea465f3cd106a15e2acaeb2fc6",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 320729434
+              }
+            }
+          }
+        ],
+        "leaderReward": {
+          "ada": {
+            "lovelace": 356451468
+          }
+        },
+        "relativeStake": "2259072603059/5362533738111964",
+        "totalRewards": {
+          "ada": {
+            "lovelace": 5048246642
+          }
+        }
+      },
+      "pool1q65ag8panwayzaqfs6je7jz2ywt8x2032yaunq5hf25t7t8c26e": {
+        "blocksMade": 35,
+        "delegators": [
+          {
+            "credential": "035a09c79a3a989cbe19911c5daaa7867eb3bb1067ba0117c1b1ae9e",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 13245484589
+              }
+            }
+          },
+          {
+            "credential": "0b875936e5281deadf5ec1abecd409501601ea9db862b53a8a752a84",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 26527716571
+              }
+            }
+          },
+          {
+            "credential": "0e488888c5d30fc5cc68deda6aa0097aed4ffc95d7597eea5bcd1b88",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 3150201
+              }
+            }
+          }
+        ],
+        "leaderReward": {
+          "ada": {
+            "lovelace": 642289856
+          }
+        },
+        "relativeStake": "11989567419511/37537736166783748",
+        "totalRewards": {
+          "ada": {
+            "lovelace": 4649680995
+          }
+        }
+      },
+      "pool1qal80uhlj949mgv0ecvdkmgqjdn5q27wmpaj4crnr5e9v6qmsv7": {
+        "blocksMade": 37,
+        "delegators": [
+          {
+            "credential": "035182a975d50cc1b1e7ccded588120984442465d07a1c7e9ab4828f",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 10240925
+              }
+            }
+          },
+          {
+            "credential": "2f5ce682a9ba0a00ca59d7a9955914448a1e22d578e20aacfe587ec2",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 9272197918
+              }
+            }
+          },
+          {
+            "credential": "31346ef84a8b025a42d3382f3bcd12707c19edbb26e4f33a4908fd21",
+            "from": "script",
+            "stake": {
+              "ada": {
+                "lovelace": 2804370
+              }
+            }
+          }
+        ],
+        "leaderReward": {
+          "ada": {
+            "lovelace": 1144419177
+          }
+        },
+        "relativeStake": "382458407430/1340633434527991",
+        "totalRewards": {
+          "ada": {
+            "lovelace": 4915384474
+          }
+        }
+      }
+    },
+    "totalRewards": {
+      "ada": {
+        "lovelace": 16915963291271
+      }
+    },
+    "totalStake": {
+      "ada": {
+        "lovelace": 37537736166783748
+      }
+    },
+    "treasuryTax": {
+      "ada": {
+        "lovelace": 3383192658254
+      }
+    }
+  }
+}

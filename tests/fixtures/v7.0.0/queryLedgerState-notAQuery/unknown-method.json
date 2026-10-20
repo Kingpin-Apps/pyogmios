@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": -32600,
+    "message": "Invalid request: Error in $.params: unknown query name."
+  },
+  "id": "queryLedgerState/notAQuery:unknown-method",
+  "jsonrpc": "2.0"
+}

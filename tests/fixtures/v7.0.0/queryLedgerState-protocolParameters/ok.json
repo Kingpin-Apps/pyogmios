@@ -1,0 +1,135 @@
+{
+  "id": "queryLedgerState/protocolParameters:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/protocolParameters",
+  "result": {
+    "collateralPercentage": 150,
+    "constitutionalCommitteeMaxTermLength": 365,
+    "constitutionalCommitteeMinSize": 3,
+    "delegateRepresentativeDeposit": {
+      "ada": {
+        "lovelace": 500000000
+      }
+    },
+    "delegateRepresentativeMaxIdleTime": 31,
+    "delegateRepresentativeVotingThresholds": {
+      "constitution": "3/4",
+      "constitutionalCommittee": {
+        "default": "67/100",
+        "stateOfNoConfidence": "3/5"
+      },
+      "hardForkInitiation": "3/5",
+      "noConfidence": "67/100",
+      "protocolParametersUpdate": {
+        "economic": "67/100",
+        "governance": "3/4",
+        "network": "67/100",
+        "technical": "67/100"
+      },
+      "treasuryWithdrawals": "67/100"
+    },
+    "desiredNumberOfStakePools": 500,
+    "governanceActionDeposit": {
+      "ada": {
+        "lovelace": 1000000000
+      }
+    },
+    "governanceActionLifetime": 30,
+    "maxBlockBodySize": {
+      "bytes": 90112
+    },
+    "maxBlockHeaderSize": {
+      "bytes": 1100
+    },
+    "maxCollateralInputs": 3,
+    "maxExecutionUnitsPerBlock": {
+      "cpu": 20000000000,
+      "memory": 77500000
+    },
+    "maxExecutionUnitsPerTransaction": {
+      "cpu": 10000000000,
+      "memory": 17500000
+    },
+    "maxReferenceScriptsSizePerTransaction": {
+      "bytes": 204800
+    },
+    "maxTransactionSize": {
+      "bytes": 16384
+    },
+    "maxValueSize": {
+      "bytes": 5000
+    },
+    "minFeeCoefficient": 44,
+    "minFeeConstant": {
+      "ada": {
+        "lovelace": 155381
+      }
+    },
+    "minFeeReferenceScripts": {
+      "base": 15.0,
+      "multiplier": 1.2,
+      "range": 25600
+    },
+    "minStakePoolCost": {
+      "ada": {
+        "lovelace": 75000000
+      }
+    },
+    "minUtxoDepositCoefficient": 4310,
+    "minUtxoDepositConstant": {
+      "ada": {
+        "lovelace": 0
+      }
+    },
+    "monetaryExpansion": "3/1000",
+    "plutusCostModels": {
+      "plutus:v1": [
+        100788,
+        420,
+        1
+      ],
+      "plutus:v2": [
+        100788,
+        420,
+        1
+      ],
+      "plutus:v3": [
+        100788,
+        420,
+        1
+      ]
+    },
+    "scriptExecutionPrices": {
+      "cpu": "721/10000000",
+      "memory": "577/10000"
+    },
+    "stakeCredentialDeposit": {
+      "ada": {
+        "lovelace": 2000000
+      }
+    },
+    "stakePoolDeposit": {
+      "ada": {
+        "lovelace": 500000000
+      }
+    },
+    "stakePoolPledgeInfluence": "3/10",
+    "stakePoolRetirementEpochBound": 18,
+    "stakePoolVotingThresholds": {
+      "constitutionalCommittee": {
+        "default": "51/100",
+        "stateOfNoConfidence": "51/100"
+      },
+      "hardForkInitiation": "51/100",
+      "noConfidence": "51/100",
+      "protocolParametersUpdate": {
+        "security": "51/100"
+      }
+    },
+    "treasuryExpansion": "1/5",
+    "version": {
+      "major": 11,
+      "minor": 0
+    }
+  }
+}

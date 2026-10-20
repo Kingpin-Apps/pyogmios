@@ -1,0 +1,116 @@
+{
+  "id": "nextBlock:recent-03",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "17e4ee42cb9753446380693f46ab5a9123469332295e067d7b85b1ab0f9cc22c",
+      "era": "conway",
+      "height": 4777317,
+      "id": "c5d1b2a1f5893735ede5cd6bb177049537e546c5149c96968a0e851777037f2d",
+      "issuer": {
+        "leaderValue": {
+          "output": "08f71bb2ca47f84879350624b28424a5f62bdc4bea679ee4fec79f060fa153bcdbae89f04330fc33b34e22f2ccff34d391f11a7ca6bedd7e4db21a5eeafe63c5",
+          "proof": "0addeff1d2ed758f0af86693fa5ff7e84b5ec93e740c6507f33d676879e60b7e71cb9194a9d98c481f5b4d70ef6b10365382985e28a51d14580b1e5abc8654f99fc82171523e8fabebeea2f3f8bc3508"
+        },
+        "operationalCertificate": {
+          "count": 17,
+          "kes": {
+            "period": 940,
+            "verificationKey": "dc2bf27d4f7a0e15b75528acd6eb34f6df09a1eb6cdbf6311fdb20e600a11b54"
+          },
+          "sigma": "54f5047134b980d3517f5730a06cc0151513a3e8f52c7d87c96c79561ed968e86d0db6b02f96b68c098598dec86258dddf1499ebf9717869a4f809886ef42806"
+        },
+        "verificationKey": "e60463b05f082b6372036fe99fb9707489d98d5ee00ae21a66ad532199f0549d",
+        "vrfVerificationKey": "6e66d76589787e4eae56575d0694554bd85b1a2ae307de5d1d5bd16c1d454a49"
+      },
+      "protocol": {
+        "version": {
+          "major": 11,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 523
+      },
+      "slot": 125864910,
+      "transactions": [
+        {
+          "fee": {
+            "ada": {
+              "lovelace": 178393
+            }
+          },
+          "id": "f72bba9e621a0f28f8447c9b5d605372e0de12ad2ac057722d9e21e74bbda6e2",
+          "inputs": [
+            {
+              "index": 2,
+              "transaction": {
+                "id": "5bf0535b064ae1d690b9a48de6eb556c8a068fbceb86cedc294ebf3784aa0d77"
+              }
+            }
+          ],
+          "metadata": {
+            "hash": "918bf0eff7dae5542be28ea9f05ce5816b83609f8a5ae94f9c6725e50ecbb9fa",
+            "labels": {
+              "674": {
+                "json": {
+                  "msg": [
+                    "Politikoz payment",
+                    "CAIXA2 10",
+                    "quote 12"
+                  ]
+                }
+              }
+            }
+          },
+          "outputs": [
+            {
+              "address": "addr_test1qzv8tmtm0q5pxw3vd6xxvkyt4fpd0h6xgkshm569xjp62cph9703d8mc263dj3x0h3ycmtmghhu9rt2n9tun7m4vwudq0zr44l",
+              "value": {
+                "acbed9d34e67bc5609bc9ee9642046d93f443ffc23c4bcace9d9e386": {
+                  "744b4f5a": 50
+                },
+                "ada": {
+                  "lovelace": 2000000
+                }
+              }
+            },
+            {
+              "address": "addr_test1qq8j3jn3lh2v0ev0mdsh6v0cg0gh03ajeg3su2ynxsac6ng90qsvx5tsvm7wyqxh6cm39m3s8vz3x7qhk4rs6ps2w98qfs5ksh",
+              "value": {
+                "acbed9d34e67bc5609bc9ee9642046d93f443ffc23c4bcace9d9e386": {
+                  "744b4f5a": 232
+                },
+                "ada": {
+                  "lovelace": 976397506
+                },
+                "d730dd39784b9bd2ac6f26a39a74a2cc758f0610c3aa28cd0490acab": {
+                  "506f6c6974696b6f7a3030303031": 1,
+                  "506f6c6974696b6f7a3030303032": 1
+                }
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "key": "09ab453b092d9fadd3dc4f3b816a833aabbb0174c2242bc2ac09e555683ddd4d",
+              "signature": "4cc13e9baac893a436f819179ed2e5798f61ff3ee795873d4f96e29a5bfb5c868ca178305fca3536c164f016b2bd368804a1847a1943db96bbc8a9cfe3e6590a"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {
+            "invalidAfter": 125865203
+          }
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

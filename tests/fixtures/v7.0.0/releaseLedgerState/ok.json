@@ -1,0 +1,8 @@
+{
+  "id": "releaseLedgerState:ok",
+  "jsonrpc": "2.0",
+  "method": "releaseLedgerState",
+  "result": {
+    "released": "ledgerState"
+  }
+}

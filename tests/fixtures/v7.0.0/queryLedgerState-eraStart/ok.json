@@ -1,0 +1,12 @@
+{
+  "id": "queryLedgerState/eraStart:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/eraStart",
+  "result": {
+    "epoch": 646,
+    "slot": 55814400,
+    "time": {
+      "seconds": 55814400
+    }
+  }
+}

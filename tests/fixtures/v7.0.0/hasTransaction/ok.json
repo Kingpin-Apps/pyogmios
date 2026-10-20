@@ -1,0 +1,6 @@
+{
+  "id": "hasTransaction:ok",
+  "jsonrpc": "2.0",
+  "method": "hasTransaction",
+  "result": false
+}

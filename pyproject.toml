@@ -45,6 +45,7 @@ dev = [
     "commitizen>=4.8",
     "datamodel-code-generator>=0.34",
     "pre-commit>=4.3",
+    "websockets>=15",
 ]
 lint = [
     "ruff>=0.14",
@@ -52,6 +53,7 @@ lint = [
 ]
 test = [
     "faker>=37",
+    "jsonschema>=4.25",
     "polyfactory>=2.22",
     "pyee>=13",
     "pytest>=8.4",
@@ -75,7 +77,7 @@ default-groups = ["dev"]
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
-asyncio_mode = "strict"
+asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 addopts = ["-ra", "--strict-markers"]
 markers = [
@@ -122,3 +124,15 @@ legacy_tag_formats = ["$version"]
 update_changelog_on_bump = true
 major_version_zero = true
 version_files = ["src/pyogmios/__init__.py:__version__"]
+
+# Model generation (`just regen-models`): scripts/generate.py passes --input and --output.
+[tool.datamodel-codegen]
+input-file-type = "jsonschema"
+preset = "standard-py311-20261017"
+collapse-root-models = false
+use-type-alias-type = true
+enum-field-as-literal = "all"
+use-tag-as-union-variant-name = true
+snake-case-field = true
+disable-timestamp = true
+formatters = ["ruff-format", "ruff-check"]

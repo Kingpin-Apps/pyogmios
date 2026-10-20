@@ -1,0 +1,210 @@
+{
+  "id": "nextBlock:recent-01",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "0902e929bebe9d1ebf8f1de15ed1934fb259ff3b9a88e609c4f4e790333c0521",
+      "era": "conway",
+      "height": 4777298,
+      "id": "2fedfa669bb238facf953bf5bdadc31795855648b74008f704bd1cbaf3d32c4d",
+      "issuer": {
+        "leaderValue": {
+          "output": "9a61dd8f1e7508a39db79bfc9cb866f0c077902bb08ddd9ca44adde54f8d4542ef3df7f4b63335d746f3997fb0fc824b4d7b8ecef2b0eb42da240189827f7856",
+          "proof": "91c5c9b34383e5f9b25f5e95aeff380efce560d6ba35416b9a5fc64c142768af35755b2aac610827e74a24c12778b10c843fb9de747b1ae168bfcbd1ee7250794e929feae77b87f83dc1a20afdc30b0d"
+        },
+        "operationalCertificate": {
+          "count": 18,
+          "kes": {
+            "period": 957,
+            "verificationKey": "68f7e9024441f46e8c5d0571010d7f60683c0d889f42c2cd72abc49f86f09e8e"
+          },
+          "sigma": "78a1e4da06a974b2c5a8311352cde815adaa69b45df3a8fb14603bce5eb94cec8ad4963060e1d400b14db7f579ba9d1cea1d59b9c77c69c4c7fdb29855accf0b"
+        },
+        "verificationKey": "5e05cc4b4d924ba37c5c8024260119857ccec07e9591799110c31e3678a942c9",
+        "vrfVerificationKey": "29d44d42458205e75f153f3368dbd516d43e7f9cffe7a1dd1ec15fe474d74ab6"
+      },
+      "protocol": {
+        "version": {
+          "major": 11,
+          "minor": 1
+        }
+      },
+      "size": {
+        "bytes": 1063
+      },
+      "slot": 125864433,
+      "transactions": [
+        {
+          "collateralReturn": {
+            "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+            "value": {
+              "a5f4f7078fa520cef356ad12f0827495a0028a2a3d51e5d805dd88df": {
+                "51414441": 250000000
+              },
+              "ada": {
+                "lovelace": 9839256917
+              },
+              "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                "5348454e": 100000
+              }
+            }
+          },
+          "collaterals": [
+            {
+              "index": 1,
+              "transaction": {
+                "id": "b795c0444880e5d8e097bc509a019f2b9e330245ce81ea7210d88bc797fe899b"
+              }
+            }
+          ],
+          "fee": {
+            "ada": {
+              "lovelace": 274758
+            }
+          },
+          "id": "604a7f2efe8dee45bfa69ae57f4d9bc68098a7bb82d142e84e00449ff6d0b013",
+          "inputs": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "673fe0eca5f1adc6a7918bc3c49200321cca5b76c8ac70bb3fcdfcfb50798517"
+              }
+            },
+            {
+              "index": 1,
+              "transaction": {
+                "id": "b795c0444880e5d8e097bc509a019f2b9e330245ce81ea7210d88bc797fe899b"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+              "value": {
+                "ada": {
+                  "lovelace": 10000000
+                }
+              }
+            },
+            {
+              "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
+              "value": {
+                "a5f4f7078fa520cef356ad12f0827495a0028a2a3d51e5d805dd88df": {
+                  "51414441": 250000000
+                },
+                "ada": {
+                  "lovelace": 9843982159
+                },
+                "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                  "5348454e": 100000
+                }
+              }
+            }
+          ],
+          "redeemers": [
+            {
+              "executionUnits": {
+                "cpu": 20406334,
+                "memory": 66334
+              },
+              "redeemer": "d879820100",
+              "validator": {
+                "index": 0,
+                "purpose": "spend"
+              }
+            },
+            {
+              "executionUnits": {
+                "cpu": 75765490,
+                "memory": 231575
+              },
+              "redeemer": "d8798100",
+              "validator": {
+                "index": 0,
+                "purpose": "withdraw"
+              }
+            }
+          ],
+          "references": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "495819ce8722e89707e08db05826ac71f04dc93704c8fb3ad849b5d9ff0ec6a8"
+              }
+            },
+            {
+              "index": 0,
+              "transaction": {
+                "id": "be3af4cc934306be635c49e92902bd5e08d94a42521010b62d49bd62ba0c3510"
+              }
+            }
+          ],
+          "requiredExtraSignatories": [
+            "0d8ea520b034b33c1188db96486c24eb528167dc9ccd7dd9db0a118e"
+          ],
+          "scriptIntegrityHash": "eaee89fd91084b5b6cc8d5f807489465abb4f76dca0a283d03c97c14369f0aa6",
+          "signatories": [
+            {
+              "key": "eaca0ab9fee46ecbbaf42f3b23c150ab817a7f44f9581958612cabeb52e27b7e",
+              "signature": "a6415dc53f60f9bbe7afeb4175d91e6e842a499eff0f95cec9ad9ba29506a60ab9dc769d3a0147f49a79d103a68c0ddee8a1b19efe3afb2d740f36468611ec08"
+            }
+          ],
+          "spends": "inputs",
+          "totalCollateral": {
+            "ada": {
+              "lovelace": 5000000
+            }
+          },
+          "withdrawals": {
+            "stake_test17rsstvwujfymjsexy8j7n89ep40zgm7n2v4npsv0pdfpeqspe7lal": {
+              "ada": {
+                "lovelace": 0
+              }
+            }
+          }
+        },
+        {
+          "fee": {
+            "ada": {
+              "lovelace": 200000
+            }
+          },
+          "id": "a7aac7b20e7d8afb34c04a010fea2e88aed87c2c798d6c8a017788de775031f5",
+          "inputs": [
+            {
+              "index": 63,
+              "transaction": {
+                "id": "c5bb35cd69206969adc8189a9c05de80ba83e9fcbd3da5de9111397504dbfeff"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1qp0huukerv0ut2akt9tn0vfgyyuy4taverus6rzfduup4jv0srv38zr3802xk8uw9enzel7nxtaflqqplkfv278qh2pszt8lux",
+              "value": {
+                "ada": {
+                  "lovelace": 10000000000
+                }
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "key": "6855ffb8cbde9163c55c2405f93a8cfa063a631d811281d954e16782123956a7",
+              "signature": "6c10975754138a315133d046e61750e04f395c9bd632779c4cec88ff7290da5afdf7edb88980f0585ed884fa4c5a03984e06a7790a4cde94d5474de9f6614206"
+            }
+          ],
+          "spends": "inputs"
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "releaseMempool:ok",
+  "jsonrpc": "2.0",
+  "method": "releaseMempool",
+  "result": {
+    "released": "mempool"
+  }
+}

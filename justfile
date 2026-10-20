@@ -79,3 +79,15 @@ bump:
 clean:
     rm -rf dist .venvs .pytest_cache .ruff_cache .coverage htmlcov
     find . -name __pycache__ -type d -prune -not -path "./.venv/*" -exec rm -rf {} +
+
+# Regenerate src/pyogmios/_generated from the pinned schema (schemas/VERSION)
+regen-models:
+    uv run python scripts/generate.py
+
+# Check src/pyogmios/_generated matches what the pinned schema generates
+check-generated: regen-models
+    git diff --exit-code -- src/pyogmios/_generated
+
+# Record fixtures from a live Ogmios server (OGMIOS_URL, default ws://localhost:1337)
+record-fixtures:
+    OGMIOS_URL={{ogmios_url}} uv run python scripts/record_fixtures.py

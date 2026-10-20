@@ -1,0 +1,6 @@
+{
+  "id": "queryLedgerState/epoch:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/epoch",
+  "result": 1456
+}

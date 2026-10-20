@@ -1,0 +1,35 @@
+{
+  "id": "queryNetwork/genesisConfiguration:alonzo",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/genesisConfiguration",
+  "result": {
+    "era": "alonzo",
+    "updatableParameters": {
+      "collateralPercentage": 150,
+      "maxCollateralInputs": 3,
+      "maxExecutionUnitsPerBlock": {
+        "cpu": 40000000000,
+        "memory": 50000000
+      },
+      "maxExecutionUnitsPerTransaction": {
+        "cpu": 10000000000,
+        "memory": 10000000
+      },
+      "maxValueSize": {
+        "bytes": 5000
+      },
+      "minUtxoDepositCoefficient": 4310,
+      "plutusCostModels": {
+        "plutus:v1": [
+          197209,
+          0,
+          1
+        ]
+      },
+      "scriptExecutionPrices": {
+        "cpu": "721/10000000",
+        "memory": "577/10000"
+      }
+    }
+  }
+}

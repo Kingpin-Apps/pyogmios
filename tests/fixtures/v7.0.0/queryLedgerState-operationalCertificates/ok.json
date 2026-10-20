@@ -1,0 +1,10 @@
+{
+  "id": "queryLedgerState/operationalCertificates:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/operationalCertificates",
+  "result": {
+    "pool1q9caq55mprtqvdvvw8lpg248q7pv5zxjlygzj9z29czv72x6hr8": 5,
+    "pool1q9d5hcn3fq28x09hmh58wvc6tvmhvt36vwnctuwnupqywrt2z8g": 0,
+    "pool1qxcz3zxnye8g9ejsqslhl0ljevdx895uc80lr89ulf92gcv40ng": 0
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": 2000,
+    "data": "Target point is too old.",
+    "message": "Failed to acquire requested point."
+  },
+  "id": "acquireLedgerState:point-not-on-chain",
+  "jsonrpc": "2.0",
+  "method": "acquireLedgerState"
+}

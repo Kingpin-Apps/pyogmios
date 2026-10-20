@@ -1,0 +1,17 @@
+{
+  "id": "queryLedgerState/treasuryAndReserves:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/treasuryAndReserves",
+  "result": {
+    "reserves": {
+      "ada": {
+        "lovelace": 7462263833216252
+      }
+    },
+    "treasury": {
+      "ada": {
+        "lovelace": 7224991644778487
+      }
+    }
+  }
+}

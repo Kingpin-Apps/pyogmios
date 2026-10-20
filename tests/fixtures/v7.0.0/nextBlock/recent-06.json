@@ -1,0 +1,106 @@
+{
+  "id": "nextBlock:recent-06",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "b5a9ce5c678aa7dd4fc7756d557acb9d9a438c55df5dfcfdd98982c79aae148d",
+      "era": "conway",
+      "height": 4777388,
+      "id": "7e04f4e0daffe7be54b2bbcfdb5184555203ffd33986754aff41cdd8207364f7",
+      "issuer": {
+        "leaderValue": {
+          "output": "bebcc69572cf085f873e3b46655750fab8334171a6b2c625fbcea6fc65b990834a311fce52e807676d848d31c3ddbfe3475c5a0c222b6fc4c24cc1f5fa4b8629",
+          "proof": "ce982b5ffd1fae7aa048db8dbd86f2bd8300b6d3112bed14a6e4f05a0dfc91a14748e8e374dfea62f3a40b289dcfabe6fbd86f407f58524bd19bec437a9866de74289722d86b4127df7395327e7cf20a"
+        },
+        "operationalCertificate": {
+          "count": 17,
+          "kes": {
+            "period": 940,
+            "verificationKey": "dc2bf27d4f7a0e15b75528acd6eb34f6df09a1eb6cdbf6311fdb20e600a11b54"
+          },
+          "sigma": "54f5047134b980d3517f5730a06cc0151513a3e8f52c7d87c96c79561ed968e86d0db6b02f96b68c098598dec86258dddf1499ebf9717869a4f809886ef42806"
+        },
+        "verificationKey": "e60463b05f082b6372036fe99fb9707489d98d5ee00ae21a66ad532199f0549d",
+        "vrfVerificationKey": "6e66d76589787e4eae56575d0694554bd85b1a2ae307de5d1d5bd16c1d454a49"
+      },
+      "protocol": {
+        "version": {
+          "major": 11,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 438
+      },
+      "slot": 125866730,
+      "transactions": [
+        {
+          "certificates": [
+            {
+              "credential": "126c88a3876e6a87f493fbbcdb9945f17164b36b94d8e779cd9fba2b",
+              "from": "verificationKey",
+              "stakePool": {
+                "id": "pool15jqsjphnxg7hcx2rvd0ryhg5xwshg7xktthj3zf70nmxx9ffjet"
+              },
+              "type": "stakeDelegation"
+            },
+            {
+              "credential": "126c88a3876e6a87f493fbbcdb9945f17164b36b94d8e779cd9fba2b",
+              "delegateRepresentative": {
+                "type": "abstain"
+              },
+              "from": "verificationKey",
+              "type": "stakeDelegation"
+            }
+          ],
+          "fee": {
+            "ada": {
+              "lovelace": 174609
+            }
+          },
+          "id": "be58fc602359637b5769a7c138d51398b18a9d9cc02cb96be6d8354e918fc25e",
+          "inputs": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "d28a1a82848a70d8e22ff5d84ee84f11d85a3da8b0f15518dd8a05bbd082662f"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1qr9ujdnggsvw45yp8jkp2vfjlv54gxszwzpklazeqavrfngjdjy28pmwd2rlfylmhndej303w9jtx6u5mrnhnnvlhg4sgtvcal",
+              "value": {
+                "ada": {
+                  "lovelace": 4825391
+                }
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "key": "22000fc371ee8e9f65d9ce208a66a7e1e76a2e0eda2602b0d749fcc7495c06e5",
+              "signature": "e1bef24dbebdb3efcd3ff8a98bf7bbae2946079e03fdd4be34dc5cc50af4602c1edb0432e613a92196b5ecd62468aabe4b0efcc408b98d07299585f5aeeefa00"
+            },
+            {
+              "key": "cd11df7cf3bf1615e8f9a3feab11fb09d61e71c34ba44b7f7b85fab36c27be3f",
+              "signature": "924d08a340077df1dc9624913d6ad90a90e4e2b792a61355b58647fc0ec53948126af9dc729bb4809dc86cd82738a19195fd5c3ed5ef7d5a3b06c4875ca9aa0e"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {
+            "invalidAfter": 125870228
+          }
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

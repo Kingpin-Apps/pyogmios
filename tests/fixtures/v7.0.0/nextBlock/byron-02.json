@@ -1,0 +1,88 @@
+{
+  "id": "nextBlock:byron-02",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "819b76c86d541b1e8899e1b2fdfec23277d2bfd6b94e4222ec231d63c8dd9598",
+      "era": "alonzo",
+      "height": 3,
+      "id": "e19690d1a8ab6cab8ba342970bac8bc530a21425e011df916b1b84235217558c",
+      "issuer": {
+        "leaderValue": {
+          "output": "dc5e4617d6ef36d0e397bf20122d17ead2e0b16eb6a7c634d5052c129378f938a1239c223f5a12b16c09944a5e939bd4199e194fca4726beff70e6354285094e",
+          "proof": "5a6dd4ba4be6a39776c0f1bf84a8c6658d03f36658e7c888d077163861a37041cea28a4edcc8c53aebe230974574ebb7b972640b5504cd09c84964277ef9bc313a22cf63f9d335e6ac31e247c499fd00"
+        },
+        "operationalCertificate": {
+          "count": 0,
+          "kes": {
+            "period": 0,
+            "verificationKey": "a71701a75fe43c186987601ccf2f3be58bab554a7e5789cf152cae407111d90d"
+          },
+          "sigma": "9b57f61d620849a0a43424bbac1c9700ae4ecc6391d31cc8cde1cd61aada4b017bbabe5123ee3b91e4a0c8a64e0251098121ab407d879bfb79f53011d2304807"
+        },
+        "verificationKey": "adb240669de458252fa7c7672d1eaab20a4653ea8a005a30e0d1d829688a0a47",
+        "vrfVerificationKey": "5579273d79bdf98457d1d3ba515b487eaadf609d5d5a8d9059e3943a700ee953"
+      },
+      "nonce": {
+        "output": "199aa0363e180b2180dc0948c39b827a7b82da022f4f0ec282f6dbe8d5c49208a2bf9782c91a3a3886de52e09d6fd5e8caf6a619e12400ad8366bb762ce15f10",
+        "proof": "bd70a8c89b682b80e61b2ae89afa4ffcd898238729b0a01b9d6b95b080c94d031f49932ee86f2362bd2f7c70ff31710a9ff1b4ba0537b3f4f17c809db9f703540b423e9c453d55997b5ac1784e7af004"
+      },
+      "protocol": {
+        "version": {
+          "major": 7,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 235
+      },
+      "slot": 60,
+      "transactions": [
+        {
+          "fee": {
+            "ada": {
+              "lovelace": 200000
+            }
+          },
+          "id": "a8fa4293645facb2a0332f4dfc442dff3fc9ca021c95ee908df5d9605e3825be",
+          "inputs": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "4843cf2e582b2f9ce37600e5ab4cc678991f988f8780fed05407f9537f7712bd"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1vp8cprhse9pnnv7f4l3n6pj0afq2hjm6f7r2205dz0583egagfjah",
+              "value": {
+                "ada": {
+                  "lovelace": 29999999999800000
+                }
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "addressAttributes": "a1024102",
+              "chainCode": "27aaab4b53635ae1a1060bd65f8c176ff3efbad1b0553ebd5622000c08e67858",
+              "key": "faaa72b55e6dcc6c525be6546762057ac60338dcaa1a8d02022772843a3cc150",
+              "signature": "313d20e5d3b2a65a7b85974b49ae3fde570011b5b379e00499ceb62d5e5ee13248c736e981b4cab3da153d2befdbf036aa1650eec3bb502f2737f70eba476c0a"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {}
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

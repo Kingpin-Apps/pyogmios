@@ -1,0 +1,9 @@
+{
+  "id": "acquireMempool:ok",
+  "jsonrpc": "2.0",
+  "method": "acquireMempool",
+  "result": {
+    "acquired": "mempool",
+    "slot": 125877034
+  }
+}

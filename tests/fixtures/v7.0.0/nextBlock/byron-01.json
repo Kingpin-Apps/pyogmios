@@ -1,0 +1,51 @@
+{
+  "id": "nextBlock:byron-01",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "genesis",
+      "era": "alonzo",
+      "height": 0,
+      "id": "268ae601af8f9214804735910a3301881fbe0eec9936db7d1fb9fc39e93d1e37",
+      "issuer": {
+        "leaderValue": {
+          "output": "382451611f106d9facd22b99073f02ac60f5208e0f8e7527240c402bcc49bbe5622008183796aac445de366b26362243a4b50815b53de5b2b8e2079d074a7867",
+          "proof": "d3d5d87ed6928a5c90b11f3df393e8163f986fbe2b92619ff676601bf4b945feade39d0e050e3fc30eddf6251517c2916a430f1955e2f427563c925fdcb9305b46ac25a13db6859b2b63dff7c9796004"
+        },
+        "operationalCertificate": {
+          "count": 0,
+          "kes": {
+            "period": 0,
+            "verificationKey": "32fedaef288cd1753b4452d5c38387c010e68f92f420c75cbc8f2e731ef10855"
+          },
+          "sigma": "36bda6e6dd23cb109f04adf8387983e49421b0eb5e838cec83bc6ac207ffa3f4986ce7be67785184cfd522d062d8dc32c187b3a3de6fd325e17b193dc1720c0c"
+        },
+        "verificationKey": "ae29c552228a08f3c563450b10a9f548f4602d598e4b78dd4d70edaf12ba548d",
+        "vrfVerificationKey": "7f69d32c32041f11992dff6d6b9445ba3e0997a074e4c700b504b359f1ef55b4"
+      },
+      "nonce": {
+        "output": "d5d31f8db50a4598ced210857fba94a9821f65b86fe4b567516942ba31f7bc935b7e966e554c1e4ef7c86ead2588aa0c648d96efb2ab77b79743d0330b7a0c48",
+        "proof": "5d39e23be3b57220691bb65e12854aed6593e9854a1e9c444c976b8a046ddf3f02f777c8139358ece52762326c2824ec84e91a33a66c56b4c59971dce52693c843b95a1be86e00313cd3dac57c9a6507"
+      },
+      "protocol": {
+        "version": {
+          "major": 7,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 4
+      },
+      "slot": 0,
+      "transactions": [],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

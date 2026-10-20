@@ -1,0 +1,126 @@
+{
+  "id": "queryLedgerState/governanceProposals:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/governanceProposals",
+  "result": [
+    {
+      "action": {
+        "guardrails": {
+          "hash": "fa24fb305126805cf2164c161d852a0e7330cf988f1fe558cf7d4a64"
+        },
+        "type": "treasuryWithdrawals",
+        "withdrawals": {
+          "stake_test1uz3q3kanffwufw9hszxczwt9pmujet0vuu447wa7qm54sgc87y4lj": {
+            "ada": {
+              "lovelace": 708000000
+            }
+          }
+        }
+      },
+      "deposit": {
+        "ada": {
+          "lovelace": 1000000000
+        }
+      },
+      "metadata": {
+        "hash": "e9a2fc1ae97de40bf24daafc5931bd5cb825bf621a9d0da05893523e23217ced",
+        "url": "http://127.0.0.1:3001/data/tamquam"
+      },
+      "proposal": {
+        "index": 0,
+        "transaction": {
+          "id": "c69da4b48fe0ce153aebf24926b6a42316e88ac4d8b8d664b8e38c65440fbf17"
+        }
+      },
+      "returnAccount": "stake_test1uz3q3kanffwufw9hszxczwt9pmujet0vuu447wa7qm54sgc87y4lj",
+      "since": {
+        "epoch": 1432
+      },
+      "until": {
+        "epoch": 1462
+      },
+      "votes": [
+        {
+          "issuer": {
+            "from": "verificationKey",
+            "id": "1c1be1199bf33ccdb0a98010bbe79f4de314b0769bf2051137285705",
+            "role": "delegateRepresentative"
+          },
+          "vote": "yes"
+        },
+        {
+          "issuer": {
+            "from": "verificationKey",
+            "id": "2cbcebb4b8b52e62f796dfaa4aba98a95ba59220ef0d0b6dd5b179a5",
+            "role": "delegateRepresentative"
+          },
+          "vote": "yes"
+        },
+        {
+          "issuer": {
+            "from": "verificationKey",
+            "id": "8498524498e375d3a5ce700e0aa670e5b0ef8f07ac0993519e57b29b",
+            "role": "delegateRepresentative"
+          },
+          "vote": "yes"
+        }
+      ]
+    },
+    {
+      "action": {
+        "type": "information"
+      },
+      "deposit": {
+        "ada": {
+          "lovelace": 1000000000
+        }
+      },
+      "metadata": {
+        "hash": "c457b42f73f698b6f6636f95107d326b7ea5149d3f26287bdec341b4644dec9b",
+        "url": "http://127.0.0.1:3001/data/incidunt"
+      },
+      "proposal": {
+        "index": 0,
+        "transaction": {
+          "id": "4e6912f6c6d61ff0ab1e0f6aba4a3699b276cda73d30416ef6801cacf9f41a88"
+        }
+      },
+      "returnAccount": "stake_test1up4zaf7rt7mslj0dymtursr2tard83mnnutsl2uju4atnpgwuh8au",
+      "since": {
+        "epoch": 1432
+      },
+      "until": {
+        "epoch": 1462
+      },
+      "votes": []
+    },
+    {
+      "action": {
+        "type": "information"
+      },
+      "deposit": {
+        "ada": {
+          "lovelace": 1000000000
+        }
+      },
+      "metadata": {
+        "hash": "130030775082173e9e0091d140795b1d24aa6cc64bca07b4a7a90042d1214034",
+        "url": "http://127.0.0.1:3001/data/pecco"
+      },
+      "proposal": {
+        "index": 0,
+        "transaction": {
+          "id": "bc0f5f5c028a441f37cd9d2e13f8d2e13b583915ea8c444ad863c2a0ba55471e"
+        }
+      },
+      "returnAccount": "stake_test1urc97qarn32lghvpj6drk8vjkn66mhvszaq3ak82cywh00cdcg58d",
+      "since": {
+        "epoch": 1432
+      },
+      "until": {
+        "epoch": 1462
+      },
+      "votes": []
+    }
+  ]
+}

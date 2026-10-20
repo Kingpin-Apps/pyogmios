@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": 2004,
+    "data": "Missing 'DijkstraGenesisFile' from node's configuration.",
+    "message": "Failed to retrieve genesis configuration."
+  },
+  "id": "queryNetwork/genesisConfiguration:dijkstra",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/genesisConfiguration"
+}

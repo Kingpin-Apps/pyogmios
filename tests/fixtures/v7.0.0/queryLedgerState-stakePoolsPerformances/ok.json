@@ -1,0 +1,107 @@
+{
+  "id": "queryLedgerState/stakePoolsPerformances:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/stakePoolsPerformances",
+  "result": {
+    "activeStakeInEpoch": {
+      "ada": {
+        "lovelace": 1564490911149206
+      }
+    },
+    "desiredNumberOfStakePools": 500,
+    "stakePoolPledgeInfluence": "3/10",
+    "stakePools": {
+      "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th": {
+        "approximatePerformance": 0.885,
+        "id": "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th",
+        "ownerStake": {
+          "ada": {
+            "lovelace": 2497634194
+          }
+        },
+        "parameters": {
+          "cost": {
+            "ada": {
+              "lovelace": 340000000
+            }
+          },
+          "margin": "0/1",
+          "pledge": {
+            "ada": {
+              "lovelace": 500000000
+            }
+          }
+        },
+        "stake": {
+          "ada": {
+            "lovelace": 13492420330
+          }
+        }
+      },
+      "pool1qzhrd5sd0v0r6q2kqmaz07tvgry72whcjw0xsmnttgyuxtzpkkx": {
+        "approximatePerformance": 0.885,
+        "id": "pool1qzhrd5sd0v0r6q2kqmaz07tvgry72whcjw0xsmnttgyuxtzpkkx",
+        "ownerStake": {
+          "ada": {
+            "lovelace": 2497472301
+          }
+        },
+        "parameters": {
+          "cost": {
+            "ada": {
+              "lovelace": 170000000
+            }
+          },
+          "margin": "3/40",
+          "pledge": {
+            "ada": {
+              "lovelace": 500000000
+            }
+          }
+        },
+        "stake": {
+          "ada": {
+            "lovelace": 3746472301
+          }
+        }
+      },
+      "pool1qzq896ke4meh0tn9fl0dcnvtn2rzdz75lk3h8nmsuew8z5uln7r": {
+        "approximatePerformance": 0.885,
+        "id": "pool1qzq896ke4meh0tn9fl0dcnvtn2rzdz75lk3h8nmsuew8z5uln7r",
+        "ownerStake": {
+          "ada": {
+            "lovelace": 1997639694
+          }
+        },
+        "parameters": {
+          "cost": {
+            "ada": {
+              "lovelace": 170000000
+            }
+          },
+          "margin": "1/100",
+          "pledge": {
+            "ada": {
+              "lovelace": 1000000000
+            }
+          }
+        },
+        "stake": {
+          "ada": {
+            "lovelace": 1997639694
+          }
+        }
+      }
+    },
+    "totalRewardsInEpoch": {
+      "ada": {
+        "lovelace": 13522255109929
+      }
+    },
+    "totalStakeInEpoch": {
+      "ada": {
+        "lovelace": 37537736166783748
+      }
+    }
+  }
+}

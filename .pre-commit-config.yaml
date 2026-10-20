@@ -1,6 +1,8 @@
 # See https://pre-commit.com for more information.
 # ruff and commitizen run from the uv environment, so uv.lock is the only place their versions are pinned.
 default_install_hook_types: [pre-commit, commit-msg]
+# Pinned upstream schemas must stay byte-identical to the Ogmios release.
+exclude: ^schemas/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

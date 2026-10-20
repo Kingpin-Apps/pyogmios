@@ -1,0 +1,16 @@
+{
+  "id": "findIntersection:ok",
+  "jsonrpc": "2.0",
+  "method": "findIntersection",
+  "result": {
+    "intersection": {
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    },
+    "tip": {
+      "height": 4777797,
+      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
+      "slot": 125877033
+    }
+  }
+}

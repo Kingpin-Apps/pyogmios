@@ -1,0 +1,6 @@
+{
+  "id": "queryLedgerState/utxo:unknown-reference",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/utxo",
+  "result": []
+}

@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": -32600,
+    "message": "Invalid request: Error in $.params: parsing Lovelace failed, expected Object, but encountered Number."
+  },
+  "id": "queryLedgerState/projectedRewards:invalid-params",
+  "jsonrpc": "2.0"
+}
