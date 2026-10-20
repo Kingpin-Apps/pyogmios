@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main, v7]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_FROZEN: "1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv run --only-group lint ruff check .
+      - run: uv run --only-group lint ruff format --check .
+
+  typecheck:
+    runs-on: ubuntu-latest
+    # Temporary: the legacy v5/v6 code fails strict mypy. Make this blocking once Phase 3 of the v7 upgrade lands.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv run mypy
+
+  test:
+    name: test (${{ matrix.os }}, ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.11", "3.12", "3.13", "3.14", "3.15"]
+        include:
+          - os: ubuntu-latest
+            python: "3.14t"
+          - os: ubuntu-latest
+            python: "3.15t"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Import check
+        run: uv run python -c "import pyogmios; print(pyogmios.__version__)"
+      - name: Unit tests
+        run: uv run pytest -m "not integration" --cov --cov-report=xml
+      - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.15'
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: coverage.xml
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv build
+      - name: Check the wheel installs and imports
+        run: uv run --isolated --no-project --with dist/*.whl python -c "import pyogmios"
