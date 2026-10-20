@@ -4,10 +4,10 @@ from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
 )
-from pyogmios.models import Epoch, QueryUnavailableInCurrentEra, Era
+from pyogmios.models import Epoch, Era, QueryUnavailableInCurrentEra
 from pyogmios.models.response_model import QueryResponse, QueryResponseReflection
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (

@@ -59,16 +59,12 @@ class LedgerStateQuery(Enum):
 
     EPOCH = f"{Method.QUERY_LEDGER_STATE.value}/epoch"
     PROTOCOL_PARAMETERS = f"{Method.QUERY_LEDGER_STATE.value}/protocolParameters"
-    REWARD_ACCOUNT_SUMMARIES = (
-        f"{Method.QUERY_LEDGER_STATE.value}/rewardAccountSummaries"
-    )
+    REWARD_ACCOUNT_SUMMARIES = f"{Method.QUERY_LEDGER_STATE.value}/rewardAccountSummaries"
     ERA_START = f"{Method.QUERY_LEDGER_STATE.value}/eraStart"
     ERA_SUMMARIES = f"{Method.QUERY_LEDGER_STATE.value}/eraSummaries"
     TIP = f"{Method.QUERY_LEDGER_STATE.value}/tip"
     PROJECTED_REWARDS = f"{Method.QUERY_LEDGER_STATE.value}/projectedRewards"
-    PROPOSED_PROTOCOL_PARAMETERS = (
-        f"{Method.QUERY_LEDGER_STATE.value}/proposedProtocolParameters"
-    )
+    PROPOSED_PROTOCOL_PARAMETERS = f"{Method.QUERY_LEDGER_STATE.value}/proposedProtocolParameters"
     REWARDS_PROVENANCE = f"{Method.QUERY_LEDGER_STATE.value}/rewardsProvenance"
     LIVE_STAKE_DISTRIBUTION = f"{Method.QUERY_LEDGER_STATE.value}/liveStakeDistribution"
     UTXO = f"{Method.QUERY_LEDGER_STATE.value}/utxo"

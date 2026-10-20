@@ -1,18 +1,16 @@
-from typing import List
-
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
     UnknownResultError,
 )
-from pyogmios.models import EraMismatch, Address, TxIn, Utxo
+from pyogmios.models import Address, EraMismatch, TxIn, Utxo
 from pyogmios.models.response_model import UtxoResponse
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
@@ -23,14 +21,10 @@ def is_era_mismatch(response: UtxoResponse) -> bool:
 
 def is_utxo_list(response: UtxoResponse) -> bool:
     result = response.result
-    if isinstance(result, Utxo):
-        return True
-    return False
+    return bool(isinstance(result, Utxo))
 
 
-async def utxo(
-    context: InteractionContext, filters: List[Address] | List[TxIn]
-) -> Utxo:
+async def utxo(context: InteractionContext, filters: list[Address] | list[TxIn]) -> Utxo:
     """
     Query the utxo for the given stake key or transaction hashes.
     :param context: The interaction context to use for the query.
@@ -39,9 +33,7 @@ async def utxo(
     request_args = RequestArgs(
         method=Method.QUERY,
         params={
-            "query": {"utxo": filters}
-            if isinstance(filters, List) and len(filters) > 0
-            else "utxo"
+            "query": {"utxo": filters} if isinstance(filters, list) and len(filters) > 0 else "utxo"
         },
     )
 
@@ -55,9 +47,7 @@ async def utxo(
             return result
         elif isinstance(result, EraMismatchResult):
             era_mismatch = result.eraMismatch
-            raise EraMismatchError(
-                str(era_mismatch.queryEra), str(era_mismatch.ledgerEra)
-            )
+            raise EraMismatchError(str(era_mismatch.queryEra), str(era_mismatch.ledgerEra))
         else:
             raise UnknownResultError(response)
     except Exception as error:

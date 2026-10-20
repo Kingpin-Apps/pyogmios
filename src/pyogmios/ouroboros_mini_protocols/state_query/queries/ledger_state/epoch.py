@@ -1,16 +1,16 @@
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import LedgerStateQuery
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
     UnknownResultError,
 )
 from pyogmios.models import Epoch, QueryUnavailableInCurrentEra
 from pyogmios.models.response_model import QueryLedgerStateEpochResponse
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
@@ -32,9 +32,7 @@ async def epoch(context: InteractionContext) -> Epoch:
             return result
         elif isinstance(result, EraMismatchResult):
             era_mismatch = result.eraMismatch
-            raise EraMismatchError(
-                era_mismatch.queryEra.value, era_mismatch.ledgerEra.value
-            )
+            raise EraMismatchError(era_mismatch.queryEra.value, era_mismatch.ledgerEra.value)
         else:
             raise UnknownResultError(response)
     except Exception as error:

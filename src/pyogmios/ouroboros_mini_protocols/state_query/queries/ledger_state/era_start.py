@@ -3,8 +3,8 @@ from pyogmios.enums import LedgerStateQuery
 from pyogmios.models import Bound
 from pyogmios.models.response_model import QueryLedgerStateEraStartResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
@@ -18,9 +18,7 @@ async def era_start(context: InteractionContext) -> Bound:
 
     try:
         response = await query(request_args, context)
-        query_response = QueryLedgerStateEraStartResponse.model_validate(
-            response.model_dump()
-        )
+        query_response = QueryLedgerStateEraStartResponse.model_validate(response.model_dump())
         return query_response.result
     except Exception as error:
         raise error

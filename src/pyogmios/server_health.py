@@ -3,12 +3,11 @@ Server health module
 
 This module contains the functions to check the server health.
 """
-from typing import Optional
 
 import aiohttp
-from pyogmios.models.base_model import BaseModel
 
 from pyogmios.exceptions import RequestError
+from pyogmios.models.base_model import BaseModel
 from pyogmios.models.server_health_model import ServerHealth
 
 
@@ -17,10 +16,10 @@ class ConnectionConfig(BaseModel):
     Connection configuration model class
     """
 
-    host: Optional[str] = None
-    port: Optional[int] = None
-    tls: Optional[bool] = None
-    max_payload: Optional[int] = None
+    host: str | None = None
+    port: int | None = None
+    tls: bool | None = None
+    max_payload: int | None = None
 
 
 class Address(BaseModel):
@@ -28,8 +27,8 @@ class Address(BaseModel):
     Address model class
     """
 
-    http: Optional[str] = None
-    webSocket: Optional[str] = None
+    http: str | None = None
+    webSocket: str | None = None
 
 
 class Connection(ConnectionConfig):
@@ -56,11 +55,10 @@ async def get_server_health(options: Options) -> ServerHealth | RequestError:
     :return: The server health or an error
     """
     url = f"{options.connection.address.http}/health"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url=url) as response:
-            if response.status == 200:
-                server_health = ServerHealth(**await response.json())
-            else:
-                raise RequestError(response=response)
+    async with aiohttp.ClientSession() as session, session.get(url=url) as response:
+        if response.status == 200:
+            server_health = ServerHealth(**await response.json())
+        else:
+            raise RequestError(response=response)
 
     return server_health

@@ -1,5 +1,4 @@
 import json
-from typing import Dict
 
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
@@ -8,7 +7,7 @@ from pyogmios.models.request_model import Request
 from pyogmios.models.response_model import ReleaseMempoolResponse
 
 
-async def release(context: InteractionContext, args: Dict) -> str:
+async def release(context: InteractionContext, args: dict) -> str:
     """
     Release a previously acquired mempool snapshot.
     :param context: The interaction context

@@ -3,20 +3,20 @@ from __future__ import annotations
 from datetime import datetime
 from enum import Enum
 from types import UnionType
-from typing import Optional, Dict, List, Union
+from typing import Annotated, Literal, Union
 
-from pydantic import conint, Field, constr, confloat, AnyUrl, RootModel
-from typing_extensions import Annotated, Literal, TypedDict
+from pydantic import AnyUrl, Field, RootModel, confloat, conint, constr
+from typing_extensions import TypedDict
 
 from pyogmios.enums import (
-    RewardPot,
-    NonceEnum,
-    Network,
-    InputSource,
-    Language,
-    InvalidEntityType,
-    InvalidEntityEntity,
     IncompatibleEraEnum,
+    InputSource,
+    InvalidEntityEntity,
+    InvalidEntityType,
+    Language,
+    Network,
+    NonceEnum,
+    RewardPot,
 )
 from pyogmios.models.base_model import BaseModel
 
@@ -29,9 +29,7 @@ class Origin(RootModel):
     root: str = "origin"
 
 
-BlockNo = int
-
-Metadatum: UnionType = int | str | bytes | List | Dict
+Metadatum: UnionType = int | str | bytes | list | dict
 
 StakePoolId = str
 
@@ -61,9 +59,7 @@ class AddressAttributes(RootModel):
 
 
 class AssetQuantity(RootModel):
-    root: int = Field(
-        ..., description="A number of asset, can be negative went burning assets."
-    )
+    root: int = Field(..., description="A number of asset, can be negative went burning assets.")
 
 
 class BlockNo(RootModel):
@@ -73,7 +69,7 @@ class BlockNo(RootModel):
 
 
 class BlockNoOrOrigin(RootModel):
-    root: Union[BlockNo, Origin]
+    root: BlockNo | Origin
 
 
 class BlockSize(RootModel):
@@ -123,8 +119,8 @@ class GenesisDelegationCertificate(BaseModel):
 
 
 class MoveInstantaneousRewards(BaseModel):
-    rewards: Optional[Rewards] = None
-    value: Optional[Lovelace] = None
+    rewards: Rewards | None = None
+    value: Lovelace | None = None
     pot: RewardPot
 
 
@@ -144,22 +140,20 @@ Certificate = (
 
 
 class CertifiedVrf(BaseModel):
-    proof: Optional[VrfProof] = None
-    output: Optional[VrfOutput] = None
+    proof: VrfProof | None = None
+    output: VrfOutput | None = None
 
 
 class ChainCode(RootModel):
-    root: str = Field(
-        ..., description="An Ed25519-BIP32 chain-code for key deriviation."
-    )
+    root: str = Field(..., description="An Ed25519-BIP32 chain-code for key deriviation.")
 
 
 class CostModel(RootModel):
-    root: Optional[List[Int64]] = None
+    root: list[Int64] | None = None
 
 
 class CostModels(RootModel):
-    root: Optional[Dict[str, CostModel]] = None
+    root: dict[str, CostModel] | None = None
 
 
 class Datum(RootModel):
@@ -167,7 +161,7 @@ class Datum(RootModel):
 
 
 class RewardAccountSummaries(RootModel):
-    root: Optional[Dict[str, RewardAccountSummary]] = None
+    root: dict[str, RewardAccountSummary] | None = None
 
 
 class RewardAccountSummary(BaseModel):
@@ -199,7 +193,7 @@ class HeaderEnum(Enum):
 
 
 class DigestBlake2bBlockHeader(RootModel):
-    root: Union[constr(min_length=64, max_length=64), HeaderEnum]
+    root: constr(min_length=64, max_length=64) | HeaderEnum
 
 
 class DigestBlake2bCredential(RootModel):
@@ -328,9 +322,7 @@ class KesVerificationKey(RootModel):
 
 
 class Lovelace(BaseModel):
-    lovelace: int = Field(
-        ..., description="A number of lovelace, possibly large when summed up."
-    )
+    lovelace: int = Field(..., description="A number of lovelace, possibly large when summed up.")
 
 
 class LovelaceDelta(RootModel):
@@ -355,7 +347,7 @@ class NetworkMagic(RootModel):
 
 
 class NonMyopicMemberRewards(RootModel):
-    root: Optional[Dict[str, Dict[str, confloat(ge=0.0)]]] = None
+    root: dict[str, dict[str, confloat(ge=0.0)]] | None = None
 
 
 class Null(RootModel):
@@ -377,7 +369,7 @@ class ProtocolMagicId(RootModel):
 class ProtocolVersion(BaseModel):
     major: UInt32
     minor: UInt32
-    patch: Optional[UInt32] = None
+    patch: UInt32 | None = None
 
 
 class PoolId(RootModel):
@@ -420,23 +412,23 @@ class Ratio(RootModel):
 
 
 class ProtocolParametersUpdate(BaseModel):
-    network: Optional[Ratio] = None
-    economic: Optional[Ratio] = None
-    technical: Optional[Ratio] = None
-    governance: Optional[Ratio] = None
+    network: Ratio | None = None
+    economic: Ratio | None = None
+    technical: Ratio | None = None
+    governance: Ratio | None = None
 
 
 class DelegateRepresentativeVotingThresholds(BaseModel):
-    no_confidence: Optional[Ratio] = Field(None, alias="noConfidence")
-    constitution: Optional[Ratio] = None
-    constitutional_committee: Optional[ConstitutionalCommittee] = Field(
+    no_confidence: Ratio | None = Field(None, alias="noConfidence")
+    constitution: Ratio | None = None
+    constitutional_committee: ConstitutionalCommittee | None = Field(
         None, alias="constitutionalCommittee"
     )
-    hard_fork_initiation: Optional[Ratio] = Field(None, alias="hardForkInitiation")
-    protocol_parameters_update: Optional[ProtocolParametersUpdate] = Field(
+    hard_fork_initiation: Ratio | None = Field(None, alias="hardForkInitiation")
+    protocol_parameters_update: ProtocolParametersUpdate | None = Field(
         None, alias="protocolParametersUpdate"
     )
-    treasury_withdrawals: Optional[Ratio] = Field(None, alias="treasuryWithdrawals")
+    treasury_withdrawals: Ratio | None = Field(None, alias="treasuryWithdrawals")
 
 
 class Size(BaseModel):
@@ -453,18 +445,18 @@ class ConstitutionalCommitteeMember(BaseModel):
 
 
 class ConstitutionalCommittee(BaseModel):
-    default: Optional[Ratio] = None
-    state_of_no_confidence: Optional[Ratio] = Field(None, alias="stateOfNoConfidence")
-    members: Optional[List[ConstitutionalCommitteeMember]]
-    quorum: Optional[Ratio]
+    default: Ratio | None = None
+    state_of_no_confidence: Ratio | None = Field(None, alias="stateOfNoConfidence")
+    members: list[ConstitutionalCommitteeMember] | None
+    quorum: Ratio | None
 
 
 class StakePoolVotingThresholds(BaseModel):
-    no_confidence: Optional[Ratio] = Field(None, alias="noConfidence")
-    constitutional_committee: Optional[ConstitutionalCommittee] = Field(
+    no_confidence: Ratio | None = Field(None, alias="noConfidence")
+    constitutional_committee: ConstitutionalCommittee | None = Field(
         None, alias="constitutionalCommittee"
     )
-    hard_fork_initiation: Optional[Ratio] = Field(None, alias="hardForkInitiation")
+    hard_fork_initiation: Ratio | None = Field(None, alias="hardForkInitiation")
 
 
 class Redeemer(BaseModel):
@@ -487,7 +479,7 @@ class RelativeTime(BaseModel):
 
 
 class Rewards(RootModel):
-    root: Optional[Dict[str, LovelaceDelta]] = None
+    root: dict[str, LovelaceDelta] | None = None
 
 
 class RewardAccount(RootModel):
@@ -563,7 +555,7 @@ class UtcTime(RootModel):
 
 class Value(BaseModel):
     coins: Lovelace
-    assets: Optional[Dict[str, AssetQuantity]] = None
+    assets: dict[str, AssetQuantity] | None = None
 
 
 class VerificationKey(RootModel):
@@ -579,7 +571,7 @@ class VrfProof(RootModel):
 
 
 class Withdrawals(RootModel):
-    root: Optional[Dict[str, Lovelace]] = None
+    root: dict[str, Lovelace] | None = None
 
 
 class WitnessHash(RootModel):
@@ -614,15 +606,15 @@ class ScriptPlutus(RootModel):
 
 
 class All(BaseModel):
-    all: List[ScriptNative]
+    all: list[ScriptNative]
 
 
 class Any(BaseModel):
-    any: List[ScriptNative]
+    any: list[ScriptNative]
 
 
 class NOf(RootModel):
-    root: Dict[str, List[ScriptNative]]
+    root: dict[str, list[ScriptNative]]
 
 
 class ExpiresAt(BaseModel):
@@ -654,22 +646,22 @@ class PoolMetadata(BaseModel):
 
 
 class PoolParameters(BaseModel):
-    owners: Optional[List[DigestBlake2bVerificationKey]]
+    owners: list[DigestBlake2bVerificationKey] | None
     cost: Lovelace
     margin: Ratio
     pledge: Lovelace
-    vrf: Optional[DigestBlake2bVrfVerificationKey]
-    metadata: Optional[Null | PoolMetadata]
-    id: Optional[PoolId]
-    relays: Optional[List[Relay]]
-    rewardAccount: Optional[RewardAccount]
+    vrf: DigestBlake2bVrfVerificationKey | None
+    metadata: Null | PoolMetadata | None
+    id: PoolId | None
+    relays: list[Relay] | None
+    rewardAccount: RewardAccount | None
 
 
 class OpCert(BaseModel):
-    count: Optional[UInt64] = None
-    sigma: Optional[Signature] = None
-    kesPeriod: Optional[UInt64] = None
-    hotVk: Optional[KesVerificationKey] = None
+    count: UInt64 | None = None
+    sigma: Signature | None = None
+    kesPeriod: UInt64 | None = None
+    hotVk: KesVerificationKey | None = None
 
 
 class ByAddress(BaseModel):
@@ -695,11 +687,11 @@ class DlgCertificate(BaseModel):
 
 class GenesisByron(BaseModel):
     era: Literal["byron"]
-    genesisKeyHashes: List[DigestBlake2bVerificationKey]
-    genesisDelegations: Dict[str, DlgCertificate]
+    genesisKeyHashes: list[DigestBlake2bVerificationKey]
+    genesisDelegations: dict[str, DlgCertificate]
     systemStart: UtcTime
-    initialFunds: Dict[str, Lovelace]
-    initialCoinOffering: Dict[str, Lovelace]
+    initialFunds: dict[str, Lovelace]
+    initialCoinOffering: dict[str, Lovelace]
     securityParameter: UInt64
     networkMagic: NetworkMagic
     protocolParameters: ProtocolParametersByron
@@ -736,8 +728,8 @@ class GenesisShelley(BaseModel):
     updateQuorum: UInt64
     maxLovelaceSupply: UInt64
     protocolParameters: ProtocolParametersShelley
-    initialDelegates: Dict[str, GenesisDelegate] = Field(..., title="InitialDelegates")
-    initialFunds: Dict[str, Lovelace] = Field(..., title="InitialFunds")
+    initialDelegates: dict[str, GenesisDelegate] = Field(..., title="InitialDelegates")
+    initialFunds: dict[str, Lovelace] = Field(..., title="InitialFunds")
     initialPools: GenesisPools
 
 
@@ -765,15 +757,13 @@ class UpdatableParameters(BaseModel):
 class GenesisConway(BaseModel):
     era: Literal["conway"]
     constitution: Constitution
-    constitutional_committee: ConstitutionalCommittee = Field(
-        ..., alias="constitutionalCommittee"
-    )
+    constitutional_committee: ConstitutionalCommittee = Field(..., alias="constitutionalCommittee")
     updatable_parameters: UpdatableParameters = Field(..., alias="updatableParameters")
 
 
 class GenesisPools(BaseModel):
-    pools: Dict[str, PoolParameters]
-    delegators: Dict[str, PoolId]
+    pools: dict[str, PoolParameters]
+    delegators: dict[str, PoolId]
 
 
 class ProtocolParametersAlonzo(BaseModel):
@@ -866,81 +856,67 @@ class ProtocolParametersShelley(BaseModel):
 
 
 class ProtocolParameters(BaseModel):
-    min_fee_coefficient: Optional[NullableUInt64] = Field(
-        None, alias="minFeeCoefficient"
-    )
-    min_fee_constant: Optional[Lovelace] = Field(None, alias="minFeeConstant")
-    min_utxo_deposit_coefficient: Optional[NullableUInt64] = Field(
+    min_fee_coefficient: NullableUInt64 | None = Field(None, alias="minFeeCoefficient")
+    min_fee_constant: Lovelace | None = Field(None, alias="minFeeConstant")
+    min_utxo_deposit_coefficient: NullableUInt64 | None = Field(
         None, alias="minUtxoDepositCoefficient"
     )
-    min_utxo_deposit_constant: Optional[Lovelace | int] = Field(
-        None, alias="minUtxoDepositConstant"
-    )
-    max_block_body_size: Optional[Size] = Field(None, alias="maxBlockBodySize")
-    max_block_header_size: Optional[Size] = Field(None, alias="maxBlockHeaderSize")
-    max_transaction_size: Optional[Size] = Field(None, alias="maxTransactionSize")
-    max_value_size: Optional[Size] = Field(None, alias="maxValueSize")
-    extra_entropy: Optional[Nonce] = Field(None, alias="extraEntropy")
-    stake_credential_deposit: Optional[Lovelace] = Field(
-        None, alias="stakeCredentialDeposit"
-    )
-    stake_pool_deposit: Optional[Lovelace] = Field(None, alias="stakePoolDeposit")
-    stake_pool_retirement_epoch_bound: Optional[NullableUInt64] = Field(
+    min_utxo_deposit_constant: Lovelace | int | None = Field(None, alias="minUtxoDepositConstant")
+    max_block_body_size: Size | None = Field(None, alias="maxBlockBodySize")
+    max_block_header_size: Size | None = Field(None, alias="maxBlockHeaderSize")
+    max_transaction_size: Size | None = Field(None, alias="maxTransactionSize")
+    max_value_size: Size | None = Field(None, alias="maxValueSize")
+    extra_entropy: Nonce | None = Field(None, alias="extraEntropy")
+    stake_credential_deposit: Lovelace | None = Field(None, alias="stakeCredentialDeposit")
+    stake_pool_deposit: Lovelace | None = Field(None, alias="stakePoolDeposit")
+    stake_pool_retirement_epoch_bound: NullableUInt64 | None = Field(
         None, alias="stakePoolRetirementEpochBound"
     )
-    stake_pool_pledge_influence: Optional[NullableRatio] = Field(
+    stake_pool_pledge_influence: NullableRatio | None = Field(
         None, alias="stakePoolPledgeInfluence"
     )
-    min_stake_pool_cost: Optional[Lovelace] = Field(None, alias="minStakePoolCost")
-    desired_number_of_stake_pools: Optional[NullableUInt64] = Field(
+    min_stake_pool_cost: Lovelace | None = Field(None, alias="minStakePoolCost")
+    desired_number_of_stake_pools: NullableUInt64 | None = Field(
         None, alias="desiredNumberOfStakePools"
     )
-    federated_block_production_ratio: Optional[NullableRatio] = Field(
+    federated_block_production_ratio: NullableRatio | None = Field(
         None, alias="federatedBlockProductionRatio"
     )
-    monetary_expansion: Optional[NullableRatio] = Field(None, alias="monetaryExpansion")
-    treasury_expansion: Optional[NullableRatio] = Field(None, alias="treasuryExpansion")
-    collateral_percentage: Optional[NullableUInt64] = Field(
-        None, alias="collateralPercentage"
-    )
-    max_collateral_inputs: Optional[NullableUInt64] = Field(
-        None, alias="maxCollateralInputs"
-    )
-    plutus_cost_models: Optional[CostModels] = Field(None, alias="plutusCostModels")
-    script_execution_prices: Optional[ScriptExecutionPrices] = Field(
+    monetary_expansion: NullableRatio | None = Field(None, alias="monetaryExpansion")
+    treasury_expansion: NullableRatio | None = Field(None, alias="treasuryExpansion")
+    collateral_percentage: NullableUInt64 | None = Field(None, alias="collateralPercentage")
+    max_collateral_inputs: NullableUInt64 | None = Field(None, alias="maxCollateralInputs")
+    plutus_cost_models: CostModels | None = Field(None, alias="plutusCostModels")
+    script_execution_prices: ScriptExecutionPrices | None = Field(
         None, alias="scriptExecutionPrices"
     )
-    max_execution_units_per_transaction: Optional[ExecutionUnits] = Field(
+    max_execution_units_per_transaction: ExecutionUnits | None = Field(
         None, alias="maxExecutionUnitsPerTransaction"
     )
-    max_execution_units_per_block: Optional[ExecutionUnits] = Field(
+    max_execution_units_per_block: ExecutionUnits | None = Field(
         None, alias="maxExecutionUnitsPerBlock"
     )
-    stake_pool_voting_thresholds: Optional[StakePoolVotingThresholds] = Field(
+    stake_pool_voting_thresholds: StakePoolVotingThresholds | None = Field(
         None, alias="stakePoolVotingThresholds"
     )
-    constitutional_committee_min_size: Optional[NullableUInt64] = Field(
+    constitutional_committee_min_size: NullableUInt64 | None = Field(
         None, alias="constitutionalCommitteeMinSize"
     )
-    constitutional_committee_max_term_length: Optional[NullableUInt64] = Field(
+    constitutional_committee_max_term_length: NullableUInt64 | None = Field(
         None, alias="constitutionalCommitteeMaxTermLength"
     )
-    governance_action_lifetime: Optional[Epoch] = Field(
-        None, alias="governanceActionLifetime"
+    governance_action_lifetime: Epoch | None = Field(None, alias="governanceActionLifetime")
+    governance_action_deposit: Lovelace | None = Field(None, alias="governanceActionDeposit")
+    delegate_representative_voting_thresholds: DelegateRepresentativeVotingThresholds | None = (
+        Field(None, alias="delegateRepresentativeVotingThresholds")
     )
-    governance_action_deposit: Optional[Lovelace] = Field(
-        None, alias="governanceActionDeposit"
-    )
-    delegate_representative_voting_thresholds: Optional[
-        DelegateRepresentativeVotingThresholds
-    ] = Field(None, alias="delegateRepresentativeVotingThresholds")
-    delegate_representative_deposit: Optional[Lovelace] = Field(
+    delegate_representative_deposit: Lovelace | None = Field(
         None, alias="delegateRepresentativeDeposit"
     )
-    delegate_representative_max_idle_time: Optional[Epoch] = Field(
+    delegate_representative_max_idle_time: Epoch | None = Field(
         None, alias="delegateRepresentativeMaxIdleTime"
     )
-    version: Optional[ProtocolVersion] = None
+    version: ProtocolVersion | None = None
 
 
 class Allegra(BaseModel):
@@ -959,8 +935,8 @@ class AuxiliaryData(BaseModel):
 
 
 class AuxiliaryDataBody(BaseModel):
-    blob: Optional[Dict[str, Metadatum]] = None
-    scripts: Optional[List[Script]] = None
+    blob: dict[str, Metadatum] | None = None
+    scripts: list[Script] | None = None
 
 
 class Babbage(BaseModel):
@@ -969,25 +945,25 @@ class Babbage(BaseModel):
 
 
 class BlockAllegra(BaseModel):
-    body: List[TxAllegra]
+    body: list[TxAllegra]
     headerHash: HeaderHash
     header: Header
 
 
 class BlockAlonzo(BaseModel):
-    body: List[TxAlonzo]
+    body: list[TxAlonzo]
     headerHash: HeaderHash
     header: Header
 
 
 class BlockBabbage(BaseModel):
-    body: List[TxBabbage]
+    body: list[TxBabbage]
     headerHash: DigestBlake2bBlockHeader
     header: Header
 
 
 class BlockMary(BaseModel):
-    body: List[TxMary]
+    body: list[TxMary]
     headerHash: HeaderHash
     header: Header
 
@@ -999,7 +975,7 @@ class BlockProof(BaseModel):
 
 
 class BlockShelley(BaseModel):
-    body: List[TxShelley]
+    body: list[TxShelley]
     headerHash: DigestBlake2bBlockHeader
     header: Header
 
@@ -1036,7 +1012,7 @@ class Header(BaseModel):
     opCert: OpCert
     protocolVersion: ProtocolVersion
     signature: IssuerSignature
-    vrfInput: Optional[CertifiedVrf] = None
+    vrfInput: CertifiedVrf | None = None
 
 
 class Vote(BaseModel):
@@ -1082,13 +1058,13 @@ class StandardBlock(BaseModel):
 
 
 class StandardBlockBodyUpdatePayload(BaseModel):
-    proposal: Optional[Union[Null, UpdateProposalByron]]
-    votes: List[Vote]
+    proposal: Null | UpdateProposalByron | None
+    votes: list[Vote]
 
 
 class StandardBlockBody(BaseModel):
-    txPayload: List[TxByron]
-    dlgPayload: List[DlgCertificate]
+    txPayload: list[TxByron]
+    dlgPayload: list[DlgCertificate]
     updatePayload: StandardBlockBodyUpdatePayload
 
 
@@ -1114,16 +1090,14 @@ class TxAllegra(BaseModel):
     id: DigestBlake2bBlockBody
     body: TxAllegraBody
     witness: Witness
-    metadata: Union[AuxiliaryData, Null]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    metadata: AuxiliaryData | Null
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxAllegraBody(BaseModel):
-    inputs: List[TxIn]
-    outputs: List[TxOut]
-    certificates: List[Certificate]
+    inputs: list[TxIn]
+    outputs: list[TxOut]
+    certificates: list[Certificate]
     withdrawals: Withdrawals
     fee: Lovelace
     validityInterval: ValidityInterval
@@ -1135,25 +1109,23 @@ class TxAlonzo(BaseModel):
     inputSource: InputSource
     body: TxAlonzoBody
     witness: Witness
-    metadata: Union[AuxiliaryData, Null]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    metadata: AuxiliaryData | Null
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxAlonzoBody(BaseModel):
-    inputs: List[TxIn]
-    collaterals: List[TxIn]
-    outputs: List[TxOut]
-    certificates: List[Certificate]
+    inputs: list[TxIn]
+    collaterals: list[TxIn]
+    outputs: list[TxOut]
+    certificates: list[Certificate]
     withdrawals: Withdrawals
     fee: Lovelace
     validityInterval: ValidityInterval
     update: UpdateAlonzo
     mint: Value
-    network: Union[Network, Null]
-    scriptIntegrityHash: Union[DigestBlake2bScriptIntegrity, Null]
-    requiredExtraSignatures: List[DigestBlake2bVerificationKey]
+    network: Network | Null
+    scriptIntegrityHash: DigestBlake2bScriptIntegrity | Null
+    requiredExtraSignatures: list[DigestBlake2bVerificationKey]
 
 
 class TxBabbage(BaseModel):
@@ -1161,42 +1133,38 @@ class TxBabbage(BaseModel):
     inputSource: InputSource
     body: TxBabbageBody
     witness: Witness
-    metadata: Union[AuxiliaryData, Null]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    metadata: AuxiliaryData | Null
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxBabbageBody(BaseModel):
-    inputs: List[TxIn]
-    references: List[TxIn]
-    collaterals: List[TxIn]
-    collateralReturn: Union[TxOut, Null]
-    totalCollateral: Union[Lovelace, Null]
-    outputs: List[TxOut]
-    certificates: List[Certificate]
+    inputs: list[TxIn]
+    references: list[TxIn]
+    collaterals: list[TxIn]
+    collateralReturn: TxOut | Null
+    totalCollateral: Lovelace | Null
+    outputs: list[TxOut]
+    certificates: list[Certificate]
     withdrawals: Withdrawals
     fee: Lovelace
     validityInterval: ValidityInterval
     update: UpdateBabbage
     mint: Value
-    network: Union[Network, Null]
-    scriptIntegrityHash: Union[DigestBlake2bScriptIntegrity, Null]
-    requiredExtraSignatures: List[DigestBlake2bVerificationKey]
+    network: Network | Null
+    scriptIntegrityHash: DigestBlake2bScriptIntegrity | Null
+    requiredExtraSignatures: list[DigestBlake2bVerificationKey]
 
 
 class TxByron(BaseModel):
     id: TxId
     body: TxByronBody
-    witness: List[TxWitness]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    witness: list[TxWitness]
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxByronBody(BaseModel):
-    inputs: List[TxIn]
-    outputs: List[TxOut]
+    inputs: list[TxIn]
+    outputs: list[TxOut]
 
 
 class TxIn(BaseModel):
@@ -1208,16 +1176,14 @@ class TxMary(BaseModel):
     id: DigestBlake2bBlockBody
     body: TxMaryBody
     witness: Witness
-    metadata: Union[AuxiliaryData, Null]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    metadata: AuxiliaryData | Null
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxMaryBody(BaseModel):
-    inputs: List[TxIn]
-    outputs: List[TxOut]
-    certificates: List[Certificate]
+    inputs: list[TxIn]
+    outputs: list[TxOut]
+    certificates: list[Certificate]
     withdrawals: Withdrawals
     fee: Lovelace
     validityInterval: ValidityInterval
@@ -1228,9 +1194,9 @@ class TxMaryBody(BaseModel):
 class TxOut(BaseModel):
     address: Address
     value: Value
-    datumHash: Optional[Union[DigestBlake2bDatum, Null]] = None
-    datum: Optional[Union[Any, Datum, Null]] = None
-    script: Optional[Union[Script, Null]] = None
+    datumHash: DigestBlake2bDatum | Null | None = None
+    datum: Any | Datum | Null | None = None
+    script: Script | Null | None = None
 
 
 class TxRedeemWitness(BaseModel):
@@ -1241,16 +1207,14 @@ class TxShelley(BaseModel):
     id: DigestBlake2bBlockBody
     body: TxShellyBody
     witness: Witness
-    metadata: Union[AuxiliaryData, Null]
-    raw: str = Field(
-        ..., description="The raw serialized transaction, as found on-chain."
-    )
+    metadata: AuxiliaryData | Null
+    raw: str = Field(..., description="The raw serialized transaction, as found on-chain.")
 
 
 class TxShellyBody(BaseModel):
-    inputs: List[TxIn]
-    outputs: List[TxOut]
-    certificates: List[Certificate]
+    inputs: list[TxIn]
+    outputs: list[TxOut]
+    certificates: list[Certificate]
     withdrawals: Withdrawals
     fee: Lovelace
     timeToLive: Slot
@@ -1263,23 +1227,23 @@ class TxWitnessVk(BaseModel):
 
 class UpdateProposalAlonzo(BaseModel):
     epoch: Epoch
-    proposal: Dict[str, ProtocolParametersAlonzo]
+    proposal: dict[str, ProtocolParametersAlonzo]
 
 
 class UpdateProposalBabbage(BaseModel):
     epoch: Epoch
-    proposal: Dict[str, ProtocolParametersBabbage]
+    proposal: dict[str, ProtocolParametersBabbage]
 
 
 class UpdateProposalShelley(BaseModel):
     epoch: Epoch
-    proposal: Dict[str, ProtocolParametersShelley]
+    proposal: dict[str, ProtocolParametersShelley]
 
 
 class UpdateProposalByronBody(BaseModel):
     protocolVersion: ProtocolVersion
     softwareVersion: SoftwareVersion
-    metadata: Dict[str, str]
+    metadata: dict[str, str]
     parametersUpdate: ProtocolParametersByron
 
 
@@ -1296,8 +1260,8 @@ class Utxo(BaseModel):
 
 
 class ValidityInterval(BaseModel):
-    invalidBefore: Union[Slot, Null]
-    invalidHereafter: Union[Slot, Null]
+    invalidBefore: Slot | Null
+    invalidHereafter: Slot | Null
 
 
 class WitnessVk(BaseModel):
@@ -1307,17 +1271,17 @@ class WitnessVk(BaseModel):
 
 class BootstrapWitness(BaseModel):
     signature: Signature
-    chainCode: Union[ChainCode, Null]
-    addressAttributes: Union[AddressAttributes, Null]
+    chainCode: ChainCode | Null
+    addressAttributes: AddressAttributes | Null
     key: VerificationKey
 
 
 class Witness(BaseModel):
-    signatures: Dict[str, Signature]
-    scripts: Optional[Dict[str, Script]]
-    bootstrap: Optional[List[BootstrapWitness]]
-    datums: Optional[Dict[str, Datum]]
-    redeemers: Optional[Dict[str, Redeemer]]
+    signatures: dict[str, Signature]
+    scripts: dict[str, Script] | None
+    bootstrap: list[BootstrapWitness] | None
+    datums: dict[str, Datum] | None
+    redeemers: dict[str, Redeemer] | None
 
 
 Block = Union[Babbage, Alonzo, Mary, Allegra, Shelley, Byron]
@@ -1338,19 +1302,19 @@ UpdateShelley = Union[Null, UpdateProposalShelley]
 
 
 class SubmitTxErrorMissingVkWitnesses(BaseModel):
-    missingVkWitnesses: List[DigestBlake2bVerificationKey]
+    missingVkWitnesses: list[DigestBlake2bVerificationKey]
 
 
 class SubmitTxErrorMissingScriptWitnesses(BaseModel):
-    missingScriptWitnesses: List[DigestBlake2bScript]
+    missingScriptWitnesses: list[DigestBlake2bScript]
 
 
 class SubmitTxErrorScriptWitnessNotValidating(BaseModel):
-    scriptWitnessNotValidating: List[DigestBlake2bScript]
+    scriptWitnessNotValidating: list[DigestBlake2bScript]
 
 
 class SubmitTxErrorInsufficientGenesisSignatures(BaseModel):
-    insufficientGenesisSignatures: List[DigestBlake2bVerificationKey]
+    insufficientGenesisSignatures: list[DigestBlake2bVerificationKey]
 
 
 class SubmitTxErrorMissingTxMetadata(BaseModel):
@@ -1406,7 +1370,7 @@ class SubmitTxErrorFeeTooSmall(BaseModel):
 
 
 class SubmitTxErrorAddressAttributesTooLarge(BaseModel):
-    addressAttributesTooLarge: List[Address]
+    addressAttributesTooLarge: list[Address]
 
 
 class SubmitTxErrorTriesToForgeAda(BaseModel):
@@ -1537,8 +1501,8 @@ class SubmitTxErrorDuplicateGenesisVrf(BaseModel):
 
 
 class NonGenesisVoters(BaseModel):
-    currentlyVoting: List[DigestBlake2bVerificationKey]
-    shouldBeVoting: List[DigestBlake2bVerificationKey]
+    currentlyVoting: list[DigestBlake2bVerificationKey]
+    shouldBeVoting: list[DigestBlake2bVerificationKey]
 
 
 class SubmitTxErrorNonGenesisVoters(BaseModel):
@@ -1555,8 +1519,8 @@ class SubmitTxErrorProtocolVersionCannotFollow(BaseModel):
 
 
 class MissingRequiredDatumsObject(BaseModel):
-    provided: Optional[List[DigestBlake2bDatum]] = None
-    missing: List[DigestBlake2bDatum]
+    provided: list[DigestBlake2bDatum] | None = None
+    missing: list[DigestBlake2bDatum]
 
 
 class MissingRequiredDatums(BaseModel):
@@ -1564,8 +1528,8 @@ class MissingRequiredDatums(BaseModel):
 
 
 class UnspendableDatums(BaseModel):
-    nonSpendable: List[DigestBlake2bDatum]
-    acceptable: List[DigestBlake2bDatum]
+    nonSpendable: list[DigestBlake2bDatum]
+    acceptable: list[DigestBlake2bDatum]
 
 
 class SubmitTxErrorUnspendableDatums(BaseModel):
@@ -1573,8 +1537,8 @@ class SubmitTxErrorUnspendableDatums(BaseModel):
 
 
 class ExtraDataMismatch(BaseModel):
-    provided: Union[DigestBlake2bScriptIntegrity, Null]
-    inferredFromParameters: Union[DigestBlake2bScriptIntegrity, Null]
+    provided: DigestBlake2bScriptIntegrity | Null
+    inferredFromParameters: DigestBlake2bScriptIntegrity | Null
 
 
 class ScriptPurposeSpend(BaseModel):
@@ -1594,12 +1558,9 @@ class ScriptPurposeWithdrawal(BaseModel):
 
 
 class ScriptPurpose(RootModel):
-    root: Union[
-        ScriptPurposeSpend,
-        ScriptPurposeMint,
-        ScriptPurposeCertificate,
-        ScriptPurposeWithdrawal,
-    ]
+    root: (
+        ScriptPurposeSpend | ScriptPurposeMint | ScriptPurposeCertificate | ScriptPurposeWithdrawal
+    )
 
 
 class NoRedeemer(BaseModel):
@@ -1622,7 +1583,7 @@ class BadTranslation(BaseModel):
 
 
 class SubmitTxErrorCollectErrors(BaseModel):
-    collectErrors: List[Union[NoRedeemer, NoWitness, NoCostModel, BadTranslation]]
+    collectErrors: list[NoRedeemer | NoWitness | NoCostModel | BadTranslation]
 
 
 class SubmitTxErrorExtraDataMismatch(BaseModel):
@@ -1630,7 +1591,7 @@ class SubmitTxErrorExtraDataMismatch(BaseModel):
 
 
 class SubmitTxErrorMissingRequiredSignatures(BaseModel):
-    missingRequiredSignatures: List[DigestBlake2bVerificationKey]
+    missingRequiredSignatures: list[DigestBlake2bVerificationKey]
 
 
 class SubmitTxErrorMissingCollateralInputs(BaseModel):
@@ -1664,7 +1625,7 @@ class SubmitTxErrorValidationTagMismatch(BaseModel):
 
 
 class SubmitTxErrorExtraScriptWitnesses(BaseModel):
-    extraScriptWitnesses: List[DigestBlake2bScript]
+    extraScriptWitnesses: list[DigestBlake2bScript]
 
 
 class ExecutionUnitsTooLarge(BaseModel):
@@ -1677,11 +1638,11 @@ class SubmitTxErrorExecutionUnitsTooLarge(BaseModel):
 
 
 class SubmitTxErrorUnspendableScriptInputs(BaseModel):
-    unspendableScriptInputs: List[TxIn]
+    unspendableScriptInputs: list[TxIn]
 
 
 class MissingRequiredRedeemers(BaseModel):
-    missing: List[Dict[str, ScriptPurpose]]
+    missing: list[dict[str, ScriptPurpose]]
 
 
 class UpdateWrongEpoch(BaseModel):
@@ -1718,14 +1679,12 @@ class InvalidEntityRewardAccount(BaseModel):
 
 
 class InvalidEntity(RootModel):
-    root: Union[
-        InvalidEntityAddress, InvalidEntityPoolRegistration, InvalidEntityRewardAccount
-    ]
+    root: InvalidEntityAddress | InvalidEntityPoolRegistration | InvalidEntityRewardAccount
 
 
 class NetworkMismatch(BaseModel):
     expectedNetwork: Network
-    invalidEntities: List[InvalidEntity]
+    invalidEntities: list[InvalidEntity]
 
 
 class SubmitTxErrorNetworkMismatch(BaseModel):
@@ -1738,24 +1697,24 @@ class OutputTooSmall(BaseModel):
 
 
 class SubmitTxErrorOutputTooSmall(BaseModel):
-    outputTooSmall: List[Union[TxOut, OutputTooSmall]]
+    outputTooSmall: list[TxOut | OutputTooSmall]
 
 
 class SubmitTxErrorTooManyAssetsInOutput(BaseModel):
-    tooManyAssetsInOutput: List[TxOut]
+    tooManyAssetsInOutput: list[TxOut]
 
 
 class ValueNotConserved(BaseModel):
-    consumed: Union[LovelaceDelta, Value]
-    produced: Union[LovelaceDelta, Value]
+    consumed: LovelaceDelta | Value
+    produced: LovelaceDelta | Value
 
 
 class SubmitTxErrorInvalidWitnesses(BaseModel):
-    invalidWitnesses: List[VerificationKey]
+    invalidWitnesses: list[VerificationKey]
 
 
 class SubmitTxErrorBadInputs(BaseModel):
-    badInputs: List[TxIn]
+    badInputs: list[TxIn]
 
 
 class OutsideOfValidityInterval(BaseModel):
@@ -1772,7 +1731,7 @@ class SubmitTxErrorValueNotConserved(BaseModel):
 
 
 class ExtraRedeemers(BaseModel):
-    extraRedeemers: List[str]
+    extraRedeemers: list[str]
 
 
 class Era(Enum):
@@ -1798,7 +1757,7 @@ class SubmitTxErrorCollateralHasNonAdaAssets(BaseModel):
 
 
 class SubmitTxErrorMissingDatumHashesForInputs(BaseModel):
-    missingDatumHashesForInputs: List[TxIn]
+    missingDatumHashesForInputs: list[TxIn]
 
 
 class SubmitTxErrorCollateralIsScript(BaseModel):
@@ -1815,11 +1774,11 @@ class SubmitTxErrorTotalCollateralMismatch(BaseModel):
 
 
 class SubmitTxErrorMalformedReferenceScripts(BaseModel):
-    malformedReferenceScripts: List[DigestBlake2bScript]
+    malformedReferenceScripts: list[DigestBlake2bScript]
 
 
 class SubmitTxErrorMalformedScriptWitnesses(BaseModel):
-    malformedScriptWitnesses: List[DigestBlake2bScript]
+    malformedScriptWitnesses: list[DigestBlake2bScript]
 
 
 class Bound(BaseModel):
@@ -1830,7 +1789,7 @@ class Bound(BaseModel):
 
 class EraSummary(BaseModel):
     start: Bound
-    end: Optional[Bound]
+    end: Bound | None
     parameters: EraParameters
 
 
@@ -1851,7 +1810,7 @@ class SafeZone(RootModel):
 class EraParameters(BaseModel):
     epoch_length: Epoch = Field(alias="epochLength")
     slot_length: SlotLength = Field(alias="slotLength")
-    safe_zone: Optional[SafeZone] = Field(alias="safeZone")
+    safe_zone: SafeZone | None = Field(alias="safeZone")
 
 
 class PoolRank(BaseModel):
@@ -1860,7 +1819,7 @@ class PoolRank(BaseModel):
 
 
 class PoolsRanking(RootModel):
-    root: Optional[Dict[str, PoolRank]] = None
+    root: dict[str, PoolRank] | None = None
 
 
 GenesisConfig = GenesisByron | GenesisShelley | GenesisAlonzo | GenesisConway
@@ -1883,9 +1842,7 @@ class RewardInfoPool(BaseModel):
 
 
 class IndividualPoolRewardsProvenance(BaseModel):
-    totalMintedBlocks: UInt64 = Field(
-        ..., description="The number of blocks the pool produced."
-    )
+    totalMintedBlocks: UInt64 = Field(..., description="The number of blocks the pool produced.")
     totalStakeShare: Ratio = Field(
         ..., description="The stake pool's stake share (portion of the total stake)."
     )
@@ -1908,9 +1865,7 @@ class IndividualPoolRewardsProvenance(BaseModel):
         ...,
         description="The stake pool's apparent performance according to Section 5.5.2 of the Shelley Design Spec.",
     )
-    totalRewards: Lovelace = Field(
-        ..., description="The total Lovelace earned by the stake pool."
-    )
+    totalRewards: Lovelace = Field(..., description="The total Lovelace earned by the stake pool.")
     leaderRewards: Lovelace = Field(
         ..., description="The total Lovelace earned by the stake pool leader."
     )
@@ -1920,7 +1875,7 @@ class RewardsProvenance(BaseModel):
     epochLength: Epoch
     decentralizationParameter: Ratio
     maxLovelaceSupply: Lovelace
-    mintedBlocks: Dict[str, UInt64] = Field(
+    mintedBlocks: dict[str, UInt64] = Field(
         ..., description="Number of blocks minted by each pool."
     )
     totalMintedBlocks: Int64 = Field(
@@ -1954,7 +1909,7 @@ class RewardsProvenance(BaseModel):
         ...,
         description="The amount of Lovelace that is delegated during the given epoch.",
     )
-    pools: Dict[str, IndividualPoolRewardsProvenance]
+    pools: dict[str, IndividualPoolRewardsProvenance]
 
 
 class RewardsProvenanceNew(BaseModel):
@@ -1970,13 +1925,11 @@ class RewardsProvenanceNew(BaseModel):
             examples=["2/3", "7/8"],
         ),
     ]
-    totalRewards: int = Field(
-        ..., description="Total rewards available for the given epoch."
-    )
+    totalRewards: int = Field(..., description="Total rewards available for the given epoch.")
     activeStake: int = Field(
         ..., description="The total amount of staked Lovelace during this epoch."
     )
-    pools: Dict[str, RewardInfoPool]
+    pools: dict[str, RewardInfoPool]
 
 
 class PoolDistribution(BaseModel):
@@ -1985,16 +1938,16 @@ class PoolDistribution(BaseModel):
 
 
 class PoolDistributions(RootModel):
-    root: Optional[Dict[str, PoolDistribution]] = None
+    root: dict[str, PoolDistribution] | None = None
 
 
 class EvaluationResult(BaseModel):
-    EvaluationResult: Dict[str, ExecutionUnits]
+    EvaluationResult: dict[str, ExecutionUnits]
 
 
 class MissingRequiredScripts(BaseModel):
-    missing: List[RedeemerPointer]
-    resolved: Dict[str, DigestBlake2bScript]
+    missing: list[RedeemerPointer]
+    resolved: dict[str, DigestBlake2bScript]
 
 
 class ScriptFailureMissingRequiredScripts(BaseModel):
@@ -2003,7 +1956,7 @@ class ScriptFailureMissingRequiredScripts(BaseModel):
 
 class ValidatorFailed(BaseModel):
     error: str
-    traces: List[str]
+    traces: list[str]
 
 
 class ValidatorFailedError(BaseModel):
@@ -2023,28 +1976,24 @@ class NonScriptInputReferencedByRedeemer(BaseModel):
 
 
 class IllFormedExecutionBudget(BaseModel):
-    illFormedExecutionBudget: Union[ExecutionUnits, Null]
+    illFormedExecutionBudget: ExecutionUnits | Null
 
 
 class ScriptFailure(RootModel):
-    root: List[
-        Union[
-            ExtraRedeemers,
-            MissingRequiredDatums,
-            ScriptFailureMissingRequiredScripts,
-            ValidatorFailedError,
-            UnknownInputReferencedByRedeemer,
-            NonScriptInputReferencedByRedeemer,
-            IllFormedExecutionBudget,
-            NoCostModelForLanguage,
-        ]
-    ] = Field(
-        ..., description="Errors which may occur when evaluating an on-chain script."
-    )
+    root: list[
+        ExtraRedeemers
+        | MissingRequiredDatums
+        | ScriptFailureMissingRequiredScripts
+        | ValidatorFailedError
+        | UnknownInputReferencedByRedeemer
+        | NonScriptInputReferencedByRedeemer
+        | IllFormedExecutionBudget
+        | NoCostModelForLanguage
+    ] = Field(..., description="Errors which may occur when evaluating an on-chain script.")
 
 
 class EvaluationFailureScriptFailures(BaseModel):
-    ScriptFailures: Dict[str, ScriptFailure]
+    ScriptFailures: dict[str, ScriptFailure]
 
 
 class EvaluationFailureIncompatibleEra(BaseModel):
@@ -2054,7 +2003,7 @@ class EvaluationFailureIncompatibleEra(BaseModel):
 
 
 class EvaluationFailureAdditionalUtxoOverlap(BaseModel):
-    AdditionalUtxoOverlap: List[TxIn]
+    AdditionalUtxoOverlap: list[TxIn]
 
 
 class EvaluationFailureNotEnoughSynced(BaseModel):
@@ -2070,13 +2019,13 @@ class EvaluationFailureCannotCreateEvaluationContext(BaseModel):
 
 
 class EvaluationFailure(BaseModel):
-    EvaluationFailure: Union[
-        EvaluationFailureScriptFailures,
-        EvaluationFailureIncompatibleEra,
-        EvaluationFailureAdditionalUtxoOverlap,
-        EvaluationFailureNotEnoughSynced,
-        EvaluationFailureCannotCreateEvaluationContext,
-    ]
+    EvaluationFailure: (
+        EvaluationFailureScriptFailures
+        | EvaluationFailureIncompatibleEra
+        | EvaluationFailureAdditionalUtxoOverlap
+        | EvaluationFailureNotEnoughSynced
+        | EvaluationFailureCannotCreateEvaluationContext
+    )
 
 
 Base16 = str

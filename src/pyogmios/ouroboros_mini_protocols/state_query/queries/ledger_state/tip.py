@@ -3,8 +3,8 @@ from pyogmios.enums import LedgerStateQuery
 from pyogmios.models import PointOrOrigin
 from pyogmios.models.response_model import QueryLedgerStateTipResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 

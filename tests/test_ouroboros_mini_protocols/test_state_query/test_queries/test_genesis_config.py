@@ -9,11 +9,11 @@ from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    GenesisAlonzo,
-    GenesisShelley,
-    GenesisByron,
     Era,
     EraMismatch,
+    GenesisAlonzo,
+    GenesisByron,
+    GenesisShelley,
     QueryUnavailableInCurrentEra,
 )
 from pyogmios.models.response_model import (
@@ -32,7 +32,7 @@ from tests.conftest import (
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (GenesisAlonzoFactory.build(), GenesisAlonzo),
         (GenesisByronFactory.build(), GenesisByron),

@@ -5,28 +5,28 @@ from pyogmios.connection import (
 )
 from pyogmios.exceptions import EraMismatchError
 from pyogmios.models import (
-    ProtocolParametersShelley,
+    Era,
     ProtocolParametersAlonzo,
     ProtocolParametersBabbage,
-    Era,
+    ProtocolParametersShelley,
 )
 from pyogmios.models.response_model import (
-    QueryResponseReflection,
     QueryLedgerStateProtocolParametersResponse,
+    QueryResponseReflection,
 )
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 from tests.conftest import (
-    ProtocolParametersShelleyFactory,
     ProtocolParametersAlonzoFactory,
     ProtocolParametersBabbageFactory,
+    ProtocolParametersShelleyFactory,
 )
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (ProtocolParametersShelleyFactory.build(), ProtocolParametersShelley),
         (ProtocolParametersAlonzoFactory.build(), ProtocolParametersAlonzo),
@@ -53,9 +53,7 @@ async def test_current_protocol_parameters(mocker, test_input, expected):
 
 
 @pytest.mark.asyncio
-async def test_current_protocol_parameters_era_mismatch(
-    mocker, fake_era_mismatch_result
-):
+async def test_current_protocol_parameters_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
         "pyogmios.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
         return_value=QueryLedgerStateProtocolParametersResponse.from_base_response(

@@ -1,51 +1,47 @@
 from __future__ import annotations
 
 import json
-from typing import List, Dict, Optional
 
 from nanoid import generate
 
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import AcquireFailureDetails, EraWithGenesis
 from pyogmios.exceptions import (
-    UnknownResultError,
-    AcquirePointTooOldError,
     AcquirePointNotOnChainError,
+    AcquirePointTooOldError,
     RequestError,
+    UnknownResultError,
 )
 from pyogmios.models import (
+    AnyStakeCredential,
     BaseModel,
-    PointOrOrigin,
     BlockNoOrOrigin,
-    Epoch,
-    ProtocolParametersShelley,
-    ProtocolParametersAlonzo,
-    ProtocolParametersBabbage,
-    RewardAccountSummaries,
     Bound,
-    EraSummary,
-    Lovelace,
     DigestBlake2bCredential,
+    Epoch,
+    EraSummary,
+    GenesisConfig,
+    Lovelace,
     NonMyopicMemberRewards,
+    PointOrOrigin,
+    PoolDistribution,
     PoolId,
     PoolParameters,
     PoolsRanking,
+    ProtocolParameters,
+    ProtocolParametersAlonzo,
+    ProtocolParametersBabbage,
+    ProtocolParametersShelley,
+    RewardAccountSummaries,
     RewardsProvenance,
     RewardsProvenanceNew,
-    PoolDistribution,
     UtcTime,
-    ProtocolParameters,
-    AnyStakeCredential,
-    GenesisConfig,
 )
-from pyogmios.models.request_model import ReleaseLedgerState, AcquireLedgerState
-from pyogmios.models.response_model import ReleaseResponse, AcquireResponse
+from pyogmios.models.request_model import AcquireLedgerState, ReleaseLedgerState
+from pyogmios.models.response_model import AcquireResponse, ReleaseResponse
 from pyogmios.models.result_models import (
-    AcquireSuccessResult,
     AcquireFailureResult,
-)
-from pyogmios.ouroboros_mini_protocols.state_query.queries.network.genesis_config import (
-    genesis_config,
+    AcquireSuccessResult,
 )
 from pyogmios.ouroboros_mini_protocols.state_query.queries.ledger_state.epoch import (
     epoch,
@@ -64,6 +60,9 @@ from pyogmios.ouroboros_mini_protocols.state_query.queries.ledger_state.tip impo
 )
 from pyogmios.ouroboros_mini_protocols.state_query.queries.network.block_height import (
     block_height,
+)
+from pyogmios.ouroboros_mini_protocols.state_query.queries.network.genesis_config import (
+    genesis_config,
 )
 from pyogmios.ouroboros_mini_protocols.state_query.queries.network.tip import (
     tip,
@@ -128,8 +127,8 @@ class QueryLedgerState(BaseModel):
 
     async def reward_account_summaries(
         self,
-        scripts: Optional[List[AnyStakeCredential]] = None,
-        keys: Optional[List[AnyStakeCredential]] = None,
+        scripts: list[AnyStakeCredential] | None = None,
+        keys: list[AnyStakeCredential] | None = None,
     ) -> RewardAccountSummaries:
         """
         Query delegations and rewards
@@ -144,7 +143,7 @@ class QueryLedgerState(BaseModel):
         await ensure_socket_is_open(self.context.socket)
         return await era_start(self.context)
 
-    async def era_summaries(self) -> List[EraSummary]:
+    async def era_summaries(self) -> list[EraSummary]:
         """
         Query the era summaries
         """
@@ -245,7 +244,7 @@ class StateQueryClient(BaseModel):
 
     async def non_myopic_member_rewards(
         self,
-        input_list: List[Lovelace] | List[DigestBlake2bCredential],
+        input_list: list[Lovelace] | list[DigestBlake2bCredential],
     ) -> NonMyopicMemberRewards:
         """
         Query non myopic member rewards
@@ -253,14 +252,14 @@ class StateQueryClient(BaseModel):
         await ensure_socket_is_open(self.context.socket)
         return await non_myopic_member_rewards(self.context, input_list)
 
-    async def pool_ids(self) -> List[PoolId]:
+    async def pool_ids(self) -> list[PoolId]:
         """
         Query pool ids
         """
         await ensure_socket_is_open(self.context.socket)
         return await pool_ids(self.context)
 
-    async def pool_parameters(self, pools: List[PoolId]) -> Dict[str, PoolParameters]:
+    async def pool_parameters(self, pools: list[PoolId]) -> dict[str, PoolParameters]:
         """
         Query pool parameters
         """
@@ -276,9 +275,12 @@ class StateQueryClient(BaseModel):
 
     async def proposed_protocol_parameters(
         self,
-    ) -> Dict[str, ProtocolParametersShelley] | Dict[
-        str, ProtocolParametersAlonzo
-    ] | Dict[str, ProtocolParametersBabbage] | None:
+    ) -> (
+        dict[str, ProtocolParametersShelley]
+        | dict[str, ProtocolParametersAlonzo]
+        | dict[str, ProtocolParametersBabbage]
+        | None
+    ):
         """
         Query proposed protocol parameters
         """

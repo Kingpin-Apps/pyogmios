@@ -3,8 +3,10 @@ A queue that can be used to store tasks.
 
 This module contains the Queue class.
 """
+
 from collections import deque
-from typing import Callable, Any
+from collections.abc import Callable
+from typing import Any
 
 from promise import Promise
 
@@ -47,9 +49,7 @@ class Queue:
         :return:
         """
 
-        def executor(
-            resolve: Callable[[Any], None], reject: Callable[[Exception], None]
-        ) -> None:
+        def executor(resolve: Callable[[Any], None], reject: Callable[[Exception], None]) -> None:
             """
             The executor function for the Promise.
             :param resolve: The resolve function of the Promise.
@@ -81,9 +81,7 @@ class Queue:
         :return: A Promise that will be fulfilled (rejected) when the task is completed successfully (unsuccessfully).
         """
 
-        def executor(
-            resolve: Callable[[Any], None], reject: Callable[[Exception], None]
-        ) -> None:
+        def executor(resolve: Callable[[Any], None], reject: Callable[[Exception], None]) -> None:
             """
             The executor function for the Promise.
             :param resolve: The resolve function of the Promise.

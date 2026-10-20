@@ -1,7 +1,8 @@
-from typing import Callable, Coroutine, Any, Dict
+from collections.abc import Callable, Coroutine
+from typing import Any
 
 from pyogmios.connection import InteractionContext
-from pyogmios.models import BaseModel, Slot, TxId, TxAlonzo, TxBabbage, Null
+from pyogmios.models import BaseModel, Null, Slot, TxAlonzo, TxBabbage, TxId
 from pyogmios.ouroboros_mini_protocols.tx_monitor.await_acquire import (
     await_acquire,
 )
@@ -18,9 +19,9 @@ class TxMonitorClient(BaseModel):
     context: InteractionContext
     awaitAcquire: Callable[[dict], Coroutine[Any, Any, Slot]]
     hasTx: Callable[[TxId], Coroutine[Any, Any, bool]]
-    nextTx: Callable[[Dict], Coroutine[Any, Any, TxId | TxAlonzo | TxBabbage | Null]]
-    release: Callable[[Dict], Coroutine[Any, Any, str]]
-    sizeAndCapacity: Callable[[Dict], Coroutine[Any, Any, str]]
+    nextTx: Callable[[dict], Coroutine[Any, Any, TxId | TxAlonzo | TxBabbage | Null]]
+    release: Callable[[dict], Coroutine[Any, Any, str]]
+    sizeAndCapacity: Callable[[dict], Coroutine[Any, Any, str]]
     shutdown: Callable[[], Coroutine[Any, Any, None]]
 
 
@@ -48,7 +49,7 @@ async def create_tx_monitor_client(context: InteractionContext) -> TxMonitorClie
         await ensure_socket_is_open(context.socket)
         return await has_tx(context, tx_id)
 
-    async def default_next_tx(args: Dict) -> TxId | TxAlonzo | TxBabbage | Null:
+    async def default_next_tx(args: dict) -> TxId | TxAlonzo | TxBabbage | Null:
         """
         Next tx.
         :return: The tx id
@@ -56,7 +57,7 @@ async def create_tx_monitor_client(context: InteractionContext) -> TxMonitorClie
         await ensure_socket_is_open(context.socket)
         return await next_tx(context, args)
 
-    async def default_release(args: Dict) -> str:
+    async def default_release(args: dict) -> str:
         """
         Release.
         :return: The release
@@ -64,7 +65,7 @@ async def create_tx_monitor_client(context: InteractionContext) -> TxMonitorClie
         await ensure_socket_is_open(context.socket)
         return await release(context, args)
 
-    async def default_size_and_capacity(args: Dict) -> str:
+    async def default_size_and_capacity(args: dict) -> str:
         """
         Size and capacity.
         :return: The size and capacity

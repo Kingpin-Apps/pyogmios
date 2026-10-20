@@ -3,51 +3,52 @@ This module contains the evaluate_tx function.
 
 The evaluate_tx function is used to evaluate a transaction.
 """
-from typing import Optional, List
 
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import UnknownResultError
 from pyogmios.models import (
-    Utxo,
-    EvaluationResult,
     EvaluationFailure,
+    EvaluationFailureAdditionalUtxoOverlap,
+    EvaluationFailureCannotCreateEvaluationContext,
+    EvaluationFailureIncompatibleEra,
+    EvaluationFailureNotEnoughSynced,
+    EvaluationFailureScriptFailures,
+    EvaluationResult,
     ExtraRedeemers,
     IllFormedExecutionBudget,
     MissingRequiredScripts,
     NoCostModelForLanguage,
     NonScriptInputReferencedByRedeemer,
     UnknownInputReferencedByRedeemer,
+    Utxo,
+)
+from pyogmios.models import (
     ValidatorFailedError as ValidatorFailedErrorModel,
-    EvaluationFailureScriptFailures,
-    EvaluationFailureIncompatibleEra,
-    EvaluationFailureAdditionalUtxoOverlap,
-    EvaluationFailureNotEnoughSynced,
-    EvaluationFailureCannotCreateEvaluationContext,
 )
 from pyogmios.models.request_model import Request
 from pyogmios.models.response_model import EvaluateTxResponse
 from pyogmios.ouroboros_mini_protocols.tx_submission.evaluation_errors import (
+    AdditionalUtxoOverlapError,
+    CannotCreateEvaluationContextError,
     ExtraRedeemersError,
     IllFormedExecutionBudgetError,
+    IncompatibleEraError,
     MissingRequiredDatums,
+    MissingRequiredDatumsError,
     MissingRequiredScriptsError,
     NoCostModelForLanguageError,
     NonScriptInputReferencedByRedeemerError,
+    NotEnoughSyncedError,
     UnknownInputReferencedByRedeemerError,
     ValidatorFailedError,
-    IncompatibleEraError,
-    AdditionalUtxoOverlapError,
-    NotEnoughSyncedError,
-    CannotCreateEvaluationContextError,
-    MissingRequiredDatumsError,
 )
 from pyogmios.request import send_request
 
 
 async def evaluate_tx(
-    context: InteractionContext, bytes_: str, additional_utxo_set: Optional[Utxo] = None
-) -> EvaluationResult | List[Exception]:
+    context: InteractionContext, bytes_: str, additional_utxo_set: Utxo | None = None
+) -> EvaluationResult | list[Exception]:
     """
     Evaluate a transaction.
     :param context: The interaction context
@@ -80,7 +81,7 @@ async def evaluate_tx(
 
 def handle_evaluate_tx_response(
     response: EvaluateTxResponse,
-) -> EvaluationResult | List[Exception]:
+) -> EvaluationResult | list[Exception]:
     """
     Handle the evaluate tx response.
     :param response: The response
@@ -95,7 +96,7 @@ def handle_evaluate_tx_response(
             evaluation_failure = result.EvaluationFailure
             if isinstance(evaluation_failure, EvaluationFailureScriptFailures):
                 script_failures = evaluation_failure.ScriptFailures
-                for k in script_failures.keys():
+                for k in script_failures:
                     failure = script_failures[k]
                     if isinstance(failure, ExtraRedeemers):
                         errors += ExtraRedeemersError(failure)

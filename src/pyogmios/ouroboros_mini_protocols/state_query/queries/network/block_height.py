@@ -4,8 +4,8 @@ from pyogmios.exceptions import QueryUnavailableInCurrentEraError
 from pyogmios.models import BlockNoOrOrigin
 from pyogmios.models.response_model import QueryNetworkBlockHeightResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 

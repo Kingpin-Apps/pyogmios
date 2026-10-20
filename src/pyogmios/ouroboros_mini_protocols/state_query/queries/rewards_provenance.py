@@ -1,18 +1,18 @@
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    RewardsProvenance,
-    QueryUnavailableInCurrentEra,
     EraMismatch,
+    QueryUnavailableInCurrentEra,
+    RewardsProvenance,
 )
 from pyogmios.models.response_model import RewardsProvenanceResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
@@ -22,9 +22,7 @@ async def rewards_provenance(context: InteractionContext) -> RewardsProvenance:
     :param context: The interaction context to use for the query.
     :return: The rewards provenance.
     """
-    request_args = RequestArgs(
-        method=Method.QUERY, params={"query": "rewardsProvenance"}
-    )
+    request_args = RequestArgs(method=Method.QUERY, params={"query": "rewardsProvenance"})
 
     try:
         response = await query(request_args, context)

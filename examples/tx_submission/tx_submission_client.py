@@ -1,11 +1,12 @@
 """
 Transaction submission client example
 """
+
 import asyncio
 
 from pyogmios.connection import (
-    create_interaction_context,
     InteractionContextOptions,
+    create_interaction_context,
 )
 from pyogmios.enums import InteractionType
 from pyogmios.ouroboros_mini_protocols.tx_submission.tx_submission_client import (
@@ -20,9 +21,7 @@ async def main():
     interaction_context_options = InteractionContextOptions(
         interaction_type=InteractionType.ONE_TIME, log_level="INFO"
     )
-    interaction_context = await create_interaction_context(
-        options=interaction_context_options
-    )
+    interaction_context = await create_interaction_context(options=interaction_context_options)
     await asyncio.sleep(1)
     print(interaction_context.socket.sock.connected)
 

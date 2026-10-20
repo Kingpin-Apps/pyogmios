@@ -1,30 +1,28 @@
-from typing import List
-
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
     UnknownResultError,
 )
 from pyogmios.models import (
-    Lovelace,
     DigestBlake2bCredential,
-    NonMyopicMemberRewards,
-    StakeAddress,
-    QueryUnavailableInCurrentEra,
     EraMismatch,
+    Lovelace,
+    NonMyopicMemberRewards,
+    QueryUnavailableInCurrentEra,
+    StakeAddress,
 )
 from pyogmios.models.response_model import NonMyopicMemberRewardsResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
 async def non_myopic_member_rewards(
     context: InteractionContext,
-    input_list: List[Lovelace] | List[DigestBlake2bCredential] | List[StakeAddress],
+    input_list: list[Lovelace] | list[DigestBlake2bCredential] | list[StakeAddress],
 ) -> NonMyopicMemberRewards:
     """
     Query the non-myopic member rewards for the given stake key hashes.

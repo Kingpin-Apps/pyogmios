@@ -1,4 +1,4 @@
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 from websocket import WebSocketApp
 
@@ -9,7 +9,7 @@ T = TypeVar("T")
 
 
 class Options(BaseModel):
-    mirror: Optional[str]
+    mirror: str | None
 
 
 def request_next(socket: WebSocketApp, options: Options = None) -> None:

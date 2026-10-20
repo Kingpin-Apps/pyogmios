@@ -3,17 +3,17 @@ from faker import Faker
 
 from pyogmios.enums import Method
 from pyogmios.models import (
-    PointOrOrigin,
-    Point,
     DigestBlake2bBlockHeader,
     Origin,
+    Point,
+    PointOrOrigin,
 )
 from pyogmios.models.request_model import (
     AcquireLedgerState,
     NextBlock,
     ReleaseLedgerState,
+    Request,
 )
-from pyogmios.models.request_model import Request
 
 
 def test_request_from_base_request():
@@ -56,15 +56,13 @@ def test_release_ledger_state_from_base():
     result = ReleaseLedgerState.from_base(request_id)
 
     # Assert
-    assert isinstance(
-        result, ReleaseLedgerState
-    ), "Result is not an instance of ReleaseLedgerState"
+    assert isinstance(result, ReleaseLedgerState), "Result is not an instance of ReleaseLedgerState"
     assert result.id == request_id
     assert result.method == Method.RELEASE_LEDGER_STATE.value
 
 
 @pytest.mark.parametrize(
-    "test_id, request_id, point, expected_method",
+    ("test_id", "request_id", "point", "expected_method"),
     [
         (
             "HP-1",
@@ -88,13 +86,13 @@ def test_acquire_ledger_state_from_base(
     request = AcquireLedgerState.from_base(request_id, point)
 
     # Assert
-    assert isinstance(
-        request, AcquireLedgerState
-    ), f"Test {test_id}: Result is not an instance of AcquireLedgerState"
-    assert (
-        request.method == expected_method.value
-    ), f"Test {test_id}: Method is not set to ACQUIRE_LEDGER_STATE"
-    assert (
-        request.params["point"] == point.model_dump()
-    ), f"Test {test_id}: Point is not set correctly"
+    assert isinstance(request, AcquireLedgerState), (
+        f"Test {test_id}: Result is not an instance of AcquireLedgerState"
+    )
+    assert request.method == expected_method.value, (
+        f"Test {test_id}: Method is not set to ACQUIRE_LEDGER_STATE"
+    )
+    assert request.params["point"] == point.model_dump(), (
+        f"Test {test_id}: Point is not set correctly"
+    )
     assert request.id == request_id, f"Test {test_id}: Request ID is not set correctly"

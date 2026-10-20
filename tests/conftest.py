@@ -5,13 +5,13 @@ from polyfactory.factories.pydantic_factory import ModelFactory
 
 from pyogmios.connection import InteractionContext
 from pyogmios.models import (
-    ProtocolParametersShelley,
-    ProtocolParametersBabbage,
-    ProtocolParametersAlonzo,
     GenesisAlonzo,
     GenesisByron,
     GenesisShelley,
     PoolParameters,
+    ProtocolParametersAlonzo,
+    ProtocolParametersBabbage,
+    ProtocolParametersShelley,
     RewardsProvenance,
     RewardsProvenanceNew,
 )
@@ -23,7 +23,7 @@ from pyogmios.ouroboros_mini_protocols.state_query.query import (
     ResponseArgs,
     ResponseHandlerArgs,
 )
-from pyogmios.server_health import ConnectionConfig, Connection, Options, Address
+from pyogmios.server_health import Address, Connection, ConnectionConfig, Options
 
 
 class ConnectionConfigFactory(ModelFactory):
@@ -115,9 +115,7 @@ def mock_server_health(mocker):
     mocker.patch("pyogmios.utils.socket_utils.ensure_socket_is_open", return_value=True)
     mocker.patch("threading.Thread")
     mocker.patch("threading.Event.is_set", return_value=True)
-    mocker.patch(
-        "pyogmios.ouroboros_mini_protocols.chain_sync.request_next.request_next"
-    )
+    mocker.patch("pyogmios.ouroboros_mini_protocols.chain_sync.request_next.request_next")
     mocker.patch(
         "pyogmios.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
     )
@@ -212,9 +210,7 @@ def mock_server_health_options():
             port=1337,
             tls=False,
             max_payload=1000,
-            address=Address(
-                http="http://localhost:1337", webSocket="ws://localhost:1337"
-            ),
+            address=Address(http="http://localhost:1337", webSocket="ws://localhost:1337"),
         )
     )
 

@@ -1,12 +1,13 @@
-from typing import Callable, Optional, Coroutine, Any, List
+from collections.abc import Callable, Coroutine
+from typing import Any
 
 from pyogmios.connection import InteractionContext
 from pyogmios.exceptions import WebSocketClosedError
-from pyogmios.models import BaseModel, Utxo, TxId, EvaluationResult
+from pyogmios.models import BaseModel, EvaluationResult, TxId, Utxo
 from pyogmios.models.response_model import (
-    SubmitTxResponse,
-    Response,
     EvaluateTxResponse,
+    Response,
+    SubmitTxResponse,
 )
 from pyogmios.ouroboros_mini_protocols.tx_submission.evaluate_tx import (
     evaluate_tx,
@@ -20,10 +21,8 @@ from pyogmios.utils.socket_utils import ensure_socket_is_open
 
 class TxSubmissionClient(BaseModel):
     context: InteractionContext
-    evaluate_tx: Callable[
-        [str, Utxo], Coroutine[Any, Any, EvaluationResult | List[Exception]]
-    ]
-    submit_tx: Callable[[str], Coroutine[Any, Any, TxId | List[SubmitTxErrorShelley]]]
+    evaluate_tx: Callable[[str, Utxo], Coroutine[Any, Any, EvaluationResult | list[Exception]]]
+    submit_tx: Callable[[str], Coroutine[Any, Any, TxId | list[SubmitTxErrorShelley]]]
     shutdown: Callable[[], Coroutine[Any, Any, None]]
 
 
@@ -57,7 +56,7 @@ async def create_tx_submission_client(
 
     try:
 
-        async def default_submit_tx(bytes_: str) -> TxId | List[SubmitTxErrorShelley]:
+        async def default_submit_tx(bytes_: str) -> TxId | list[SubmitTxErrorShelley]:
             """
             Submit a transaction.
             :param bytes_: The bytes
@@ -71,8 +70,8 @@ async def create_tx_submission_client(
                 await shutdown()
 
         async def default_evaluate_tx(
-            bytes_: str, additional_utxo_set: Optional[Utxo] = None
-        ) -> EvaluationResult | List[Exception]:
+            bytes_: str, additional_utxo_set: Utxo | None = None
+        ) -> EvaluationResult | list[Exception]:
             """
             Evaluate a transaction.
             :param bytes_: The bytes

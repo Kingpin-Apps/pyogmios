@@ -1,8 +1,8 @@
 import asyncio
 
 from pyogmios.connection import (
-    create_interaction_context,
     InteractionContextOptions,
+    create_interaction_context,
 )
 from pyogmios.enums import InteractionType
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
@@ -22,10 +22,7 @@ async def main():
     era_summaries = await client.query_ledger_state.era_summaries()
     await client.shutdown()
 
-    [
-        print(era_summary.model_dump_json(indent=4, by_alias=True))
-        for era_summary in era_summaries
-    ]
+    [print(era_summary.model_dump_json(indent=4, by_alias=True)) for era_summary in era_summaries]
 
 
 if __name__ == "__main__":

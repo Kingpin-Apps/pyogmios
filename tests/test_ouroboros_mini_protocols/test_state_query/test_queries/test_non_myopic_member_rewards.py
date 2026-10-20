@@ -8,11 +8,11 @@ from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    NonMyopicMemberRewards,
-    StakeAddress,
-    EraMismatch,
-    QueryUnavailableInCurrentEra,
     Era,
+    EraMismatch,
+    NonMyopicMemberRewards,
+    QueryUnavailableInCurrentEra,
+    StakeAddress,
 )
 from pyogmios.models.response_model import (
     NonMyopicMemberRewardsResponse,
@@ -56,16 +56,12 @@ async def test_non_myopic_member_rewards_query_unavailable(mocker):
     with pytest.raises(QueryUnavailableInCurrentEraError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        addr = StakeAddress(
-            "stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4"
-        )
+        addr = StakeAddress("stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4")
         non_myopic_member_rewards = await client.non_myopic_member_rewards([addr])
         client.shutdown()
         assert isinstance(non_myopic_member_rewards, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_name == "nonMyopicMemberRewards"
-    assert (
-        exc_info.value.message == "QueryUnavailableInCurrentEra. nonMyopicMemberRewards"
-    )
+    assert exc_info.value.message == "QueryUnavailableInCurrentEra. nonMyopicMemberRewards"
 
 
 @pytest.mark.asyncio
@@ -82,9 +78,7 @@ async def test_non_myopic_member_rewards_era_mismatch(mocker, fake_era_mismatch_
     with pytest.raises(EraMismatchError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        addr = StakeAddress(
-            "stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4"
-        )
+        addr = StakeAddress("stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4")
         non_myopic_member_rewards = await client.non_myopic_member_rewards([addr])
         client.shutdown()
         assert isinstance(non_myopic_member_rewards, EraMismatchResult)

@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 from pyogmios.connection import (
@@ -7,13 +5,13 @@ from pyogmios.connection import (
 )
 from pyogmios.exceptions import UnknownResultError
 from pyogmios.models import (
-    EraSummary,
     Bound,
-    RelativeTime,
     Epoch,
     EraParameters,
-    SlotLength,
+    EraSummary,
+    RelativeTime,
     SafeZone,
+    SlotLength,
 )
 from pyogmios.models.response_model import (
     EraSummariesResponse,
@@ -32,12 +30,8 @@ async def test_era_summaries(mocker):
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=[
                 EraSummary(
-                    start=Bound(
-                        time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)
-                    ),
-                    end=Bound(
-                        time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)
-                    ),
+                    start=Bound(time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)),
+                    end=Bound(time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)),
                     parameters=EraParameters(
                         epochLength=Epoch(500),
                         slotLength=SlotLength(123),
@@ -52,7 +46,7 @@ async def test_era_summaries(mocker):
     client = await create_state_query_client(interaction_context)
     era_summaries = await client.era_summaries()
     await client.shutdown()
-    assert isinstance(era_summaries, List)
+    assert isinstance(era_summaries, list)
     assert isinstance(era_summaries[0], EraSummary)
 
 

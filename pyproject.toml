@@ -99,6 +99,12 @@ extend-exclude = ["dist"]
 select = ["E", "W", "F", "I", "B", "UP", "SIM", "RUF", "ASYNC", "PT"]
 ignore = ["E501"]
 
+# Temporary: legacy v5/v6 code that Phases 2-6 of the v7 upgrade replace. Remove each entry as its code is rewritten.
+[tool.ruff.lint.per-file-ignores]
+"src/pyogmios/models/__init__.py" = ["UP007", "F821"]
+"src/pyogmios/ouroboros_mini_protocols/tx_submission/*_errors.py" = ["UP007"]
+"tests/**" = ["PT012"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true

@@ -3,10 +3,10 @@ This module contains the EventEmitter class.
 
 The EventEmitter class can be used to emit events and listen to them.
 """
-from typing import Dict
 
-from typing import TypeVar, Callable
+from collections.abc import Callable
 from queue import Queue
+from typing import TypeVar
 
 T = TypeVar("T")
 
@@ -17,7 +17,7 @@ class EventEmitter:
     """
 
     def __init__(self):
-        self._callbacks: Dict[str, callable] = {}
+        self._callbacks: dict[str, callable] = {}
 
     def on(self, event_name, function):
         """
@@ -26,7 +26,7 @@ class EventEmitter:
         :param function: The function to call when the event is emitted.
         :return: The function that was passed as an argument.
         """
-        self._callbacks[event_name] = self._callbacks.get(event_name, []) + [function]
+        self._callbacks[event_name] = [*self._callbacks.get(event_name, []), function]
         return function
 
     def emit(self, event_name, *args, **kwargs):

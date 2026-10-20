@@ -1,10 +1,10 @@
 import json
-from typing import TypedDict, Union
+from typing import TypedDict
 
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import UnknownResultError
-from pyogmios.models import TxId, TxAlonzo, TxBabbage, Null
+from pyogmios.models import Null, TxAlonzo, TxBabbage, TxId
 from pyogmios.models.request_model import Request
 from pyogmios.models.response_model import NextTxResponse
 
@@ -34,7 +34,7 @@ async def next_tx(
 
 def handle_next_tx_response(
     response: NextTxResponse,
-) -> Union[TxId, TxAlonzo, TxBabbage, Null]:
+) -> TxId | TxAlonzo | TxBabbage | Null:
     """
     Handle the next tx response.
     :param response: The response
@@ -42,12 +42,7 @@ def handle_next_tx_response(
     """
     try:
         result = response.result
-        if (
-            isinstance(result, TxId)
-            or isinstance(result, TxAlonzo)
-            or isinstance(result, TxBabbage)
-            or isinstance(result, Null)
-        ):
+        if isinstance(result, (TxId, TxAlonzo, TxBabbage, Null)):
             return result
         else:
             raise UnknownResultError(result)

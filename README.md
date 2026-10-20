@@ -104,17 +104,22 @@ unless you have advanced needs.
 import asyncio
 
 from pyogmios.connection import (
-    create_interaction_context, InteractionContextOptions,
+    create_interaction_context,
+    InteractionContextOptions,
 )
 from pyogmios.enums import InteractionType
-from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import create_state_query_client
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
+    create_state_query_client,
+)
 
 
 async def main():
     """
     This will query the chain tip of the node through Ogmios.
     """
-    interaction_context_options = InteractionContextOptions(interaction_type=InteractionType.ONE_TIME)
+    interaction_context_options = InteractionContextOptions(
+        interaction_type=InteractionType.ONE_TIME
+    )
     interaction_context = await create_interaction_context(options=interaction_context_options)
     client = await create_state_query_client(interaction_context)
     chain_tip = await client.tip()
@@ -134,19 +139,24 @@ import asyncio
 from typing import Callable
 
 from pyogmios.connection import (
-    create_interaction_context, InteractionContextOptions,
+    create_interaction_context,
+    InteractionContextOptions,
 )
 from pyogmios.enums import InteractionType, Origin
 from pyogmios.models import RollBackward, RollForward
-from pyogmios.ouroboros_mini_protocols.chain_sync.chain_sync_client import ChainSyncMessageHandlers, \
-    create_chain_sync_client
+from pyogmios.ouroboros_mini_protocols.chain_sync.chain_sync_client import (
+    ChainSyncMessageHandlers,
+    create_chain_sync_client,
+)
 
 
 async def main():
     """
     This run the chain sync client and print the output.
     """
-    interaction_context_options = InteractionContextOptions(interaction_type=InteractionType.LONG_RUNNING)
+    interaction_context_options = InteractionContextOptions(
+        interaction_type=InteractionType.LONG_RUNNING
+    )
     interaction_context = await create_interaction_context(options=interaction_context_options)
     await asyncio.sleep(1)
     print(interaction_context.socket.sock.connected)
@@ -170,11 +180,12 @@ async def main():
         callback()
 
     chain_sync_message_handlers = ChainSyncMessageHandlers(
-        roll_backward=roll_backward_callback,
-        roll_forward=roll_forward_callback
+        roll_backward=roll_backward_callback, roll_forward=roll_forward_callback
     )
 
-    chain_sync_client = await create_chain_sync_client(interaction_context, chain_sync_message_handlers)
+    chain_sync_client = await create_chain_sync_client(
+        interaction_context, chain_sync_message_handlers
+    )
     await chain_sync_client.start_sync([Origin.origin], 0)
     await asyncio.sleep(10)
     await chain_sync_client.shutdown()

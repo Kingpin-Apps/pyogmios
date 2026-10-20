@@ -1,10 +1,10 @@
 import asyncio
 
 from pyogmios.connection import (
-    create_interaction_context,
     InteractionContextOptions,
+    create_interaction_context,
 )
-from pyogmios.enums import InteractionType, EraWithGenesis
+from pyogmios.enums import EraWithGenesis, InteractionType
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
@@ -18,9 +18,7 @@ async def main():
         options=InteractionContextOptions(interaction_type=InteractionType.ONE_TIME)
     )
     client = await create_state_query_client(interaction_context)
-    byron_genesis_config = await client.query_network.genesis_config(
-        EraWithGenesis.BYRON
-    )
+    byron_genesis_config = await client.query_network.genesis_config(EraWithGenesis.BYRON)
     await client.shutdown()
 
     print(byron_genesis_config.model_dump_json(indent=4, by_alias=True))

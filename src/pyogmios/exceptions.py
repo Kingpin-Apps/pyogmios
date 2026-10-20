@@ -3,7 +3,6 @@ PyOgmios client exceptions
 
 This module contains the various exceptions that maybe raised by the client.
 """
-from typing import List
 
 from pyogmios.models import PointOrOrigin
 
@@ -15,9 +14,7 @@ class ServerNotReady(Exception):
 
     def __init__(self, health):
         self.health = health
-        self.message = (
-            f"Server not ready. Network synchronization at: {health.network_sync_at}"
-        )
+        self.message = f"Server not ready. Network synchronization at: {health.network_sync_at}"
         super().__init__(self.message)
 
 
@@ -37,14 +34,12 @@ class IntersectionNotFoundError(Exception):
     Intersection not found exception
     """
 
-    def __init__(self, points: PointOrOrigin | List[PointOrOrigin]):
+    def __init__(self, points: PointOrOrigin | list[PointOrOrigin]):
         self.points = points
         if isinstance(points, list):
             self.message = f"Intersection with points {[point.model_dump_json() for point in points]} not found"
         else:
-            self.message = (
-                f"Intersection with points {points.model_dump_json()} not found"
-            )
+            self.message = f"Intersection with points {points.model_dump_json()} not found"
         super().__init__(self.message)
 
 
@@ -129,9 +124,7 @@ class EraMismatchError(Exception):
     def __init__(self, query_era: str, ledger_era: str):
         self.query_era = query_era
         self.ledger_era = ledger_era
-        self.message = (
-            f"Era mismatch. Query from era {query_era}. Ledger is in {ledger_era}"
-        )
+        self.message = f"Era mismatch. Query from era {query_era}. Ledger is in {ledger_era}"
         super().__init__(self.message)
 
 

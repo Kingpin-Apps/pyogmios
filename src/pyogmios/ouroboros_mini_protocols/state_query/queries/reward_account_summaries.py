@@ -1,24 +1,22 @@
-from typing import List, Optional
-
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import LedgerStateQuery
 from pyogmios.models import (
-    RewardAccountSummaries,
     AnyStakeCredential,
+    RewardAccountSummaries,
 )
 from pyogmios.models.response_model import (
     QueryLedgerStateRewardAccountSummariesResponse,
 )
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
 async def reward_account_summaries(
     context: InteractionContext,
-    scripts: Optional[List[AnyStakeCredential]] = None,
-    keys: Optional[List[AnyStakeCredential]] = None,
+    scripts: list[AnyStakeCredential] | None = None,
+    keys: list[AnyStakeCredential] | None = None,
 ) -> RewardAccountSummaries:
     """
     Query current delegation settings and rewards of some given reward accounts.

@@ -7,9 +7,9 @@ from pyogmios.connection import (
 )
 from pyogmios.exceptions import QueryUnavailableInCurrentEraError
 from pyogmios.models import (
-    PointOrOrigin,
-    Point,
     DigestBlake2bBlockHeader,
+    Point,
+    PointOrOrigin,
     QueryUnavailableInCurrentEra,
 )
 from pyogmios.models.response_model import QueryResponse, QueryResponseReflection
@@ -56,13 +56,15 @@ async def test_block_height_query_unavailable(mocker):
     interaction_context = await create_interaction_context()
 
     # Act & Assert
-    with pytest.raises(QueryUnavailableInCurrentEraError) as exc_info:
-        with mock.patch(
+    with (
+        pytest.raises(QueryUnavailableInCurrentEraError) as exc_info,
+        mock.patch(
             "pyogmios.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
-        ):
-            client = await create_state_query_client(interaction_context)
-            chain_tip = await client.tip()
-            client.shutdown()
-            assert isinstance(chain_tip, QueryUnavailableInCurrentEra)
+        ),
+    ):
+        client = await create_state_query_client(interaction_context)
+        chain_tip = await client.tip()
+        client.shutdown()
+        assert isinstance(chain_tip, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_name == "chainTip"
     assert exc_info.value.message == "QueryUnavailableInCurrentEra. chainTip"

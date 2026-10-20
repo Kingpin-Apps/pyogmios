@@ -3,8 +3,8 @@ from pyogmios.enums import NetworkQuery
 from pyogmios.models import UtcTime
 from pyogmios.models.response_model import SystemStartResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 

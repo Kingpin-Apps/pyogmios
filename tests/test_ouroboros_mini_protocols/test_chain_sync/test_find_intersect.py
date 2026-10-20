@@ -3,14 +3,14 @@ import pytest
 from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios.enums import Method, Type, Version, ServiceName
+from pyogmios.enums import Method, ServiceName, Type, Version
 from pyogmios.exceptions import IntersectionNotFoundError
 from pyogmios.models import Origin
-from pyogmios.models.response_model import Response, QueryResponseReflection
+from pyogmios.models.response_model import QueryResponseReflection, Response
 from pyogmios.models.result_models import (
+    FindIntersectResult,
     IntersectionFound,
     IntersectionNotFound,
-    FindIntersectResult,
 )
 from pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect import (
     find_intersect,
@@ -18,7 +18,7 @@ from pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect import (
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (
             {
@@ -66,7 +66,7 @@ async def test_find_intersect_success(mocker, test_input, expected):
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (
             {

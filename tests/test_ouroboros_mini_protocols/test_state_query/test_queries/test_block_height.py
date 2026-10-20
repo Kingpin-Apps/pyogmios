@@ -12,7 +12,7 @@ from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (BlockNoOrOrigin(123456789), BlockNoOrOrigin),
         ("origin", BlockNoOrOrigin),

@@ -8,11 +8,11 @@ from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    PoolsRanking,
-    PoolRank,
-    EraMismatch,
-    QueryUnavailableInCurrentEra,
     Era,
+    EraMismatch,
+    PoolRank,
+    PoolsRanking,
+    QueryUnavailableInCurrentEra,
 )
 from pyogmios.models.response_model import (
     PoolsRankingResponse,

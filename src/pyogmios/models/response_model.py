@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any, Dict, Union, List
+from typing import Any
 
 from pydantic import ConfigDict
 
@@ -8,48 +8,48 @@ from pyogmios.enums import Method
 from pyogmios.models import (
     BaseModel,
     BlockNoOrOrigin,
-    QueryUnavailableInCurrentEra,
-    PointOrOrigin,
-    EraMismatch,
-    Epoch,
-    ProtocolParametersShelley,
-    ProtocolParametersAlonzo,
-    ProtocolParametersBabbage,
-    RewardAccountSummaries,
     Bound,
+    Epoch,
+    EraMismatch,
     EraSummary,
-    GenesisByron,
-    GenesisShelley,
+    EvaluationFailure,
+    EvaluationResult,
     GenesisAlonzo,
+    GenesisByron,
+    GenesisConway,
+    GenesisShelley,
+    MempoolSizeAndCapacity,
     NonMyopicMemberRewards,
+    Null,
+    PointOrOrigin,
+    PoolDistribution,
     PoolId,
     PoolParameters,
+    PoolsRanking,
+    ProtocolParameters,
+    ProtocolParametersAlonzo,
+    ProtocolParametersBabbage,
+    ProtocolParametersShelley,
+    QueryUnavailableInCurrentEra,
+    RewardAccountSummaries,
     RewardsProvenance,
     RewardsProvenanceNew,
-    UtcTime,
-    Utxo,
-    TxId,
-    EvaluationResult,
-    EvaluationFailure,
-    PoolDistribution,
-    PoolsRanking,
     TxAlonzo,
     TxBabbage,
-    Null,
-    MempoolSizeAndCapacity,
-    ProtocolParameters,
-    GenesisConway,
+    TxId,
+    UtcTime,
+    Utxo,
 )
 from pyogmios.models.base_request_response_model import BaseResponse
 from pyogmios.models.result_models import (
-    SubmitTxError,
-    RollForwardResult,
-    RollBackwardResult,
-    FindIntersectResult,
-    AcquireSuccessResult,
     AcquireFailureResult,
+    AcquireSuccessResult,
     AwaitAcquiredResult,
+    FindIntersectResult,
     ReleaseResponseResult,
+    RollBackwardResult,
+    RollForwardResult,
+    SubmitTxError,
 )
 
 
@@ -58,7 +58,7 @@ class Response(BaseResponse):
 
 
 class SubmitTransactionSuccess(BaseModel):
-    result: Dict[str, Any]
+    result: dict[str, Any]
 
 
 class SubmitTxResponseSubmitSuccess(BaseModel):
@@ -71,48 +71,48 @@ class SubmitTxResponseSubmitFail(BaseModel):
 
 class SubmitTxResponse(BaseModel):
     methodname: Method = Method.SUBMIT_TRANSACTION
-    result: Union[SubmitTxResponseSubmitSuccess, SubmitTxResponseSubmitFail]
-    reflection: Optional[Dict[str, Any]] = None
+    result: SubmitTxResponseSubmitSuccess | SubmitTxResponseSubmitFail
+    reflection: dict[str, Any] | None = None
 
 
 class EvaluateTxResponse(BaseModel):
     methodname: Method = Method.EVALUATE_TRANSACTION
-    result: Union[EvaluationResult, EvaluationFailure]
-    reflection: Optional[Dict[str, Any]] = None
+    result: EvaluationResult | EvaluationFailure
+    reflection: dict[str, Any] | None = None
 
 
 class AwaitAcquireResponse(BaseModel):
     methodname: Method = Method.ACQUIRE_LEDGER_STATE
     result: AwaitAcquiredResult
-    reflection: Optional[Dict[str, Any]] = None
+    reflection: dict[str, Any] | None = None
 
 
 class HasTxResponse(BaseModel):
     methodname: Method = Method.HAS_TRANSACTION
     result: bool
-    reflection: Optional[Dict[str, Any]] = None
+    reflection: dict[str, Any] | None = None
 
 
 class NextTxResponse(BaseModel):
     methodname: Method = Method.NEXT_TRANSACTION
-    result: Union[TxId, TxAlonzo, TxBabbage, Null]
-    reflection: Optional[Dict[str, Any]] = None
+    result: TxId | TxAlonzo | TxBabbage | Null
+    reflection: dict[str, Any] | None = None
 
 
 class ReleaseMempoolResponse(BaseModel):
     methodname: Method = Method.RELEASE_MEMPOOL
     result: str
-    reflection: Optional[Dict[str, Any]] = None
+    reflection: dict[str, Any] | None = None
 
 
 class SizeAndCapacityResponse(BaseModel):
     methodname: Method = Method.SIZE_OF_MEMPOOL
     result: MempoolSizeAndCapacity
-    reflection: Optional[Dict[str, Any]] = None
+    reflection: dict[str, Any] | None = None
 
 
 class QueryResponseReflection(BaseModel):
-    requestId: Optional[str] = None
+    requestId: str | None = None
 
     model_config = ConfigDict(extra="allow", populate_by_name=True)
 
@@ -122,7 +122,7 @@ class QueryResponse(Response):
     def from_base_response(
         request_id: str,
         method: Method,
-        result: Optional[Any] = None,
+        result: Any | None = None,
     ) -> QueryResponse:
         """
         Creates a query response from a base response.
@@ -152,7 +152,7 @@ class QueryNetworkBlockHeightResponse(QueryResponse):
 
 
 class RequestNextResponse(QueryResponse):
-    result: Union[RollForwardResult, RollBackwardResult]
+    result: RollForwardResult | RollBackwardResult
 
 
 class ReleaseResponse(QueryResponse):
@@ -162,7 +162,7 @@ class ReleaseResponse(QueryResponse):
 
 class AcquireResponse(QueryResponse):
     methodname: Method = Method.ACQUIRE_LEDGER_STATE
-    result: Union[AcquireSuccessResult, AcquireFailureResult]
+    result: AcquireSuccessResult | AcquireFailureResult
 
 
 class QueryNetworkTipResponse(QueryResponse):
@@ -182,81 +182,66 @@ class QueryLedgerStateRewardAccountSummariesResponse(QueryResponse):
 
 
 class QueryLedgerStateEraStartResponse(QueryResponse):
-    result: Optional[Bound] = None
+    result: Bound | None = None
 
 
 class EraSummariesResponse(QueryResponse):
-    result: Optional[List[EraSummary]] = None
+    result: list[EraSummary] | None = None
 
 
 class QueryNetworkGenesisConfigurationResponse(QueryResponse):
-    result: Optional[GenesisByron | GenesisShelley | GenesisAlonzo | GenesisConway]
+    result: GenesisByron | GenesisShelley | GenesisAlonzo | GenesisConway | None
 
 
 class QueryLedgerStateTipResponse(QueryResponse):
-    result: Optional[PointOrOrigin] = None
+    result: PointOrOrigin | None = None
 
 
 class NonMyopicMemberRewardsResponse(QueryResponse):
-    result: Optional[
-        Union[NonMyopicMemberRewards, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: NonMyopicMemberRewards | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class PoolIdsResponse(QueryResponse):
-    result: Optional[
-        Union[List[PoolId], EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: list[PoolId] | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class PoolParametersResponse(QueryResponse):
-    result: Optional[
-        Union[Dict[str, PoolParameters], EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: dict[str, PoolParameters] | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class PoolsRankingResponse(QueryResponse):
-    result: Optional[
-        Union[PoolsRanking, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: PoolsRanking | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class ProposedProtocolParametersResponse(QueryResponse):
-    result: Optional[
-        Union[
-            Dict[str, ProtocolParametersShelley],
-            Dict[str, ProtocolParametersAlonzo],
-            Dict[str, ProtocolParametersBabbage],
-            EraMismatch,
-            QueryUnavailableInCurrentEra,
-        ]
-    ] = None
+    result: (
+        dict[str, ProtocolParametersShelley]
+        | dict[str, ProtocolParametersAlonzo]
+        | dict[str, ProtocolParametersBabbage]
+        | EraMismatch
+        | QueryUnavailableInCurrentEra
+        | None
+    ) = None
 
 
 class RewardsProvenanceResponse(QueryResponse):
-    result: Optional[
-        Union[RewardsProvenance, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: RewardsProvenance | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class RewardsProvenanceNewResponse(QueryResponse):
-    result: Optional[
-        Union[RewardsProvenanceNew, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: RewardsProvenanceNew | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class StakeDistributionResponse(QueryResponse):
-    result: Optional[
-        Union[PoolDistribution, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+    result: PoolDistribution | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class SystemStartResponse(QueryResponse):
-    result: Optional[Union[UtcTime, EraMismatch, QueryUnavailableInCurrentEra]] = None
+    result: UtcTime | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 class UtxoResponse(QueryResponse):
-    result: Optional[Union[Utxo, EraMismatch, QueryUnavailableInCurrentEra]] = None
+    result: Utxo | EraMismatch | QueryUnavailableInCurrentEra | None = None
 
 
 Response.model_rebuild()

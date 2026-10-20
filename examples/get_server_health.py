@@ -5,7 +5,7 @@ from pyogmios.connection import (
     create_connection_object,
 )
 from pyogmios.enums import InteractionType
-from pyogmios.server_health import get_server_health, Options
+from pyogmios.server_health import Options, get_server_health
 
 
 async def main():

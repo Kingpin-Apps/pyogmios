@@ -4,7 +4,7 @@ from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.exceptions import UnknownResultError
-from pyogmios.models import Bound, RelativeTime, Epoch
+from pyogmios.models import Bound, Epoch, RelativeTime
 from pyogmios.models.response_model import (
     QueryLedgerStateEraStartResponse,
     QueryResponseReflection,
@@ -20,9 +20,7 @@ async def test_era_start(mocker):
         "pyogmios.ouroboros_mini_protocols.state_query.queries.era_start.query",
         return_value=QueryLedgerStateEraStartResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
-            result=Bound(
-                time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)
-            ),
+            result=Bound(time=RelativeTime(123456789), slot=123456789, epoch=Epoch(500)),
         ),
     )
 

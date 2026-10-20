@@ -8,9 +8,9 @@ from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    RewardAccountSummaries,
     Era,
     QueryUnavailableInCurrentEra,
+    RewardAccountSummaries,
 )
 from pyogmios.models.response_model import (
     QueryLedgerStateRewardAccountSummariesResponse,
@@ -23,9 +23,7 @@ from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
 
 
 @pytest.mark.asyncio
-async def test_delegations_and_rewards(
-    mocker, fake_delegations_and_rewards_by_accounts
-):
+async def test_delegations_and_rewards(mocker, fake_delegations_and_rewards_by_accounts):
     mocker.patch(
         "pyogmios.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
         return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
@@ -98,6 +96,4 @@ async def test_delegations_and_rewards_query_unavailable(mocker):
         client.shutdown()
         assert isinstance(delegations_and_rewards, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_name == "delegationsAndRewards"
-    assert (
-        exc_info.value.message == "QueryUnavailableInCurrentEra. delegationsAndRewards"
-    )
+    assert exc_info.value.message == "QueryUnavailableInCurrentEra. delegationsAndRewards"

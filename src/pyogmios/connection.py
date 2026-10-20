@@ -3,9 +3,10 @@ Create a connection to the server.
 
 This module contains the classes and default functions to create a connection to the server.
 """
+
 import logging
 import threading
-from typing import Optional, Callable
+from collections.abc import Callable
 
 import websocket
 from websocket import WebSocketApp, enableTrace
@@ -14,9 +15,11 @@ from pyogmios.enums import InteractionType
 from pyogmios.exceptions import ServerNotReady, WebSocketClosedError
 from pyogmios.models.base_model import BaseModel
 from pyogmios.server_health import (
-    get_server_health,
-    ConnectionConfig,
     Connection,
+    ConnectionConfig,
+    get_server_health,
+)
+from pyogmios.server_health import (
     Options as ServerHealthOptions,
 )
 
@@ -29,7 +32,7 @@ class InteractionContext(BaseModel):
     connection: Connection
     socket: WebSocketApp
     after_each: Callable[[WebSocketApp, Callable[[], None]], None]
-    log_level: Optional[str] = "DEBUG"
+    log_level: str | None = "DEBUG"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,9 +45,9 @@ class InteractionContextOptions(BaseModel):
     Interaction context options model class
     """
 
-    connection_config: Optional[ConnectionConfig] = None
-    interaction_type: Optional[InteractionType] = None
-    log_level: Optional[str] = "DEBUG"
+    connection_config: ConnectionConfig | None = None
+    interaction_type: InteractionType | None = None
+    log_level: str | None = "DEBUG"
 
 
 def default_error_handler(_: WebSocketApp, error: Exception):
@@ -79,9 +82,7 @@ def create_connection_object(config: ConnectionConfig = None) -> Connection:
     host = config.host or "localhost" if config else "localhost"
     port = config.port or 1337 if config else 1337
     tls = config.tls or False if config else False
-    max_payload = (
-        config.max_payload or 128 * 1024 * 1024 if config else 128 * 1024 * 1024
-    )
+    max_payload = config.max_payload or 128 * 1024 * 1024 if config else 128 * 1024 * 1024
 
     host_and_port = f"{host}:{port}"
 
@@ -99,9 +100,9 @@ def create_connection_object(config: ConnectionConfig = None) -> Connection:
 
 
 async def create_interaction_context(
-    error_handler: Optional[Callable[[WebSocketApp, Exception], None]] = None,
-    close_handler: Optional[Callable[[WebSocketApp, int, str], None]] = None,
-    options: Optional[InteractionContextOptions] = None,
+    error_handler: Callable[[WebSocketApp, Exception], None] | None = None,
+    close_handler: Callable[[WebSocketApp, int, str], None] | None = None,
+    options: InteractionContextOptions | None = None,
 ) -> InteractionContext | None:
     """
     Create an interaction context.
@@ -140,9 +141,7 @@ async def create_interaction_context(
             """
             if close_on_completion():
                 callback()
-                ws_app.close(
-                    status=websocket.STATUS_NORMAL, reason="Closed on completion"
-                )
+                ws_app.close(status=websocket.STATUS_NORMAL, reason="Closed on completion")
             else:
                 callback()
 

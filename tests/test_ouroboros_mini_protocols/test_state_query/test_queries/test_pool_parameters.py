@@ -1,20 +1,18 @@
-from typing import Dict
-
 import pytest
 
 from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
+    Era,
+    EraMismatch,
     PoolId,
     PoolParameters,
     QueryUnavailableInCurrentEra,
-    EraMismatch,
-    Era,
 )
 from pyogmios.models.response_model import (
     PoolParametersResponse,
@@ -45,8 +43,8 @@ async def test_pool_parameters(mocker):
         [PoolId("pool1qqqqqdk4zhsjuxxd8jyvwncf5eucfskz0xjjj64fdmlgj735lr9")]
     )
     await client.shutdown()
-    assert isinstance(pool_parameters, Dict)
-    assert isinstance(list(pool_parameters.values())[0], PoolParameters)
+    assert isinstance(pool_parameters, dict)
+    assert isinstance(next(iter(pool_parameters.values())), PoolParameters)
 
 
 @pytest.mark.asyncio

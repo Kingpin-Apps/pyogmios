@@ -3,9 +3,11 @@ This module contains the send function.
 
 The send function is used to send requests and call the after each function.
 """
+
 import json
 import logging
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from websocket import WebSocketApp, WebSocketConnectionClosedException
 
@@ -49,7 +51,7 @@ async def send_request(request: Request, context: InteractionContext) -> Respons
         result = websocket.sock.recv()
 
         result_json = json.loads(result)
-        if "error" in result_json.keys():
+        if "error" in result_json:
             return BaseErrorResponse.model_validate(result_json)
         response = Response(**json.loads(result))
         # TODO: Handle errors :class:`BaseErrorResponse`

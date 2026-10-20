@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Callable, Coroutine
+from collections.abc import Callable, Coroutine
 
 from websocket import WebSocketApp
 
@@ -8,21 +8,21 @@ from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import UnknownResultError
 from pyogmios.models import (
+    Any,
+    PointOrOrigin,
     RollBackward,
     RollForward,
-    PointOrOrigin,
-    Any,
 )
 from pyogmios.models.base_model import BaseModel
 from pyogmios.models.response_model import RequestNextResponse, Response
 from pyogmios.models.result_models import (
     IntersectionFound,
-    RollForwardResult,
     RollBackwardResult,
+    RollForwardResult,
 )
 from pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect import (
-    find_intersect,
     create_point_from_current_tip,
+    find_intersect,
 )
 from pyogmios.ouroboros_mini_protocols.chain_sync.request_next import (
     request_next,
@@ -43,9 +43,7 @@ class ChainSyncMessageHandlers(BaseModel):
 class ChainSyncClient(BaseModel):
     context: InteractionContext
     shutdown: Callable[[], Coroutine[Any, Any, None]]
-    start_sync: Callable[
-        [List[PointOrOrigin], int], Coroutine[Any, Any, IntersectionFound]
-    ]
+    start_sync: Callable[[list[PointOrOrigin], int], Coroutine[Any, Any, IntersectionFound]]
 
 
 async def create_chain_sync_client(
@@ -123,9 +121,7 @@ async def create_chain_sync_client(
             else:
                 print("Shutting down Chain Sync Client...")
 
-        async def start_sync(
-            points: List[PointOrOrigin], in_flight: int
-        ) -> IntersectionFound:
+        async def start_sync(points: list[PointOrOrigin], in_flight: int) -> IntersectionFound:
             """
             Start the sync.
             :param points: The points
@@ -147,6 +143,4 @@ async def create_chain_sync_client(
     except Exception:
         pass
     else:
-        return ChainSyncClient(
-            context=context, shutdown=shutdown, start_sync=start_sync
-        )
+        return ChainSyncClient(context=context, shutdown=shutdown, start_sync=start_sync)

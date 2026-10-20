@@ -1,19 +1,17 @@
-from typing import List
-
 import pytest
 
 from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    PoolId,
-    QueryUnavailableInCurrentEra,
     Era,
     EraMismatch,
+    PoolId,
+    QueryUnavailableInCurrentEra,
 )
 from pyogmios.models.response_model import (
     PoolIdsResponse,
@@ -31,9 +29,7 @@ async def test_pool_ids(mocker):
         "pyogmios.ouroboros_mini_protocols.state_query.queries.pool_ids.query",
         return_value=PoolIdsResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
-            result=[
-                PoolId("pool1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4")
-            ],
+            result=[PoolId("pool1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4")],
         ),
     )
 
@@ -41,7 +37,7 @@ async def test_pool_ids(mocker):
     client = await create_state_query_client(interaction_context)
     pool_ids = await client.pool_ids()
     await client.shutdown()
-    assert isinstance(pool_ids, List)
+    assert isinstance(pool_ids, list)
     assert isinstance(pool_ids[0], PoolId)
 
 

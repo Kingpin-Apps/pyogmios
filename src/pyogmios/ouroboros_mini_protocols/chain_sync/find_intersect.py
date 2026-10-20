@@ -1,13 +1,11 @@
-from typing import List
-
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    UnknownResultError,
     IntersectionNotFoundError,
     TipIsOriginError,
+    UnknownResultError,
 )
-from pyogmios.models import Point, PointOrOrigin, Origin
+from pyogmios.models import Origin, Point, PointOrOrigin
 from pyogmios.models.response_model import FindIntersectResponse
 from pyogmios.models.result_models import IntersectionFound
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
@@ -17,7 +15,7 @@ from pyogmios.ouroboros_mini_protocols.state_query.query import (
 
 
 async def find_intersect(
-    context: InteractionContext, points: List[PointOrOrigin]
+    context: InteractionContext, points: list[PointOrOrigin]
 ) -> IntersectionFound:
     """
     Find intersect.
@@ -25,14 +23,10 @@ async def find_intersect(
     :param points: The points
     :return: The intersection found
     """
-    request_args = RequestArgs(
-        method=Method.FIND_INTERSECTION, params={"points": points}
-    )
+    request_args = RequestArgs(method=Method.FIND_INTERSECTION, params={"points": points})
 
     response = await query(request_args, context)
-    find_intersect_response = FindIntersectResponse(
-        **response.model_dump(by_alias=True)
-    )
+    find_intersect_response = FindIntersectResponse(**response.model_dump(by_alias=True))
     result = find_intersect_response.result
     if find_intersect_response.methodname is not Method.FIND_INTERSECTION:
         raise UnknownResultError(find_intersect_response)

@@ -1,9 +1,9 @@
 import asyncio
-from typing import Callable
+from collections.abc import Callable
 
 from pyogmios.connection import (
-    create_interaction_context,
     InteractionContextOptions,
+    create_interaction_context,
 )
 from pyogmios.enums import InteractionType, Origin
 from pyogmios.models import RollBackward, RollForward
@@ -20,15 +20,11 @@ async def main():
     interaction_context_options = InteractionContextOptions(
         interaction_type=InteractionType.LONG_RUNNING
     )
-    interaction_context = await create_interaction_context(
-        options=interaction_context_options
-    )
+    interaction_context = await create_interaction_context(options=interaction_context_options)
     # await asyncio.sleep(1)
     # print(interaction_context.socket.sock.connected)
 
-    def roll_backward_callback(
-        roll_backward: RollBackward, callback: Callable[[], None]
-    ):
+    def roll_backward_callback(roll_backward: RollBackward, callback: Callable[[], None]):
         """
         Roll backward callback
         :param roll_backward: The roll backward result

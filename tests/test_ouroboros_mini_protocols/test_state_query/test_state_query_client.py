@@ -4,8 +4,8 @@ from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
-    create_state_query_client,
     StateQueryClient,
+    create_state_query_client,
 )
 
 

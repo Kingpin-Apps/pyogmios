@@ -1,13 +1,14 @@
-from typing import Any, Optional, TypeVar, Callable, Dict
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from nanoid import generate
 from websocket import WebSocketApp
 
 from pyogmios.connection import InteractionContext
-from pyogmios.enums import Method, NetworkQuery, LedgerStateQuery
+from pyogmios.enums import LedgerStateQuery, Method, NetworkQuery
 from pyogmios.models.base_model import BaseModel
 from pyogmios.models.request_model import Request
-from pyogmios.models.response_model import Response, QueryResponse
+from pyogmios.models.response_model import QueryResponse, Response
 from pyogmios.request import send, send_request
 
 T = TypeVar("T")
@@ -15,12 +16,12 @@ T = TypeVar("T")
 
 class RequestArgs(BaseModel):
     method: Method | LedgerStateQuery | NetworkQuery
-    params: Optional[Dict[str, Any]] = None
+    params: dict[str, Any] | None = None
 
 
 class ResponseHandlerArgs(BaseModel):
     response: QueryResponse
-    resolve: Callable[[Optional[Response]], None]
+    resolve: Callable[[Response | None], None]
     reject: Callable[[Exception], None]
 
 
@@ -28,9 +29,7 @@ class ResponseArgs(BaseModel):
     handler: Callable[[ResponseHandlerArgs], T]
 
 
-async def query(
-    request_args: RequestArgs, context: InteractionContext
-) -> QueryResponse | None:
+async def query(request_args: RequestArgs, context: InteractionContext) -> QueryResponse | None:
     """
     Sends a query to the node.
     :param request_args: The request arguments.

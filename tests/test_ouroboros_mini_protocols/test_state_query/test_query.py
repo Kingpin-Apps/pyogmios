@@ -7,8 +7,8 @@ from pyogmios.enums import Method
 from pyogmios.exceptions import PyOgmiosError
 from pyogmios.models.response_model import Response
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 

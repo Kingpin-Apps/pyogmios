@@ -8,14 +8,14 @@ from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios.models import (
-    RewardsProvenanceNew,
+    Era,
     EraMismatch,
     QueryUnavailableInCurrentEra,
-    Era,
+    RewardsProvenanceNew,
 )
 from pyogmios.models.response_model import (
-    RewardsProvenanceNewResponse,
     QueryResponseReflection,
+    RewardsProvenanceNewResponse,
 )
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (

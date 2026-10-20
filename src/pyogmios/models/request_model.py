@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any
+from typing import Any
 
 from pyogmios.enums import Method
 from pyogmios.models import PointOrOrigin
@@ -9,9 +9,7 @@ from pyogmios.models.base_request_response_model import BaseRequest
 
 class Request(BaseRequest):
     @staticmethod
-    def from_base_request(
-        request_id: str, method: Method, params: Optional[Any] = None
-    ) -> Request:
+    def from_base_request(request_id: str, method: Method, params: Any | None = None) -> Request:
         """
         Creates a request from a base request.
 
@@ -36,9 +34,7 @@ class NextBlock(Request):
         :return: The :class:`NextBlock` object
         """
         return NextBlock.model_validate(
-            Request.from_base_request(
-                method=Method.NEXT_BLOCK, request_id=request_id
-            ).model_dump()
+            Request.from_base_request(method=Method.NEXT_BLOCK, request_id=request_id).model_dump()
         )
 
 

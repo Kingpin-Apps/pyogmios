@@ -2,6 +2,9 @@ import json
 from typing import Union
 
 from pyogmios.models import (
+    ExtraRedeemers,
+    MissingRequiredDatums,
+    SubmitTxErrorAddressAttributesTooLarge,
     SubmitTxErrorAlreadyDelegating,
     SubmitTxErrorBadInputs,
     SubmitTxErrorCollateralHasNonAdaAssets,
@@ -14,7 +17,6 @@ from pyogmios.models import (
     SubmitTxErrorExecutionUnitsTooLarge,
     SubmitTxErrorExpiredUtxo,
     SubmitTxErrorExtraDataMismatch,
-    ExtraRedeemers,
     SubmitTxErrorExtraScriptWitnesses,
     SubmitTxErrorFeeTooSmall,
     SubmitTxErrorInsufficientFundsForMir,
@@ -30,7 +32,7 @@ from pyogmios.models import (
     SubmitTxErrorMissingAtLeastOneInputUtxo,
     SubmitTxErrorMissingCollateralInputs,
     SubmitTxErrorMissingDatumHashesForInputs,
-    MissingRequiredDatums,
+    SubmitTxErrorMissingRequiredRedeemers,
     SubmitTxErrorMissingRequiredSignatures,
     SubmitTxErrorMissingScriptWitnesses,
     SubmitTxErrorMissingTxMetadata,
@@ -67,8 +69,6 @@ from pyogmios.models import (
     SubmitTxErrorWrongCertificateType,
     SubmitTxErrorWrongPoolCertificate,
     SubmitTxErrorWrongRetirementEpoch,
-    SubmitTxErrorMissingRequiredRedeemers,
-    SubmitTxErrorAddressAttributesTooLarge,
 )
 
 

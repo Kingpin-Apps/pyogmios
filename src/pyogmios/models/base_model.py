@@ -1,4 +1,5 @@
-from pydantic import BaseModel as PydanticBaseModel, ConfigDict
+from pydantic import BaseModel as PydanticBaseModel
+from pydantic import ConfigDict
 
 
 class BaseModel(PydanticBaseModel):
@@ -16,4 +17,4 @@ class BaseModel(PydanticBaseModel):
     )
 
     def __hash__(self):  # make hashable BaseModel subclass
-        return hash((type(self),) + tuple(self.__dict__.values()))
+        return hash((type(self), *tuple(self.__dict__.values())))

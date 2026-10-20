@@ -1,19 +1,19 @@
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
     UnknownResultError,
 )
 from pyogmios.models import (
+    EraMismatch,
     PoolsRanking,
     QueryUnavailableInCurrentEra,
-    EraMismatch,
 )
 from pyogmios.models.response_model import PoolsRankingResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 

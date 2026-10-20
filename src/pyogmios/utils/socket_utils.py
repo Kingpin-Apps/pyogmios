@@ -3,6 +3,7 @@ Socket utilities.
 
 This module contains utilities for working with sockets.
 """
+
 from websocket import WebSocketApp
 
 from pyogmios.exceptions import WebSocketClosedError

@@ -3,11 +3,11 @@ from unittest.mock import MagicMock
 import pytest
 
 from pyogmios.exceptions import (
-    ServerNotReady,
-    RequestError,
     IntersectionNotFoundError,
-    UnknownResultError,
+    RequestError,
+    ServerNotReady,
     TipIsOriginError,
+    UnknownResultError,
     WebSocketClosedError,
 )
 from pyogmios.models import Origin

@@ -1,84 +1,82 @@
-from typing import List, Union, Optional, Dict
-
-from pydantic import RootModel, Field, model_validator
+from pydantic import Field, RootModel, model_validator
 
 from pyogmios.enums import AcquireFailureDetails
 from pyogmios.models import (
-    SubmitTxErrorUnspendableDatums,
-    SubmitTxErrorCollectErrors,
-    SubmitTxErrorExecutionUnitsTooLarge,
-    SubmitTxErrorCollateralHasNonAdaAssets,
-    SubmitTxErrorCollateralIsScript,
-    SubmitTxErrorMissingDatumHashesForInputs,
+    Any,
+    Block,
+    EraMismatch,
+    ExecutionUnits,
     ExtraRedeemers,
-    SubmitTxErrorUnspendableScriptInputs,
-    SubmitTxErrorMissingRequiredRedeemers,
-    SubmitTxErrorUpdateWrongEpoch,
-    SubmitTxErrorWrongPoolCertificate,
-    SubmitTxErrorTooManyAssetsInOutput,
-    SubmitTxErrorOutputTooSmall,
-    SubmitTxErrorNetworkMismatch,
-    SubmitTxErrorValueNotConserved,
-    SubmitTxErrorOutsideOfValidityInterval,
-    SubmitTxErrorBadInputs,
+    MissingRequiredDatums,
     PointOrOrigin,
     Slot,
-    ExecutionUnits,
-    TipOrOrigin,
-    Block,
-    TxId,
-    SubmitTxErrorMissingVkWitnesses,
-    SubmitTxErrorMissingScriptWitnesses,
-    SubmitTxErrorScriptWitnessNotValidating,
-    SubmitTxErrorInsufficientGenesisSignatures,
-    SubmitTxErrorMirNegativeTransferNotCurrentlyAllowed,
-    SubmitTxErrorMissingTxMetadata,
-    SubmitTxErrorMissingTxMetadataHash,
-    SubmitTxErrorMirTransferNotCurrentlyAllowed,
-    SubmitTxErrorTxMetadataHashMismatch,
-    SubmitTxErrorExpiredUtxo,
-    SubmitTxErrorTxTooLarge,
-    SubmitTxErrorMissingAtLeastOneInputUtxo,
-    SubmitTxErrorInvalidMetadata,
-    SubmitTxErrorFeeTooSmall,
     SubmitTxErrorAddressAttributesTooLarge,
-    SubmitTxErrorTriesToForgeAda,
-    SubmitTxErrorDelegateNotRegistered,
-    SubmitTxErrorUnknownOrIncompleteWithdrawals,
-    SubmitTxErrorStakePoolNotRegistered,
-    SubmitTxErrorWrongRetirementEpoch,
-    SubmitTxErrorStakeKeyAlreadyRegistered,
-    SubmitTxErrorPoolCostTooSmall,
-    SubmitTxErrorPoolMetadataHashTooBig,
-    SubmitTxErrorStakeKeyNotRegistered,
-    SubmitTxErrorRewardAccountNotExisting,
-    SubmitTxErrorWrongCertificateType,
-    SubmitTxErrorRewardAccountNotEmpty,
-    SubmitTxErrorUnknownGenesisKey,
     SubmitTxErrorAlreadyDelegating,
-    SubmitTxErrorInsufficientFundsForMir,
-    SubmitTxErrorTooLateForMir,
-    SubmitTxErrorMirProducesNegativeUpdate,
-    SubmitTxErrorDuplicateGenesisVrf,
-    SubmitTxErrorNonGenesisVoters,
-    SubmitTxErrorProtocolVersionCannotFollow,
-    MissingRequiredDatums,
-    SubmitTxErrorExtraDataMismatch,
-    SubmitTxErrorMissingRequiredSignatures,
-    SubmitTxErrorMissingCollateralInputs,
+    SubmitTxErrorBadInputs,
+    SubmitTxErrorCollateralHasNonAdaAssets,
+    SubmitTxErrorCollateralIsScript,
     SubmitTxErrorCollateralTooSmall,
-    SubmitTxErrorTooManyCollateralInputs,
-    SubmitTxErrorValidationTagMismatch,
-    SubmitTxErrorOutsideForecast,
+    SubmitTxErrorCollectErrors,
+    SubmitTxErrorDelegateNotRegistered,
+    SubmitTxErrorDuplicateGenesisVrf,
+    SubmitTxErrorEraMismatch,
+    SubmitTxErrorExecutionUnitsTooLarge,
+    SubmitTxErrorExpiredUtxo,
+    SubmitTxErrorExtraDataMismatch,
     SubmitTxErrorExtraScriptWitnesses,
-    SubmitTxErrorMirNegativeTransfer,
-    SubmitTxErrorTotalCollateralMismatch,
+    SubmitTxErrorFeeTooSmall,
+    SubmitTxErrorInsufficientFundsForMir,
+    SubmitTxErrorInsufficientGenesisSignatures,
+    SubmitTxErrorInvalidMetadata,
+    SubmitTxErrorInvalidWitnesses,
     SubmitTxErrorMalformedReferenceScripts,
     SubmitTxErrorMalformedScriptWitnesses,
-    SubmitTxErrorInvalidWitnesses,
-    SubmitTxErrorEraMismatch,
-    EraMismatch,
-    Any,
+    SubmitTxErrorMirNegativeTransfer,
+    SubmitTxErrorMirNegativeTransferNotCurrentlyAllowed,
+    SubmitTxErrorMirProducesNegativeUpdate,
+    SubmitTxErrorMirTransferNotCurrentlyAllowed,
+    SubmitTxErrorMissingAtLeastOneInputUtxo,
+    SubmitTxErrorMissingCollateralInputs,
+    SubmitTxErrorMissingDatumHashesForInputs,
+    SubmitTxErrorMissingRequiredRedeemers,
+    SubmitTxErrorMissingRequiredSignatures,
+    SubmitTxErrorMissingScriptWitnesses,
+    SubmitTxErrorMissingTxMetadata,
+    SubmitTxErrorMissingTxMetadataHash,
+    SubmitTxErrorMissingVkWitnesses,
+    SubmitTxErrorNetworkMismatch,
+    SubmitTxErrorNonGenesisVoters,
+    SubmitTxErrorOutputTooSmall,
+    SubmitTxErrorOutsideForecast,
+    SubmitTxErrorOutsideOfValidityInterval,
+    SubmitTxErrorPoolCostTooSmall,
+    SubmitTxErrorPoolMetadataHashTooBig,
+    SubmitTxErrorProtocolVersionCannotFollow,
+    SubmitTxErrorRewardAccountNotEmpty,
+    SubmitTxErrorRewardAccountNotExisting,
+    SubmitTxErrorScriptWitnessNotValidating,
+    SubmitTxErrorStakeKeyAlreadyRegistered,
+    SubmitTxErrorStakeKeyNotRegistered,
+    SubmitTxErrorStakePoolNotRegistered,
+    SubmitTxErrorTooLateForMir,
+    SubmitTxErrorTooManyAssetsInOutput,
+    SubmitTxErrorTooManyCollateralInputs,
+    SubmitTxErrorTotalCollateralMismatch,
+    SubmitTxErrorTriesToForgeAda,
+    SubmitTxErrorTxMetadataHashMismatch,
+    SubmitTxErrorTxTooLarge,
+    SubmitTxErrorUnknownGenesisKey,
+    SubmitTxErrorUnknownOrIncompleteWithdrawals,
+    SubmitTxErrorUnspendableDatums,
+    SubmitTxErrorUnspendableScriptInputs,
+    SubmitTxErrorUpdateWrongEpoch,
+    SubmitTxErrorValidationTagMismatch,
+    SubmitTxErrorValueNotConserved,
+    SubmitTxErrorWrongCertificateType,
+    SubmitTxErrorWrongPoolCertificate,
+    SubmitTxErrorWrongRetirementEpoch,
+    TipOrOrigin,
+    TxId,
 )
 from pyogmios.models.base_model import BaseModel
 
@@ -108,7 +106,7 @@ class AwaitAcquiredResult(BaseModel):
 
 
 class EvaluationResult(BaseModel):
-    evaluation_result: Dict[str, ExecutionUnits] = Field(None, alias="EvaluationResult")
+    evaluation_result: dict[str, ExecutionUnits] = Field(None, alias="EvaluationResult")
 
 
 class IntersectionFound(BaseModel):
@@ -169,109 +167,95 @@ class ReleaseResponseResult(BaseModel):
 
 
 class EraMismatchResult(BaseModel):
-    eraMismatch: Optional[EraMismatch] = None
+    eraMismatch: EraMismatch | None = None
 
 
 class SubmitTxError(RootModel):
-    root: List[
-        Union[
-            SubmitTxErrorEraMismatch,
-            SubmitTxErrorInvalidWitnesses,
-            SubmitTxErrorMissingVkWitnesses,
-            SubmitTxErrorMissingScriptWitnesses,
-            SubmitTxErrorScriptWitnessNotValidating,
-            SubmitTxErrorInsufficientGenesisSignatures,
-            SubmitTxErrorMissingTxMetadata,
-            SubmitTxErrorMissingTxMetadataHash,
-            SubmitTxErrorTxMetadataHashMismatch,
-            SubmitTxErrorBadInputs,
-            SubmitTxErrorExpiredUtxo,
-            SubmitTxErrorOutsideOfValidityInterval,
-            SubmitTxErrorTxTooLarge,
-            SubmitTxErrorMissingAtLeastOneInputUtxo,
-            SubmitTxErrorInvalidMetadata,
-            SubmitTxErrorFeeTooSmall,
-            SubmitTxErrorValueNotConserved,
-            SubmitTxErrorNetworkMismatch,
-            SubmitTxErrorOutputTooSmall,
-            SubmitTxErrorTooManyAssetsInOutput,
-            SubmitTxErrorAddressAttributesTooLarge,
-            SubmitTxErrorTriesToForgeAda,
-            SubmitTxErrorDelegateNotRegistered,
-            SubmitTxErrorUnknownOrIncompleteWithdrawals,
-            SubmitTxErrorStakePoolNotRegistered,
-            SubmitTxErrorWrongRetirementEpoch,
-            SubmitTxErrorWrongPoolCertificate,
-            SubmitTxErrorStakeKeyAlreadyRegistered,
-            SubmitTxErrorPoolCostTooSmall,
-            SubmitTxErrorPoolMetadataHashTooBig,
-            SubmitTxErrorStakeKeyNotRegistered,
-            SubmitTxErrorRewardAccountNotExisting,
-            SubmitTxErrorRewardAccountNotEmpty,
-            SubmitTxErrorWrongCertificateType,
-            SubmitTxErrorUnknownGenesisKey,
-            SubmitTxErrorAlreadyDelegating,
-            SubmitTxErrorInsufficientFundsForMir,
-            SubmitTxErrorTooLateForMir,
-            SubmitTxErrorMirTransferNotCurrentlyAllowed,
-            SubmitTxErrorMirNegativeTransferNotCurrentlyAllowed,
-            SubmitTxErrorMirProducesNegativeUpdate,
-            SubmitTxErrorDuplicateGenesisVrf,
-            SubmitTxErrorNonGenesisVoters,
-            SubmitTxErrorUpdateWrongEpoch,
-            SubmitTxErrorProtocolVersionCannotFollow,
-            SubmitTxErrorMissingRequiredRedeemers,
-            MissingRequiredDatums,
-            SubmitTxErrorUnspendableDatums,
-            SubmitTxErrorExtraDataMismatch,
-            SubmitTxErrorMissingRequiredSignatures,
-            SubmitTxErrorUnspendableScriptInputs,
-            ExtraRedeemers,
-            SubmitTxErrorMissingDatumHashesForInputs,
-            SubmitTxErrorMissingCollateralInputs,
-            SubmitTxErrorCollateralTooSmall,
-            SubmitTxErrorCollateralIsScript,
-            SubmitTxErrorCollateralHasNonAdaAssets,
-            SubmitTxErrorTooManyCollateralInputs,
-            SubmitTxErrorExecutionUnitsTooLarge,
-            SubmitTxErrorOutsideForecast,
-            SubmitTxErrorValidationTagMismatch,
-            SubmitTxErrorCollectErrors,
-            SubmitTxErrorExtraScriptWitnesses,
-            SubmitTxErrorMirNegativeTransfer,
-            SubmitTxErrorTotalCollateralMismatch,
-            SubmitTxErrorMalformedReferenceScripts,
-            SubmitTxErrorMalformedScriptWitnesses,
-        ]
+    root: list[
+        SubmitTxErrorEraMismatch
+        | SubmitTxErrorInvalidWitnesses
+        | SubmitTxErrorMissingVkWitnesses
+        | SubmitTxErrorMissingScriptWitnesses
+        | SubmitTxErrorScriptWitnessNotValidating
+        | SubmitTxErrorInsufficientGenesisSignatures
+        | SubmitTxErrorMissingTxMetadata
+        | SubmitTxErrorMissingTxMetadataHash
+        | SubmitTxErrorTxMetadataHashMismatch
+        | SubmitTxErrorBadInputs
+        | SubmitTxErrorExpiredUtxo
+        | SubmitTxErrorOutsideOfValidityInterval
+        | SubmitTxErrorTxTooLarge
+        | SubmitTxErrorMissingAtLeastOneInputUtxo
+        | SubmitTxErrorInvalidMetadata
+        | SubmitTxErrorFeeTooSmall
+        | SubmitTxErrorValueNotConserved
+        | SubmitTxErrorNetworkMismatch
+        | SubmitTxErrorOutputTooSmall
+        | SubmitTxErrorTooManyAssetsInOutput
+        | SubmitTxErrorAddressAttributesTooLarge
+        | SubmitTxErrorTriesToForgeAda
+        | SubmitTxErrorDelegateNotRegistered
+        | SubmitTxErrorUnknownOrIncompleteWithdrawals
+        | SubmitTxErrorStakePoolNotRegistered
+        | SubmitTxErrorWrongRetirementEpoch
+        | SubmitTxErrorWrongPoolCertificate
+        | SubmitTxErrorStakeKeyAlreadyRegistered
+        | SubmitTxErrorPoolCostTooSmall
+        | SubmitTxErrorPoolMetadataHashTooBig
+        | SubmitTxErrorStakeKeyNotRegistered
+        | SubmitTxErrorRewardAccountNotExisting
+        | SubmitTxErrorRewardAccountNotEmpty
+        | SubmitTxErrorWrongCertificateType
+        | SubmitTxErrorUnknownGenesisKey
+        | SubmitTxErrorAlreadyDelegating
+        | SubmitTxErrorInsufficientFundsForMir
+        | SubmitTxErrorTooLateForMir
+        | SubmitTxErrorMirTransferNotCurrentlyAllowed
+        | SubmitTxErrorMirNegativeTransferNotCurrentlyAllowed
+        | SubmitTxErrorMirProducesNegativeUpdate
+        | SubmitTxErrorDuplicateGenesisVrf
+        | SubmitTxErrorNonGenesisVoters
+        | SubmitTxErrorUpdateWrongEpoch
+        | SubmitTxErrorProtocolVersionCannotFollow
+        | SubmitTxErrorMissingRequiredRedeemers
+        | MissingRequiredDatums
+        | SubmitTxErrorUnspendableDatums
+        | SubmitTxErrorExtraDataMismatch
+        | SubmitTxErrorMissingRequiredSignatures
+        | SubmitTxErrorUnspendableScriptInputs
+        | ExtraRedeemers
+        | SubmitTxErrorMissingDatumHashesForInputs
+        | SubmitTxErrorMissingCollateralInputs
+        | SubmitTxErrorCollateralTooSmall
+        | SubmitTxErrorCollateralIsScript
+        | SubmitTxErrorCollateralHasNonAdaAssets
+        | SubmitTxErrorTooManyCollateralInputs
+        | SubmitTxErrorExecutionUnitsTooLarge
+        | SubmitTxErrorOutsideForecast
+        | SubmitTxErrorValidationTagMismatch
+        | SubmitTxErrorCollectErrors
+        | SubmitTxErrorExtraScriptWitnesses
+        | SubmitTxErrorMirNegativeTransfer
+        | SubmitTxErrorTotalCollateralMismatch
+        | SubmitTxErrorMalformedReferenceScripts
+        | SubmitTxErrorMalformedScriptWitnesses
     ]
 
 
 class Result(BaseModel):
-    acquire_failure: Optional[AcquireFailure] = Field(None, alias="AcquireFailure")
-    acquire_success: Optional[AcquireSuccess] = Field(None, alias="AcquireSuccess")
-    await_acquired: Optional[AwaitAcquired] = Field(None, alias="AwaitAcquired")
-    evaluation_result: Optional[EvaluationResult] = Field(
-        None, alias="EvaluationResult"
-    )
-    intersection_found: Optional[IntersectionFound] = Field(
-        None, alias="IntersectionFound"
-    )
-    intersection_not_found: Optional[IntersectionNotFound] = Field(
-        None, alias="IntersectionNotFound"
-    )
-    released: Optional[str] = Field(None, alias="Released")
-    roll_backward: Optional[RollBackward] = Field(None, alias="RollBackward")
-    roll_forward: Optional[RollForward] = Field(None, alias="RollForward")
-    submit_success: Optional[SubmitSuccess] = Field(
-        None, alias="SubmitTransactionSuccess"
-    )
-    submit_tx_error: Optional[SubmitTxError] = Field(None, alias="SubmitTxError")
+    acquire_failure: AcquireFailure | None = Field(None, alias="AcquireFailure")
+    acquire_success: AcquireSuccess | None = Field(None, alias="AcquireSuccess")
+    await_acquired: AwaitAcquired | None = Field(None, alias="AwaitAcquired")
+    evaluation_result: EvaluationResult | None = Field(None, alias="EvaluationResult")
+    intersection_found: IntersectionFound | None = Field(None, alias="IntersectionFound")
+    intersection_not_found: IntersectionNotFound | None = Field(None, alias="IntersectionNotFound")
+    released: str | None = Field(None, alias="Released")
+    roll_backward: RollBackward | None = Field(None, alias="RollBackward")
+    roll_forward: RollForward | None = Field(None, alias="RollForward")
+    submit_success: SubmitSuccess | None = Field(None, alias="SubmitTransactionSuccess")
+    submit_tx_error: SubmitTxError | None = Field(None, alias="SubmitTxError")
 
 
 class FindIntersectResult(BaseModel):
-    intersection_found: Optional[IntersectionFound] = Field(
-        None, alias="IntersectionFound"
-    )
-    intersection_not_found: Optional[IntersectionNotFound] = Field(
-        None, alias="IntersectionNotFound"
-    )
+    intersection_found: IntersectionFound | None = Field(None, alias="IntersectionFound")
+    intersection_not_found: IntersectionNotFound | None = Field(None, alias="IntersectionNotFound")

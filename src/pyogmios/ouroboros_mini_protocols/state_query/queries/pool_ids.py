@@ -1,17 +1,15 @@
-from typing import List
-
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
 from pyogmios.exceptions import (
-    QueryUnavailableInCurrentEraError,
     EraMismatchError,
+    QueryUnavailableInCurrentEraError,
     UnknownResultError,
 )
-from pyogmios.models import PoolId, EraMismatch, QueryUnavailableInCurrentEra
+from pyogmios.models import EraMismatch, PoolId, QueryUnavailableInCurrentEra
 from pyogmios.models.response_model import PoolIdsResponse
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
@@ -22,12 +20,10 @@ def is_pool_ids(response: PoolIdsResponse) -> bool:
     :return: True if the response is a list of pool ids, False otherwise.
     """
     result = response.result
-    return (
-        isinstance(result, List) and len(result) > 0 and isinstance(result[0], PoolId)
-    )
+    return isinstance(result, list) and len(result) > 0 and isinstance(result[0], PoolId)
 
 
-async def pool_ids(context: InteractionContext) -> List[PoolId]:
+async def pool_ids(context: InteractionContext) -> list[PoolId]:
     """
     Query the pool ids.
     :param context: The interaction context to use for the query.

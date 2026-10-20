@@ -1,5 +1,4 @@
 import json
-from typing import Dict
 
 from pyogmios.connection import InteractionContext
 from pyogmios.enums import Method
@@ -9,7 +8,7 @@ from pyogmios.models.request_model import Request
 from pyogmios.models.response_model import SizeAndCapacityResponse
 
 
-async def size_and_capacity(context: InteractionContext, args: Dict) -> str:
+async def size_and_capacity(context: InteractionContext, args: dict) -> str:
     """
     Get size and capacities of the mempool (acquired snapshot).
     :param context: The interaction context

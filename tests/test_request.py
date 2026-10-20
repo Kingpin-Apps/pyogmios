@@ -1,15 +1,15 @@
 """
 Test the request module.
 """
+
 import json
-from typing import Dict
 from unittest.mock import Mock
 
 import pytest
 from websocket import WebSocketApp
 
-from pyogmios.connection import InteractionContext
 from pyogmios.connection import (
+    InteractionContext,
     create_interaction_context,
 )
 from pyogmios.enums import Method
@@ -25,7 +25,7 @@ async def test_send_success():
     context = await create_interaction_context()
     test_result = {"result": "test"}
 
-    async def to_send(_: WebSocketApp) -> Dict:
+    async def to_send(_: WebSocketApp) -> dict:
         """
         Test function to send.
         """
@@ -44,7 +44,7 @@ async def test_send_fail():
     context = await create_interaction_context()
     test_error = "Expected error result"
 
-    async def to_send(_: WebSocketApp) -> Dict:
+    async def to_send(_: WebSocketApp) -> dict:
         """
         Test function to send.
         """

@@ -7,14 +7,12 @@ from pyogmios.models.response_model import (
     QueryNetworkGenesisConfigurationResponse,
 )
 from pyogmios.ouroboros_mini_protocols.state_query.query import (
-    query,
     RequestArgs,
+    query,
 )
 
 
-async def genesis_config(
-    context: InteractionContext, era: EraWithGenesis
-) -> GenesisConfig:
+async def genesis_config(context: InteractionContext, era: EraWithGenesis) -> GenesisConfig:
     """
     Query the genesis config.
     :param context: The interaction context to use for the query.
