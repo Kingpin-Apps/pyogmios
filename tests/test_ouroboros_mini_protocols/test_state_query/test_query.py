@@ -1,12 +1,12 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import Method
-from pyogmios_client.exceptions import PyOgmiosError
-from pyogmios_client.models.response_model import Response
-from pyogmios_client.ouroboros_mini_protocols.state_query.query import (
+from pyogmios.enums import Method
+from pyogmios.exceptions import PyOgmiosError
+from pyogmios.models.response_model import Response
+from pyogmios.ouroboros_mini_protocols.state_query.query import (
     query,
     RequestArgs,
 )
@@ -23,7 +23,7 @@ async def test_query_success(mocker, fake_query_response):
     context = await create_interaction_context()
 
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.query.send_request",
+        "pyogmios.ouroboros_mini_protocols.state_query.query.send_request",
         return_value=Response(**fake_query_response),
     )
 
@@ -45,7 +45,7 @@ async def test_query_error(mocker):
     context = await create_interaction_context()
 
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.query.send_request",
+        "pyogmios.ouroboros_mini_protocols.state_query.query.send_request",
         side_effect=PyOgmiosError("test-error"),
     )
 

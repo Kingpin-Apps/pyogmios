@@ -103,11 +103,11 @@ unless you have advanced needs.
 ```python
 import asyncio
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context, InteractionContextOptions,
 )
-from pyogmios_client.enums import InteractionType
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import create_state_query_client
+from pyogmios.enums import InteractionType
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import create_state_query_client
 
 
 async def main():
@@ -133,12 +133,12 @@ if __name__ == "__main__":
 import asyncio
 from typing import Callable
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context, InteractionContextOptions,
 )
-from pyogmios_client.enums import InteractionType, Origin
-from pyogmios_client.models import RollBackward, RollForward
-from pyogmios_client.ouroboros_mini_protocols.chain_sync.chain_sync_client import ChainSyncMessageHandlers, \
+from pyogmios.enums import InteractionType, Origin
+from pyogmios.models import RollBackward, RollForward
+from pyogmios.ouroboros_mini_protocols.chain_sync.chain_sync_client import ChainSyncMessageHandlers, \
     create_chain_sync_client
 
 

@@ -8,15 +8,15 @@ from unittest.mock import Mock
 import pytest
 from websocket import WebSocketApp
 
-from pyogmios_client.connection import InteractionContext
-from pyogmios_client.connection import (
+from pyogmios.connection import InteractionContext
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import Method
-from pyogmios_client.exceptions import JsonwspFaultError, PyOgmiosError
-from pyogmios_client.models.request_model import Request
-from pyogmios_client.models.response_model import Response
-from pyogmios_client.request import send, send_request
+from pyogmios.enums import Method
+from pyogmios.exceptions import JsonwspFaultError, PyOgmiosError
+from pyogmios.models.request_model import Request
+from pyogmios.models.response_model import Response
+from pyogmios.request import send, send_request
 from tests.conftest import ConnectionFactory
 
 

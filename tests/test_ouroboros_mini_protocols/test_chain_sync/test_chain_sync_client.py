@@ -2,10 +2,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.ouroboros_mini_protocols.chain_sync.chain_sync_client import (
+from pyogmios.ouroboros_mini_protocols.chain_sync.chain_sync_client import (
     create_chain_sync_client,
     ChainSyncMessageHandlers,
     ChainSyncClient,

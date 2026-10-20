@@ -2,13 +2,13 @@ from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 
-from pyogmios_client.connection import create_connection_object
-from pyogmios_client.connection import (
+from pyogmios.connection import create_connection_object
+from pyogmios.connection import (
     create_interaction_context,
     InteractionContext,
     InteractionContextOptions,
 )
-from pyogmios_client.server_health import Connection
+from pyogmios.server_health import Connection
 from tests.conftest import ConnectionConfigFactory
 
 

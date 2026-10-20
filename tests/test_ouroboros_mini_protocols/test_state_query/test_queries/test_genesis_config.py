@@ -1,14 +1,14 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import EraWithGenesis
-from pyogmios_client.exceptions import (
+from pyogmios.enums import EraWithGenesis
+from pyogmios.exceptions import (
     EraMismatchError,
     QueryUnavailableInCurrentEraError,
 )
-from pyogmios_client.models import (
+from pyogmios.models import (
     GenesisAlonzo,
     GenesisShelley,
     GenesisByron,
@@ -16,12 +16,12 @@ from pyogmios_client.models import (
     EraMismatch,
     QueryUnavailableInCurrentEra,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     QueryNetworkGenesisConfigurationResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.models.result_models import EraMismatchResult
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.result_models import EraMismatchResult
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 from tests.conftest import (
@@ -42,7 +42,7 @@ from tests.conftest import (
 @pytest.mark.asyncio
 async def test_genesis_config(mocker, test_input, expected):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
         return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
@@ -59,7 +59,7 @@ async def test_genesis_config(mocker, test_input, expected):
 @pytest.mark.asyncio
 async def test_genesis_config_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
         return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -80,7 +80,7 @@ async def test_genesis_config_query_unavailable(mocker):
 @pytest.mark.asyncio
 async def test_genesis_config_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
         return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),

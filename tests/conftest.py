@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock
 import pytest
 from polyfactory.factories.pydantic_factory import ModelFactory
 
-from pyogmios_client.connection import InteractionContext
-from pyogmios_client.models import (
+from pyogmios.connection import InteractionContext
+from pyogmios.models import (
     ProtocolParametersShelley,
     ProtocolParametersBabbage,
     ProtocolParametersAlonzo,
@@ -15,15 +15,15 @@ from pyogmios_client.models import (
     RewardsProvenance,
     RewardsProvenanceNew,
 )
-from pyogmios_client.models.request_model import Request
-from pyogmios_client.models.result_models import EraMismatchResult, FindIntersectResult
-from pyogmios_client.models.server_health_model import ServerHealth
-from pyogmios_client.ouroboros_mini_protocols.state_query.query import (
+from pyogmios.models.request_model import Request
+from pyogmios.models.result_models import EraMismatchResult, FindIntersectResult
+from pyogmios.models.server_health_model import ServerHealth
+from pyogmios.ouroboros_mini_protocols.state_query.query import (
     RequestArgs,
     ResponseArgs,
     ResponseHandlerArgs,
 )
-from pyogmios_client.server_health import ConnectionConfig, Connection, Options, Address
+from pyogmios.server_health import ConnectionConfig, Connection, Options, Address
 
 
 class ConnectionConfigFactory(ModelFactory):
@@ -109,19 +109,17 @@ def mock_server_health(mocker):
     """
     async_mock = AsyncMock(return_value=ServerHealthFactory.build())
     mocker.patch(
-        "pyogmios_client.connection.get_server_health",
+        "pyogmios.connection.get_server_health",
         return_value=async_mock,
     )
-    mocker.patch(
-        "pyogmios_client.utils.socket_utils.ensure_socket_is_open", return_value=True
-    )
+    mocker.patch("pyogmios.utils.socket_utils.ensure_socket_is_open", return_value=True)
     mocker.patch("threading.Thread")
     mocker.patch("threading.Event.is_set", return_value=True)
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.chain_sync.request_next.request_next"
+        "pyogmios.ouroboros_mini_protocols.chain_sync.request_next.request_next"
     )
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
+        "pyogmios.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
     )
 
 
@@ -164,7 +162,7 @@ def mock_send(monkeypatch):
     def mock_send(self, *args, **kwargs):
         return kwargs
 
-    monkeypatch.setattr("pyogmios_client.request.send", mock_send)
+    monkeypatch.setattr("pyogmios.request.send", mock_send)
 
 
 @pytest.fixture

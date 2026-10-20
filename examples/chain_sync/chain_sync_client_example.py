@@ -1,13 +1,13 @@
 import asyncio
 from typing import Callable
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
     InteractionContextOptions,
 )
-from pyogmios_client.enums import InteractionType, Origin
-from pyogmios_client.models import RollBackward, RollForward
-from pyogmios_client.ouroboros_mini_protocols.chain_sync.chain_sync_client import (
+from pyogmios.enums import InteractionType, Origin
+from pyogmios.models import RollBackward, RollForward
+from pyogmios.ouroboros_mini_protocols.chain_sync.chain_sync_client import (
     ChainSyncMessageHandlers,
     create_chain_sync_client,
 )

@@ -1,18 +1,18 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import Method, Type, Version, ServiceName
-from pyogmios_client.exceptions import IntersectionNotFoundError
-from pyogmios_client.models import Origin
-from pyogmios_client.models.response_model import Response, QueryResponseReflection
-from pyogmios_client.models.result_models import (
+from pyogmios.enums import Method, Type, Version, ServiceName
+from pyogmios.exceptions import IntersectionNotFoundError
+from pyogmios.models import Origin
+from pyogmios.models.response_model import Response, QueryResponseReflection
+from pyogmios.models.result_models import (
     IntersectionFound,
     IntersectionNotFound,
     FindIntersectResult,
 )
-from pyogmios_client.ouroboros_mini_protocols.chain_sync.find_intersect import (
+from pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect import (
     find_intersect,
 )
 
@@ -45,7 +45,7 @@ from pyogmios_client.ouroboros_mini_protocols.chain_sync.find_intersect import (
 @pytest.mark.asyncio
 async def test_find_intersect_success(mocker, test_input, expected):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.chain_sync.find_intersect.query",
+        "pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect.query",
         return_value=Response(
             type=Type.JSONWSP_RESPONSE,
             version=Version.v1_0,
@@ -86,7 +86,7 @@ async def test_find_intersect_success(mocker, test_input, expected):
 @pytest.mark.asyncio
 async def test_find_intersect_fail(mocker, test_input, expected):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.chain_sync.find_intersect.query",
+        "pyogmios.ouroboros_mini_protocols.chain_sync.find_intersect.query",
         return_value=Response(
             type=Type.JSONWSP_RESPONSE,
             version=Version.v1_0,

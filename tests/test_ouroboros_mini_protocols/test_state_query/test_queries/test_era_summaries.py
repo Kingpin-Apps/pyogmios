@@ -2,11 +2,11 @@ from typing import List
 
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import UnknownResultError
-from pyogmios_client.models import (
+from pyogmios.exceptions import UnknownResultError
+from pyogmios.models import (
     EraSummary,
     Bound,
     RelativeTime,
@@ -15,11 +15,11 @@ from pyogmios_client.models import (
     SlotLength,
     SafeZone,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     EraSummariesResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 
@@ -27,7 +27,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 @pytest.mark.asyncio
 async def test_era_summaries(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.era_summaries.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.era_summaries.query",
         return_value=EraSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=[
@@ -59,7 +59,7 @@ async def test_era_summaries(mocker):
 @pytest.mark.asyncio
 async def test_era_start_unknown_result(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.era_summaries.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.era_summaries.query",
         return_value=EraSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id")
         ),

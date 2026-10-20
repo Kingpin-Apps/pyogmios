@@ -1,23 +1,23 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import (
+from pyogmios.exceptions import (
     EraMismatchError,
     QueryUnavailableInCurrentEraError,
 )
-from pyogmios_client.models import (
+from pyogmios.models import (
     RewardAccountSummaries,
     Era,
     QueryUnavailableInCurrentEra,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     QueryLedgerStateRewardAccountSummariesResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.models.result_models import EraMismatchResult
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.result_models import EraMismatchResult
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 
@@ -27,7 +27,7 @@ async def test_delegations_and_rewards(
     mocker, fake_delegations_and_rewards_by_accounts
 ):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
         return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=fake_delegations_and_rewards_by_accounts,
@@ -47,7 +47,7 @@ async def test_delegations_and_rewards(
 @pytest.mark.asyncio
 async def test_delegations_and_rewards_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
         return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatchResult(**fake_era_mismatch_result),
@@ -80,7 +80,7 @@ async def test_delegations_and_rewards_era_mismatch(mocker, fake_era_mismatch_re
 @pytest.mark.asyncio
 async def test_delegations_and_rewards_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
         return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",

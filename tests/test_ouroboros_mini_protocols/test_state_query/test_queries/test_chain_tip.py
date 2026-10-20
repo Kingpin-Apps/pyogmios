@@ -2,18 +2,18 @@ from unittest import mock
 
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import QueryUnavailableInCurrentEraError
-from pyogmios_client.models import (
+from pyogmios.exceptions import QueryUnavailableInCurrentEraError
+from pyogmios.models import (
     PointOrOrigin,
     Point,
     DigestBlake2bBlockHeader,
     QueryUnavailableInCurrentEra,
 )
-from pyogmios_client.models.response_model import QueryResponse, QueryResponseReflection
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.response_model import QueryResponse, QueryResponseReflection
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 
@@ -28,7 +28,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 @pytest.mark.asyncio
 async def test_chain_sync(mocker, test_input):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.tip.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.tip.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
@@ -46,7 +46,7 @@ async def test_chain_sync(mocker, test_input):
 @pytest.mark.asyncio
 async def test_block_height_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.tip.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.tip.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -58,7 +58,7 @@ async def test_block_height_query_unavailable(mocker):
     # Act & Assert
     with pytest.raises(QueryUnavailableInCurrentEraError) as exc_info:
         with mock.patch(
-            "pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
+            "pyogmios.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
         ):
             client = await create_state_query_client(interaction_context)
             chain_tip = await client.tip()

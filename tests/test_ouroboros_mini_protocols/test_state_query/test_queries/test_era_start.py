@@ -1,15 +1,15 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import UnknownResultError
-from pyogmios_client.models import Bound, RelativeTime, Epoch
-from pyogmios_client.models.response_model import (
+from pyogmios.exceptions import UnknownResultError
+from pyogmios.models import Bound, RelativeTime, Epoch
+from pyogmios.models.response_model import (
     QueryLedgerStateEraStartResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 
@@ -17,7 +17,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 @pytest.mark.asyncio
 async def test_era_start(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.era_start.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.era_start.query",
         return_value=QueryLedgerStateEraStartResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=Bound(
@@ -36,7 +36,7 @@ async def test_era_start(mocker):
 @pytest.mark.asyncio
 async def test_era_start_unknown_result(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.era_start.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.era_start.query",
         return_value=QueryLedgerStateEraStartResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id")
         ),

@@ -2,26 +2,26 @@ from typing import Dict
 
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import (
+from pyogmios.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
 )
-from pyogmios_client.models import (
+from pyogmios.models import (
     PoolId,
     PoolParameters,
     QueryUnavailableInCurrentEra,
     EraMismatch,
     Era,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     PoolParametersResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.models.result_models import EraMismatchResult
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.result_models import EraMismatchResult
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 from tests.conftest import PoolParametersFactory
@@ -30,7 +30,7 @@ from tests.conftest import PoolParametersFactory
 @pytest.mark.asyncio
 async def test_pool_parameters(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
         return_value=PoolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result={
@@ -52,7 +52,7 @@ async def test_pool_parameters(mocker):
 @pytest.mark.asyncio
 async def test_pool_parameters_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
         return_value=PoolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -75,7 +75,7 @@ async def test_pool_parameters_query_unavailable(mocker):
 @pytest.mark.asyncio
 async def test_pool_parameters_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.pool_parameters.query",
         return_value=PoolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),

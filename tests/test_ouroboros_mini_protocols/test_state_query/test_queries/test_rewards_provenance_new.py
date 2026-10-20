@@ -1,24 +1,24 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import (
+from pyogmios.exceptions import (
     EraMismatchError,
     QueryUnavailableInCurrentEraError,
 )
-from pyogmios_client.models import (
+from pyogmios.models import (
     RewardsProvenanceNew,
     EraMismatch,
     QueryUnavailableInCurrentEra,
     Era,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     RewardsProvenanceNewResponse,
     QueryResponseReflection,
 )
-from pyogmios_client.models.result_models import EraMismatchResult
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.result_models import EraMismatchResult
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 from tests.conftest import RewardsProvenanceNewFactory
@@ -27,7 +27,7 @@ from tests.conftest import RewardsProvenanceNewFactory
 @pytest.mark.asyncio
 async def test_rewards_provenance_new(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
         return_value=RewardsProvenanceNewResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=RewardsProvenanceNewFactory.build(),
@@ -44,7 +44,7 @@ async def test_rewards_provenance_new(mocker):
 @pytest.mark.asyncio
 async def test_rewards_provenance_new_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
         return_value=RewardsProvenanceNewResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -65,7 +65,7 @@ async def test_rewards_provenance_new_query_unavailable(mocker):
 @pytest.mark.asyncio
 async def test_rewards_provenance_new_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
         return_value=RewardsProvenanceNewResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),

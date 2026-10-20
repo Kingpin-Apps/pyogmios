@@ -3,13 +3,13 @@ Transaction monitor client example
 """
 import asyncio
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
     InteractionContextOptions,
 )
-from pyogmios_client.enums import InteractionType
-from pyogmios_client.models import TxId
-from pyogmios_client.ouroboros_mini_protocols.tx_monitor.tx_monitor_client import (
+from pyogmios.enums import InteractionType
+from pyogmios.models import TxId
+from pyogmios.ouroboros_mini_protocols.tx_monitor.tx_monitor_client import (
     create_tx_monitor_client,
 )
 

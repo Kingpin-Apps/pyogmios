@@ -2,9 +2,9 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from pyogmios_client.exceptions import RequestError
-from pyogmios_client.models.server_health_model import ServerHealth
-from pyogmios_client.server_health import get_server_health
+from pyogmios.exceptions import RequestError
+from pyogmios.models.server_health_model import ServerHealth
+from pyogmios.server_health import get_server_health
 
 
 @pytest.mark.asyncio

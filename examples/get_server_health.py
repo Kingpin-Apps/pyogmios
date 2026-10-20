@@ -1,11 +1,11 @@
 import asyncio
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     InteractionContextOptions,
     create_connection_object,
 )
-from pyogmios_client.enums import InteractionType
-from pyogmios_client.server_health import get_server_health, Options
+from pyogmios.enums import InteractionType
+from pyogmios.server_health import get_server_health, Options
 
 
 async def main():

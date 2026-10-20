@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from pyogmios_client.exceptions import (
+from pyogmios.exceptions import (
     ServerNotReady,
     RequestError,
     IntersectionNotFoundError,
@@ -10,7 +10,7 @@ from pyogmios_client.exceptions import (
     TipIsOriginError,
     WebSocketClosedError,
 )
-from pyogmios_client.models import Origin
+from pyogmios.models import Origin
 
 
 def test_server_not_ready_exception():

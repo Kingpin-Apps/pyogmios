@@ -1,21 +1,21 @@
 import pytest
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
 )
-from pyogmios_client.exceptions import EraMismatchError
-from pyogmios_client.models import (
+from pyogmios.exceptions import EraMismatchError
+from pyogmios.models import (
     ProtocolParametersShelley,
     ProtocolParametersAlonzo,
     ProtocolParametersBabbage,
     Era,
 )
-from pyogmios_client.models.response_model import (
+from pyogmios.models.response_model import (
     QueryResponseReflection,
     QueryLedgerStateProtocolParametersResponse,
 )
-from pyogmios_client.models.result_models import EraMismatchResult
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.models.result_models import EraMismatchResult
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 from tests.conftest import (
@@ -36,7 +36,7 @@ from tests.conftest import (
 @pytest.mark.asyncio
 async def test_current_protocol_parameters(mocker, test_input, expected):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
         return_value=QueryLedgerStateProtocolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
@@ -57,7 +57,7 @@ async def test_current_protocol_parameters_era_mismatch(
     mocker, fake_era_mismatch_result
 ):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
         return_value=QueryLedgerStateProtocolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatchResult(**fake_era_mismatch_result),

@@ -1,19 +1,19 @@
 import pytest
 from faker import Faker
 
-from pyogmios_client.enums import Method
-from pyogmios_client.models import (
+from pyogmios.enums import Method
+from pyogmios.models import (
     PointOrOrigin,
     Point,
     DigestBlake2bBlockHeader,
     Origin,
 )
-from pyogmios_client.models.request_model import (
+from pyogmios.models.request_model import (
     AcquireLedgerState,
     NextBlock,
     ReleaseLedgerState,
 )
-from pyogmios_client.models.request_model import Request
+from pyogmios.models.request_model import Request
 
 
 def test_request_from_base_request():

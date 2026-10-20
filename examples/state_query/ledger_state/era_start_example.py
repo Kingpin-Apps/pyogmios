@@ -1,11 +1,11 @@
 import asyncio
 
-from pyogmios_client.connection import (
+from pyogmios.connection import (
     create_interaction_context,
     InteractionContextOptions,
 )
-from pyogmios_client.enums import InteractionType
-from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
+from pyogmios.enums import InteractionType
+from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
 
