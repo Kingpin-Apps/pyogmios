@@ -2,7 +2,7 @@ import json
 from typing import Dict
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError
 from pyogmios_client.models import MempoolSizeAndCapacity
 from pyogmios_client.models.request_model import Request
@@ -17,7 +17,7 @@ async def size_and_capacity(context: InteractionContext, args: Dict) -> str:
     :return: The result
     """
     request = Request.from_base_request(
-        method_name=MethodName.SIZE_AND_CAPACITY,
+        method_name=Method.SIZE_OF_MEMPOOL,
         args=args,
     )
     try:

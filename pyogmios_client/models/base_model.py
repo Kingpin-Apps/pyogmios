@@ -12,6 +12,7 @@ class BaseModel(PydanticBaseModel):
         validate_assignment=True,
         str_strip_whitespace=True,
         populate_by_name=True,
+        use_enum_values=True,
     )
 
     def __hash__(self):  # make hashable BaseModel subclass

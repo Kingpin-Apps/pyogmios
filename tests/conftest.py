@@ -173,31 +173,33 @@ def fake_server_health():
     Fixture for a fake server health response
     """
     return {
-        "startTime": "2023-06-18T23:18:44.597761Z",
-        "lastKnownTip": {
-            "slot": 95564600,
-            "hash": "36881dc2a6e2e998d168e40048522a9b89a441d8702283501f0bbc64e0611f16",
-            "blockNo": 8921790,
+        "start_time": "2023-11-23T12:00:35.503176Z",
+        "last_known_tip": {
+            "slot": 45070689,
+            "id": "20831286f59af8bbc6c305347861d3dd4aa7a2f96d3e68521e66666960d07056",
+            "height": 1624796,
         },
-        "lastTipUpdate": "2023-06-18T23:28:11.742438Z",
-        "networkSynchronization": 1,
-        "currentEra": "Babbage",
+        "last_tip_update": "2023-11-23T15:38:09.255442Z",
+        "network_synchronization": 1.0,
+        "current_era": "babbage",
         "metrics": {
-            "activeConnections": 0,
-            "runtimeStats": {
-                "cpuTime": 1154541000,
-                "currentHeapSize": 354,
-                "gcCpuTime": 682582000,
-                "maxHeapSize": 367,
+            "active_connections": 0,
+            "runtime_stats": {
+                "cpu_time": 46203532000,
+                "current_heap_size": 1318,
+                "gc_cpu_time": 44534921000,
+                "max_heap_size": 1336,
             },
-            "sessionDurations": {"max": 0, "mean": 0, "min": 0},
-            "totalConnections": 0,
-            "totalMessages": 0,
-            "totalUnrouted": 0,
+            "session_durations": {"max": 0, "mean": 3512355, "min": 0},
+            "total_connections": 2,
+            "total_messages": 5,
+            "total_unrouted": 3,
         },
-        "connectionStatus": "connected",
-        "currentEpoch": 418,
-        "slotInEpoch": 351800,
+        "connection_status": "connected",
+        "epoch": 108,
+        "slot_in_epoch": 56289,
+        "version": "nightly (unknown revision)",
+        "network": "preprod",
     }
 
 
@@ -287,5 +289,15 @@ def fake_find_intersect_intersect_found_result():
                     "blockNo": 18446744073709552000,
                 },
             }
+        }
+    }
+
+
+@pytest.fixture
+def fake_test_point():
+    return {
+        "point": {
+            "slot": 18446744073709552000,
+            "hash": "c248757d390181c517a5beadc9c3fe64bf821d3e889a963fc717003ec248757d",
         }
     }

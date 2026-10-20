@@ -12,7 +12,7 @@ from pyogmios_client.models import (
 )
 from pyogmios_client.models.response_model import (
     QueryResponseReflection,
-    CurrentProtocolParametersResponse,
+    QueryLedgerStateProtocolParametersResponse,
 )
 from pyogmios_client.models.result_models import EraMismatchResult
 from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client import (
@@ -36,8 +36,8 @@ from tests.conftest import (
 @pytest.mark.asyncio
 async def test_current_protocol_parameters(mocker, test_input, expected):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.current_protocol_parameters.query",
-        return_value=CurrentProtocolParametersResponse.from_base_response(
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
+        return_value=QueryLedgerStateProtocolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
         ),
@@ -46,7 +46,7 @@ async def test_current_protocol_parameters(mocker, test_input, expected):
     interaction_context = await create_interaction_context()
 
     client = await create_state_query_client(interaction_context)
-    current_protocol_parameters = await client.current_protocol_parameters()
+    current_protocol_parameters = await client.protocol_parameters()
     await client.shutdown()
 
     assert isinstance(current_protocol_parameters, expected)
@@ -57,8 +57,8 @@ async def test_current_protocol_parameters_era_mismatch(
     mocker, fake_era_mismatch_result
 ):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.current_protocol_parameters.query",
-        return_value=CurrentProtocolParametersResponse.from_base_response(
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.protocol_parameters.query",
+        return_value=QueryLedgerStateProtocolParametersResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatchResult(**fake_era_mismatch_result),
         ),
@@ -68,7 +68,7 @@ async def test_current_protocol_parameters_era_mismatch(
     with pytest.raises(EraMismatchError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        current_protocol_parameters = await client.current_protocol_parameters()
+        current_protocol_parameters = await client.protocol_parameters()
         client.shutdown()
         assert isinstance(current_protocol_parameters, EraMismatchResult)
 

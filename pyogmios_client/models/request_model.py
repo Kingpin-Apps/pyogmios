@@ -1,82 +1,82 @@
 from __future__ import annotations
 
-from typing import Optional, Dict, Any
+from typing import Optional, Any
 
-from pydantic import Field
+from pyogmios_client.enums import Method
+from pyogmios_client.models import PointOrOrigin
+from pyogmios_client.models.base_request_response_model import BaseRequest
 
-from pyogmios_client.enums import MethodName, ServiceName, Type, Version
-from pyogmios_client.models.base_request_response_model import BaseRequestResponse
 
-
-class Request(BaseRequestResponse):
-    args: Optional[Dict[str, Any]] = None
-    mirror: Optional[Any] = Field(
-        None,
-        description="An arbitrary JSON value that will be mirrored back in the response.",
-    )
-
+class Request(BaseRequest):
     @staticmethod
     def from_base_request(
-        method_name: MethodName,
-        args: Optional[Dict[str, Any]] = None,
-        mirror: Optional[Any] = None,
+        request_id: str, method: Method, params: Optional[Any] = None
     ) -> Request:
-        return Request(
-            type=Type.JSONWSP_REQUEST,
-            version=Version.v1_0,
-            servicename=ServiceName.OGMIOS,
-            methodname=method_name,
-            args=args,
-            mirror=mirror,
-        )
+        """
+        Creates a request from a base request.
+
+        :param request_id: The request id
+        :param method: The method
+        :param params: The params
+        :return: The :class:`Request` object
+        """
+        return Request(id=request_id, method=method, params=params)
 
 
-class RequestNext(BaseRequestResponse):
-    methodname: MethodName = MethodName.REQUEST_NEXT
+class NextBlock(Request):
+    method: Method = Method.NEXT_BLOCK
 
     @staticmethod
-    def from_base(
-        args: Optional[Dict[str, Any]] = None,
-        mirror: Optional[Any] = None,
-    ) -> RequestNext:
-        return RequestNext(
-            **Request.from_base_request(
-                method_name=MethodName.REQUEST_NEXT,
-                args=args,
-                mirror=mirror,
+    def from_base(request_id: str) -> NextBlock:
+        """
+        Creates a next block request from a base request.
+
+        :param request_id: The request id
+        :param params: The params
+        :return: The :class:`NextBlock` object
+        """
+        return NextBlock.model_validate(
+            Request.from_base_request(
+                method=Method.NEXT_BLOCK, request_id=request_id
             ).model_dump()
         )
 
 
-class RequestRelease(BaseRequestResponse):
-    methodname: MethodName = MethodName.RELEASE
+class ReleaseLedgerState(Request):
+    methodname: Method = Method.RELEASE_LEDGER_STATE
 
     @staticmethod
     def from_base(
-        args: Optional[Dict[str, Any]] = None,
-        mirror: Optional[Any] = None,
-    ) -> RequestRelease:
-        return RequestRelease(
-            **Request.from_base_request(
-                method_name=MethodName.RELEASE,
-                args=args,
-                mirror=mirror,
+        request_id: str,
+    ) -> ReleaseLedgerState:
+        """
+        Creates a release ledger state request from a base request.
+
+        :param request_id: The request id
+        :return: The :class:`ReleaseLedgerState` object
+        """
+        return ReleaseLedgerState.model_validate(
+            Request.from_base_request(
+                method=Method.RELEASE_LEDGER_STATE,
+                request_id=request_id,
             ).model_dump()
         )
 
 
-class RequestAwaitAcquire(BaseRequestResponse):
-    methodname: MethodName = MethodName.AWAIT_ACQUIRE
-
+class AcquireLedgerState(Request):
     @staticmethod
-    def from_base(
-        args: Optional[Dict[str, Any]] = None,
-        mirror: Optional[Any] = None,
-    ) -> RequestAwaitAcquire:
-        return RequestAwaitAcquire(
-            **Request.from_base_request(
-                method_name=MethodName.AWAIT_ACQUIRE,
-                args=args,
-                mirror=mirror,
+    def from_base(request_id: str, point: PointOrOrigin) -> AcquireLedgerState:
+        """
+        Creates an acquire ledger state request from a base request.
+
+        :param request_id: The request id
+        :param point: The point or origin
+        :return: The :class:`AcquireLedgerState` object
+        """
+        return AcquireLedgerState.model_validate(
+            Request.from_base_request(
+                method=Method.ACQUIRE_LEDGER_STATE,
+                request_id=request_id,
+                params={"point": point},
             ).model_dump()
         )

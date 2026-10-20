@@ -1,7 +1,7 @@
 from typing import List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -33,7 +33,7 @@ async def pool_ids(context: InteractionContext) -> List[PoolId]:
     :param context: The interaction context to use for the query.
     :return: The pool ids.
     """
-    request_args = RequestArgs(method_name=MethodName.QUERY, args={"query": "poolIds"})
+    request_args = RequestArgs(method=Method.QUERY, params={"query": "poolIds"})
 
     try:
         response = await query(request_args, context)

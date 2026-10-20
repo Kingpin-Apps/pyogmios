@@ -17,7 +17,7 @@ from pyogmios_client.models import (
     QueryUnavailableInCurrentEra,
 )
 from pyogmios_client.models.response_model import (
-    GenesisConfigResponse,
+    QueryNetworkGenesisConfigurationResponse,
     QueryResponseReflection,
 )
 from pyogmios_client.models.result_models import EraMismatchResult
@@ -43,7 +43,7 @@ from tests.conftest import (
 async def test_genesis_config(mocker, test_input, expected):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
-        return_value=GenesisConfigResponse.from_base_response(
+        return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
         ),
@@ -60,7 +60,7 @@ async def test_genesis_config(mocker, test_input, expected):
 async def test_genesis_config_query_unavailable(mocker):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
-        return_value=GenesisConfigResponse.from_base_response(
+        return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
         ),
@@ -81,7 +81,7 @@ async def test_genesis_config_query_unavailable(mocker):
 async def test_genesis_config_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.genesis_config.query",
-        return_value=GenesisConfigResponse.from_base_response(
+        return_value=QueryNetworkGenesisConfigurationResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),
         ),

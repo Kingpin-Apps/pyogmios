@@ -6,7 +6,7 @@ The evaluate_tx function is used to evaluate a transaction.
 from typing import Optional, List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError
 from pyogmios_client.models import (
     Utxo,
@@ -56,7 +56,7 @@ async def evaluate_tx(
     :return: The evaluation result
     """
     request = Request.from_base_request(
-        method_name=MethodName.EVALUATE_TX,
+        method_name=Method.EVALUATE_TRANSACTION,
         args={
             **(
                 {"additionalUtxoSet": additional_utxo_set}

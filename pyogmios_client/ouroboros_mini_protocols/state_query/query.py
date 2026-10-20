@@ -4,7 +4,7 @@ from nanoid import generate
 from websocket import WebSocketApp
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method, NetworkQuery, LedgerStateQuery
 from pyogmios_client.models.base_model import BaseModel
 from pyogmios_client.models.request_model import Request
 from pyogmios_client.models.response_model import Response, QueryResponse
@@ -14,9 +14,8 @@ T = TypeVar("T")
 
 
 class RequestArgs(BaseModel):
-    method_name: MethodName
-    args: Optional[Dict[str, Any]] = None
-    mirror: Optional[Any] = None
+    method: Method | LedgerStateQuery | NetworkQuery
+    params: Optional[Dict[str, Any]] = None
 
 
 class ResponseHandlerArgs(BaseModel):
@@ -48,29 +47,16 @@ async def query(
         try:
             request_id = generate(size=5)
 
-            if request_args.mirror:
-                if "requestId" in request_args.mirror:
-                    request_id = request_args.mirror["requestId"]
-                    mirror = request_args.mirror
-                elif isinstance(request_args.mirror, dict):
-                    mirror = {**request_args.mirror, "requestId": request_id}
-                elif isinstance(request_args.mirror, list):
-                    mirror = {*request_args.mirror, {"requestId": request_id}}
-                else:
-                    mirror = {"mirror": request_args.mirror, "requestId": request_id}
-            else:
-                mirror = {"requestId": request_id}
-
             request = Request.from_base_request(
-                method_name=request_args.method_name,
-                args=request_args.args,
-                mirror=mirror,
+                method=request_args.method,
+                params=request_args.params,
+                request_id=request_id,
             )
 
             raw_response = await send_request(request, context)
             query_response = QueryResponse.model_validate(raw_response.model_dump())
 
-            if query_response.reflection.requestId != request_id:
+            if query_response.id != request_id:
                 return
 
             return query_response

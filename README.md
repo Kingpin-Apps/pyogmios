@@ -117,7 +117,7 @@ async def main():
     interaction_context_options = InteractionContextOptions(interaction_type=InteractionType.ONE_TIME)
     interaction_context = await create_interaction_context(options=interaction_context_options)
     client = await create_state_query_client(interaction_context)
-    chain_tip = await client.chain_tip()
+    chain_tip = await client.tip()
     # await client.shutdown()
     print(chain_tip)
 

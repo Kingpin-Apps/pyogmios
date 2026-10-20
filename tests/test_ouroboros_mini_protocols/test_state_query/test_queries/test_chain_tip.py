@@ -28,7 +28,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 @pytest.mark.asyncio
 async def test_chain_sync(mocker, test_input):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.chain_tip.query",
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.tip.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
@@ -38,7 +38,7 @@ async def test_chain_sync(mocker, test_input):
     interaction_context = await create_interaction_context()
 
     client = await create_state_query_client(interaction_context)
-    chain_tip = await client.chain_tip()
+    chain_tip = await client.tip()
     await client.shutdown()
     assert isinstance(chain_tip, PointOrOrigin)
 
@@ -46,7 +46,7 @@ async def test_chain_sync(mocker, test_input):
 @pytest.mark.asyncio
 async def test_block_height_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.chain_tip.query",
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.tip.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -61,7 +61,7 @@ async def test_block_height_query_unavailable(mocker):
             "pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client.ensure_socket_is_open"
         ):
             client = await create_state_query_client(interaction_context)
-            chain_tip = await client.chain_tip()
+            chain_tip = await client.tip()
             client.shutdown()
             assert isinstance(chain_tip, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_name == "chainTip"

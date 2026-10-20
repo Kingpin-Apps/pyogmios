@@ -1,7 +1,7 @@
 import json
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError
 from pyogmios_client.models import Slot
 from pyogmios_client.models.request_model import Request
@@ -13,11 +13,11 @@ async def await_acquire(context: InteractionContext, args: dict) -> Slot:
     """
     Send a request to the node to acquire the tx submission protocol.
     :param context: The interaction context
-    :param args: The args
+    :param args: The params
     :return: The Slot
     """
     request = Request.from_base_request(
-        method_name=MethodName.AWAIT_ACQUIRE,
+        method_name=Method.AWAIT_ACQUIRE,
         args=args,
     )
     try:

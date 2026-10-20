@@ -10,8 +10,7 @@ from typing import Callable, TypeVar
 from websocket import WebSocketApp, WebSocketConnectionClosedException
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import Type
-from pyogmios_client.exceptions import JsonwspFaultError
+from pyogmios_client.models.base_request_response_model import BaseErrorResponse
 from pyogmios_client.models.request_model import Request
 from pyogmios_client.models.response_model import Response
 
@@ -46,11 +45,16 @@ async def send_request(request: Request, context: InteractionContext) -> Respons
     """
     try:
         websocket = context.socket
-        websocket.send(request.model_dump_json())
+        websocket.send(request.model_dump_json(exclude_none=True))
         result = websocket.sock.recv()
+
+        result_json = json.loads(result)
+        if "error" in result_json.keys():
+            return BaseErrorResponse.model_validate(result_json)
         response = Response(**json.loads(result))
-        if response.type is Type.JSONWSP_FAULT:
-            raise JsonwspFaultError(response.fault["code"], response.fault["string"])
+        # TODO: Handle errors :class:`BaseErrorResponse`
+        # if response.type is Type.JSONWSP_FAULT:
+        #     raise JsonwspFaultError(response.fault["code"], response.fault["string"])
         return response
     except WebSocketConnectionClosedException as error:
         raise error

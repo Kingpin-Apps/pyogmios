@@ -12,7 +12,7 @@ from pyogmios_client.connection import InteractionContext
 from pyogmios_client.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import JsonwspFaultError, PyOgmiosError
 from pyogmios_client.models.request_model import Request
 from pyogmios_client.models.response_model import Response
@@ -66,7 +66,7 @@ class MockWebSocketApp(WebSocketApp):
 async def test_send_request_success():
     # Arrange
     request = Request.from_base_request(
-        method_name=MethodName.QUERY,
+        method_name=Method.QUERY,
         args={"query": "test-query"},
         mirror={"mirror": "test-mirror"},
     )
@@ -90,7 +90,7 @@ async def test_send_request_success():
 async def test_send_request_fault():
     # Arrange
     request = Request.from_base_request(
-        method_name=MethodName.QUERY,
+        method_name=Method.QUERY,
         args={"query": "test-query"},
         mirror={"mirror": "test-mirror"},
     )

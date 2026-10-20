@@ -29,7 +29,7 @@ from pyogmios_client.ouroboros_mini_protocols.chain_sync.chain_sync_client impor
 #
 # @pytest.fixture
 # def response():
-#     return RequestNextResponse(methodname=MethodName.REQUEST_NEXT)
+#     return RequestNextResponse(methodname=Method.NEXT_BLOCK)
 
 
 @pytest.mark.asyncio

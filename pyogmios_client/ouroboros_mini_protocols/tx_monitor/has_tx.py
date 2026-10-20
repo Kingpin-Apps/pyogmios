@@ -1,7 +1,7 @@
 import json
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError
 from pyogmios_client.models import TxId
 from pyogmios_client.models.request_model import Request
@@ -16,7 +16,7 @@ async def has_tx(context: InteractionContext, tx_id: TxId) -> bool:
     :return:
     """
     request = Request.from_base_request(
-        method_name=MethodName.HAS_TX,
+        method_name=Method.HAS_TRANSACTION,
         args={"id": tx_id},
     )
     try:

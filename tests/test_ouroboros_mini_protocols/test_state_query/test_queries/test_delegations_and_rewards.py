@@ -8,12 +8,12 @@ from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
 )
 from pyogmios_client.models import (
-    DelegationsAndRewardsByAccounts,
+    RewardAccountSummaries,
     Era,
     QueryUnavailableInCurrentEra,
 )
 from pyogmios_client.models.response_model import (
-    DelegationsAndRewardsResponse,
+    QueryLedgerStateRewardAccountSummariesResponse,
     QueryResponseReflection,
 )
 from pyogmios_client.models.result_models import EraMismatchResult
@@ -27,8 +27,8 @@ async def test_delegations_and_rewards(
     mocker, fake_delegations_and_rewards_by_accounts
 ):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.delegations_and_rewards.query",
-        return_value=DelegationsAndRewardsResponse.from_base_response(
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=fake_delegations_and_rewards_by_accounts,
         ),
@@ -37,18 +37,18 @@ async def test_delegations_and_rewards(
     interaction_context = await create_interaction_context()
 
     client = await create_state_query_client(interaction_context)
-    delegations_and_rewards = await client.delegations_and_rewards(
+    delegations_and_rewards = await client.reward_account_summaries(
         ["stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4"]
     )
     await client.shutdown()
-    assert isinstance(delegations_and_rewards, DelegationsAndRewardsByAccounts)
+    assert isinstance(delegations_and_rewards, RewardAccountSummaries)
 
 
 @pytest.mark.asyncio
 async def test_delegations_and_rewards_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.delegations_and_rewards.query",
-        return_value=DelegationsAndRewardsResponse.from_base_response(
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatchResult(**fake_era_mismatch_result),
         ),
@@ -59,7 +59,7 @@ async def test_delegations_and_rewards_era_mismatch(mocker, fake_era_mismatch_re
         interaction_context = await create_interaction_context()
 
         client = await create_state_query_client(interaction_context)
-        delegations_and_rewards = await client.delegations_and_rewards(
+        delegations_and_rewards = await client.reward_account_summaries(
             ["stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4"]
         )
         client.shutdown()
@@ -80,8 +80,8 @@ async def test_delegations_and_rewards_era_mismatch(mocker, fake_era_mismatch_re
 @pytest.mark.asyncio
 async def test_delegations_and_rewards_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.delegations_and_rewards.query",
-        return_value=DelegationsAndRewardsResponse.from_base_response(
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.reward_account_summaries.query",
+        return_value=QueryLedgerStateRewardAccountSummariesResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
         ),
@@ -92,7 +92,7 @@ async def test_delegations_and_rewards_query_unavailable(mocker):
         interaction_context = await create_interaction_context()
 
         client = await create_state_query_client(interaction_context)
-        delegations_and_rewards = await client.delegations_and_rewards(
+        delegations_and_rewards = await client.reward_account_summaries(
             ["stake1uyc7gl90ufh355m9wfwhgs5dcftxvaxrp3gs9h97f4frssq5zhsq4"]
         )
         client.shutdown()

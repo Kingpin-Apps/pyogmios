@@ -1,5 +1,5 @@
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -23,9 +23,7 @@ async def pools_ranking(context: InteractionContext) -> PoolsRanking:
     :param context: The interaction context to use for the query.
     :return: The pools ranking.
     """
-    request_args = RequestArgs(
-        method_name=MethodName.QUERY, args={"query": "poolsRanking"}
-    )
+    request_args = RequestArgs(method=Method.QUERY, params={"query": "poolsRanking"})
 
     try:
         response = await query(request_args, context)

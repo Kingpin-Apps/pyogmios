@@ -1,5 +1,5 @@
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -30,7 +30,7 @@ async def stake_distribution(context: InteractionContext) -> PoolDistribution:
     :return: The stake distribution.
     """
     request_args = RequestArgs(
-        method_name=MethodName.QUERY, args={"query": "stakeDistribution"}
+        method=Method.QUERY, params={"query": "stakeDistribution"}
     )
 
     try:

@@ -12,19 +12,17 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 
 async def main():
     """
-    This will query the block height of the node through Ogmios.
+    This will query the protocol parameters of the node through Ogmios.
     """
-    interaction_context_options = InteractionContextOptions(
-        interaction_type=InteractionType.ONE_TIME
-    )
     interaction_context = await create_interaction_context(
-        options=interaction_context_options
+        options=InteractionContextOptions(interaction_type=InteractionType.ONE_TIME)
     )
-    client = await create_state_query_client(interaction_context)
-    chain_tip = await client.chain_tip()
 
-    # await client.shutdown()
-    print(chain_tip)
+    client = await create_state_query_client(interaction_context)
+    protocol_parameters = await client.query_ledger_state.protocol_parameters()
+    await client.shutdown()
+
+    print(protocol_parameters.model_dump_json(indent=4, by_alias=True))
 
 
 if __name__ == "__main__":

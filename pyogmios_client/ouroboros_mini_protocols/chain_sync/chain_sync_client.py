@@ -5,7 +5,7 @@ from typing import List, Callable, Coroutine
 from websocket import WebSocketApp
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError
 from pyogmios_client.models import (
     RollBackward,
@@ -101,12 +101,12 @@ async def create_chain_sync_client(
             :param message:
             """
             response = Response.model_validate_json(message)
-            if response.methodname is MethodName.REQUEST_NEXT:
+            if response.methodname is Method.NEXT_BLOCK:
                 try:
                     response_handler(RequestNextResponse.model_validate_json(message))
                 except Exception as err:
                     print(err)
-            elif response.methodname is MethodName.FIND_INTERSECT:
+            elif response.methodname is Method.FIND_INTERSECTION:
                 request_next(websocket_app)
 
         websocket_app.on_message = on_message

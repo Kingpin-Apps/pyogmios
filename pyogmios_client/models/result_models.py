@@ -23,7 +23,7 @@ from pyogmios_client.models import (
     SubmitTxErrorBadInputs,
     PointOrOrigin,
     Slot,
-    ExUnits,
+    ExecutionUnits,
     TipOrOrigin,
     Block,
     TxId,
@@ -108,7 +108,7 @@ class AwaitAcquiredResult(BaseModel):
 
 
 class EvaluationResult(BaseModel):
-    evaluation_result: Dict[str, ExUnits] = Field(None, alias="EvaluationResult")
+    evaluation_result: Dict[str, ExecutionUnits] = Field(None, alias="EvaluationResult")
 
 
 class IntersectionFound(BaseModel):
@@ -262,7 +262,9 @@ class Result(BaseModel):
     released: Optional[str] = Field(None, alias="Released")
     roll_backward: Optional[RollBackward] = Field(None, alias="RollBackward")
     roll_forward: Optional[RollForward] = Field(None, alias="RollForward")
-    submit_success: Optional[SubmitSuccess] = Field(None, alias="SubmitSuccess")
+    submit_success: Optional[SubmitSuccess] = Field(
+        None, alias="SubmitTransactionSuccess"
+    )
     submit_tx_error: Optional[SubmitTxError] = Field(None, alias="SubmitTxError")
 
 

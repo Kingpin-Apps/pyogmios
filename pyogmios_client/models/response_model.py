@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Optional, Any, Dict, Union, List
 
-from pydantic import Field, ConfigDict
+from pydantic import ConfigDict
 
-from pyogmios_client.enums import MethodName, Type, Version, ServiceName
+from pyogmios_client.enums import Method
 from pyogmios_client.models import (
     BaseModel,
     BlockNoOrOrigin,
@@ -15,7 +15,7 @@ from pyogmios_client.models import (
     ProtocolParametersShelley,
     ProtocolParametersAlonzo,
     ProtocolParametersBabbage,
-    DelegationsAndRewardsByAccounts,
+    RewardAccountSummaries,
     Bound,
     EraSummary,
     GenesisByron,
@@ -37,8 +37,10 @@ from pyogmios_client.models import (
     TxBabbage,
     Null,
     MempoolSizeAndCapacity,
+    ProtocolParameters,
+    GenesisConway,
 )
-from pyogmios_client.models.base_request_response_model import BaseRequestResponse
+from pyogmios_client.models.base_request_response_model import BaseResponse
 from pyogmios_client.models.result_models import (
     SubmitTxError,
     RollForwardResult,
@@ -48,32 +50,19 @@ from pyogmios_client.models.result_models import (
     AcquireFailureResult,
     AwaitAcquiredResult,
     ReleaseResponseResult,
-    EraMismatchResult,
 )
 
 
-class Response(BaseRequestResponse):
-    fault: Optional[Dict[str, Any]] = None
-    reflection: Optional[Any] = Field(
-        None,
-        description="An arbitrary JSON value that will be mirrored back in the response.",
-    )
-    result: Optional[Any] = None
-
+class Response(BaseResponse):
     model_config = ConfigDict(extra="allow", populate_by_name=True)
 
 
-class SubmitSuccess(BaseModel):
-
-    model_config = ConfigDict(
-        extra="forbid",
-    )
-
-    txId: TxId
+class SubmitTransactionSuccess(BaseModel):
+    result: Dict[str, Any]
 
 
 class SubmitTxResponseSubmitSuccess(BaseModel):
-    SubmitSuccess: SubmitSuccess
+    SubmitSuccess: SubmitTransactionSuccess
 
 
 class SubmitTxResponseSubmitFail(BaseModel):
@@ -81,43 +70,43 @@ class SubmitTxResponseSubmitFail(BaseModel):
 
 
 class SubmitTxResponse(BaseModel):
-    methodname: MethodName = MethodName.SUBMIT_TX
+    methodname: Method = Method.SUBMIT_TRANSACTION
     result: Union[SubmitTxResponseSubmitSuccess, SubmitTxResponseSubmitFail]
     reflection: Optional[Dict[str, Any]] = None
 
 
 class EvaluateTxResponse(BaseModel):
-    methodname: MethodName = MethodName.EVALUATE_TX
+    methodname: Method = Method.EVALUATE_TRANSACTION
     result: Union[EvaluationResult, EvaluationFailure]
     reflection: Optional[Dict[str, Any]] = None
 
 
 class AwaitAcquireResponse(BaseModel):
-    methodname: MethodName = MethodName.AWAIT_ACQUIRE
+    methodname: Method = Method.ACQUIRE_LEDGER_STATE
     result: AwaitAcquiredResult
     reflection: Optional[Dict[str, Any]] = None
 
 
 class HasTxResponse(BaseModel):
-    methodname: MethodName = MethodName.HAS_TX
+    methodname: Method = Method.HAS_TRANSACTION
     result: bool
     reflection: Optional[Dict[str, Any]] = None
 
 
 class NextTxResponse(BaseModel):
-    methodname: MethodName = MethodName.NEXT_TX
+    methodname: Method = Method.NEXT_TRANSACTION
     result: Union[TxId, TxAlonzo, TxBabbage, Null]
     reflection: Optional[Dict[str, Any]] = None
 
 
 class ReleaseMempoolResponse(BaseModel):
-    methodname: MethodName = MethodName.RELEASE_MEMPOOL
+    methodname: Method = Method.RELEASE_MEMPOOL
     result: str
     reflection: Optional[Dict[str, Any]] = None
 
 
 class SizeAndCapacityResponse(BaseModel):
-    methodname: MethodName = MethodName.SIZE_AND_CAPACITY
+    methodname: Method = Method.SIZE_OF_MEMPOOL
     result: MempoolSizeAndCapacity
     reflection: Optional[Dict[str, Any]] = None
 
@@ -129,34 +118,37 @@ class QueryResponseReflection(BaseModel):
 
 
 class QueryResponse(Response):
-    methodname: MethodName = MethodName.QUERY
-    reflection: Optional[QueryResponseReflection] = None
-    result: Optional[Any] = None
-
     @staticmethod
     def from_base_response(
-        reflection: Optional[Any] = None,
+        request_id: str,
+        method: Method,
         result: Optional[Any] = None,
     ) -> QueryResponse:
+        """
+        Creates a query response from a base response.
+
+        :param request_id: The request id
+        :param method: The method
+        :param result: The result
+        :return: The :class:`QueryResponse` object
+        """
         return QueryResponse(
-            type=Type.JSONWSP_RESPONSE,
-            version=Version.v1_0,
-            servicename=ServiceName.OGMIOS,
-            reflection=reflection,
+            id=request_id,
+            method=method,
             result=result,
         )
 
 
 class FindIntersectResponse(QueryResponse):
-    methodname: MethodName = MethodName.FIND_INTERSECT
+    methodname: Method = Method.FIND_INTERSECTION
     result: FindIntersectResult
 
     class Config:
         populate_by_name = True
 
 
-class QueryResponseBlockHeight(QueryResponse):
-    result: Union[BlockNoOrOrigin, QueryUnavailableInCurrentEra]
+class QueryNetworkBlockHeightResponse(QueryResponse):
+    result: BlockNoOrOrigin | QueryUnavailableInCurrentEra
 
 
 class RequestNextResponse(QueryResponse):
@@ -164,71 +156,45 @@ class RequestNextResponse(QueryResponse):
 
 
 class ReleaseResponse(QueryResponse):
-    methodname: MethodName = MethodName.RELEASE
+    methodname: Method = Method.RELEASE_LEDGER_STATE
     result: ReleaseResponseResult
 
 
 class AcquireResponse(QueryResponse):
-    methodname: MethodName = MethodName.ACQUIRE
+    methodname: Method = Method.ACQUIRE_LEDGER_STATE
     result: Union[AcquireSuccessResult, AcquireFailureResult]
 
 
-class ChainTipResponse(QueryResponse):
-    result: Optional[Union[PointOrOrigin, QueryUnavailableInCurrentEra]] = None
+class QueryNetworkTipResponse(QueryResponse):
+    result: PointOrOrigin
 
 
-class CurrentEpochResponse(QueryResponse):
-    result: Optional[
-        Union[Epoch, EraMismatchResult, QueryUnavailableInCurrentEra]
-    ] = None
+class QueryLedgerStateEpochResponse(QueryResponse):
+    result: Epoch
 
 
-class CurrentProtocolParametersResponse(QueryResponse):
-    result: Optional[
-        Union[
-            ProtocolParametersShelley,
-            ProtocolParametersAlonzo,
-            ProtocolParametersBabbage,
-            EraMismatchResult,
-            QueryUnavailableInCurrentEra,
-        ]
-    ] = None
+class QueryLedgerStateProtocolParametersResponse(QueryResponse):
+    result: ProtocolParameters
 
 
-class DelegationsAndRewardsResponse(QueryResponse):
-    result: Optional[
-        Union[
-            DelegationsAndRewardsByAccounts,
-            EraMismatchResult,
-            QueryUnavailableInCurrentEra,
-        ]
-    ] = None
+class QueryLedgerStateRewardAccountSummariesResponse(QueryResponse):
+    result: RewardAccountSummaries
 
 
-class EraStartResponse(QueryResponse):
-    result: Optional[Union[Bound, QueryUnavailableInCurrentEra]] = None
+class QueryLedgerStateEraStartResponse(QueryResponse):
+    result: Optional[Bound] = None
 
 
 class EraSummariesResponse(QueryResponse):
-    result: Optional[Union[List[EraSummary], QueryUnavailableInCurrentEra]] = None
+    result: Optional[List[EraSummary]] = None
 
 
-class GenesisConfigResponse(QueryResponse):
-    result: Optional[
-        Union[
-            GenesisByron,
-            GenesisShelley,
-            GenesisAlonzo,
-            EraMismatch,
-            QueryUnavailableInCurrentEra,
-        ]
-    ] = None
+class QueryNetworkGenesisConfigurationResponse(QueryResponse):
+    result: Optional[GenesisByron | GenesisShelley | GenesisAlonzo | GenesisConway]
 
 
-class LedgerTipResponse(QueryResponse):
-    result: Optional[
-        Union[PointOrOrigin, EraMismatch, QueryUnavailableInCurrentEra]
-    ] = None
+class QueryLedgerStateTipResponse(QueryResponse):
+    result: Optional[PointOrOrigin] = None
 
 
 class NonMyopicMemberRewardsResponse(QueryResponse):

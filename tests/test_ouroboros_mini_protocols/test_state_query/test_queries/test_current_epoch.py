@@ -18,7 +18,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 @pytest.mark.asyncio
 async def test_current_epoch(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.current_epoch.query",
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.epoch.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=Epoch(500),
@@ -27,14 +27,14 @@ async def test_current_epoch(mocker):
     interaction_context = await create_interaction_context()
 
     client = await create_state_query_client(interaction_context)
-    current_epoch = await client.current_epoch()
+    current_epoch = await client.epoch()
     assert isinstance(current_epoch, Epoch)
 
 
 @pytest.mark.asyncio
 async def test_current_epoch_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.current_epoch.query",
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.epoch.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
@@ -45,7 +45,7 @@ async def test_current_epoch_query_unavailable(mocker):
     with pytest.raises(QueryUnavailableInCurrentEraError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        current_epoch = await client.current_epoch()
+        current_epoch = await client.epoch()
         assert isinstance(current_epoch, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_name == "currentEpoch"
     assert exc_info.value.message == "QueryUnavailableInCurrentEra. currentEpoch"
@@ -54,7 +54,7 @@ async def test_current_epoch_query_unavailable(mocker):
 @pytest.mark.asyncio
 async def test_current_epoch_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.current_epoch.query",
+        "pyogmios_client.ouroboros_mini_protocols.state_query.queries.epoch.query",
         return_value=QueryResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatchResult(**fake_era_mismatch_result),
@@ -65,7 +65,7 @@ async def test_current_epoch_era_mismatch(mocker, fake_era_mismatch_result):
     with pytest.raises(EraMismatchError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        current_epoch = await client.current_epoch()
+        current_epoch = await client.epoch()
         assert isinstance(current_epoch, QueryUnavailableInCurrentEra)
     assert exc_info.value.query_era == Era.Byron.value
     assert exc_info.value.ledger_era == Era.Mary.value

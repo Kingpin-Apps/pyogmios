@@ -1,7 +1,7 @@
 from typing import List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     UnknownResultError,
     IntersectionNotFoundError,
@@ -26,7 +26,7 @@ async def find_intersect(
     :return: The intersection found
     """
     request_args = RequestArgs(
-        method_name=MethodName.FIND_INTERSECT, args={"points": points}
+        method=Method.FIND_INTERSECTION, params={"points": points}
     )
 
     response = await query(request_args, context)
@@ -34,7 +34,7 @@ async def find_intersect(
         **response.model_dump(by_alias=True)
     )
     result = find_intersect_response.result
-    if find_intersect_response.methodname is not MethodName.FIND_INTERSECT:
+    if find_intersect_response.methodname is not Method.FIND_INTERSECTION:
         raise UnknownResultError(find_intersect_response)
     if result.intersection_found:
         return result.intersection_found

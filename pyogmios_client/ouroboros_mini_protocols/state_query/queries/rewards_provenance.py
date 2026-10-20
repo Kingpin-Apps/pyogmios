@@ -1,5 +1,5 @@
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -23,7 +23,7 @@ async def rewards_provenance(context: InteractionContext) -> RewardsProvenance:
     :return: The rewards provenance.
     """
     request_args = RequestArgs(
-        method_name=MethodName.QUERY, args={"query": "rewardsProvenance"}
+        method=Method.QUERY, params={"query": "rewardsProvenance"}
     )
 
     try:

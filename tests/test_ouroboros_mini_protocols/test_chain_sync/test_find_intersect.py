@@ -3,7 +3,7 @@ import pytest
 from pyogmios_client.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import MethodName, Type, Version, ServiceName
+from pyogmios_client.enums import Method, Type, Version, ServiceName
 from pyogmios_client.exceptions import IntersectionNotFoundError
 from pyogmios_client.models import Origin
 from pyogmios_client.models.response_model import Response, QueryResponseReflection
@@ -50,7 +50,7 @@ async def test_find_intersect_success(mocker, test_input, expected):
             type=Type.JSONWSP_RESPONSE,
             version=Version.v1_0,
             servicename=ServiceName.OGMIOS,
-            methodname=MethodName.FIND_INTERSECT,
+            methodname=Method.FIND_INTERSECTION,
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=FindIntersectResult(**test_input),
         ),
@@ -91,7 +91,7 @@ async def test_find_intersect_fail(mocker, test_input, expected):
             type=Type.JSONWSP_RESPONSE,
             version=Version.v1_0,
             servicename=ServiceName.OGMIOS,
-            methodname=MethodName.FIND_INTERSECT,
+            methodname=Method.FIND_INTERSECTION,
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=FindIntersectResult(**test_input),
         ),

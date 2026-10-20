@@ -16,7 +16,7 @@ from pyogmios_client.models import (
     Era,
 )
 from pyogmios_client.models.response_model import (
-    LedgerTipResponse,
+    QueryLedgerStateTipResponse,
     QueryResponseReflection,
 )
 from pyogmios_client.models.result_models import EraMismatchResult
@@ -36,7 +36,7 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.state_query_client imp
 async def test_ledger_tip(mocker, test_input):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.ledger_tip.query",
-        return_value=LedgerTipResponse.from_base_response(
+        return_value=QueryLedgerStateTipResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=test_input,
         ),
@@ -52,7 +52,7 @@ async def test_ledger_tip(mocker, test_input):
 async def test_ledger_tip_query_unavailable(mocker):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.ledger_tip.query",
-        return_value=LedgerTipResponse.from_base_response(
+        return_value=QueryLedgerStateTipResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
         ),
@@ -73,7 +73,7 @@ async def test_ledger_tip_query_unavailable(mocker):
 async def test_ledger_tip_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
         "pyogmios_client.ouroboros_mini_protocols.state_query.queries.ledger_tip.query",
-        return_value=LedgerTipResponse.from_base_response(
+        return_value=QueryLedgerStateTipResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),
         ),

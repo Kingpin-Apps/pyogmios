@@ -1,7 +1,7 @@
 from typing import List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -37,8 +37,8 @@ async def utxo(
     :param filters: The stake key or transaction hashes to query.
     :return: The Unspent Transaction Output."""
     request_args = RequestArgs(
-        method_name=MethodName.QUERY,
-        args={
+        method=Method.QUERY,
+        params={
             "query": {"utxo": filters}
             if isinstance(filters, List) and len(filters) > 0
             else "utxo"

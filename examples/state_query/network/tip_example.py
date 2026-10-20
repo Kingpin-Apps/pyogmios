@@ -14,16 +14,15 @@ async def main():
     """
     This will query the block height of the node through Ogmios.
     """
-    interaction_context_options = InteractionContextOptions(
-        interaction_type=InteractionType.ONE_TIME
-    )
     interaction_context = await create_interaction_context(
-        options=interaction_context_options
+        options=InteractionContextOptions(interaction_type=InteractionType.ONE_TIME)
     )
     client = await create_state_query_client(interaction_context)
-    bh = await client.block_height()
+    chain_tip = await client.query_network.tip()
     await client.shutdown()
-    print(f"Block height: {bh.root.root}")
+
+    print(f"Slot: {chain_tip.slot}")
+    print(f"Id: {chain_tip.id.root}")
 
 
 if __name__ == "__main__":

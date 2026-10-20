@@ -1,7 +1,7 @@
 from typing import List, Dict
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -30,7 +30,7 @@ async def pool_parameters(
     :return: The pool parameters.
     """
     request_args = RequestArgs(
-        method_name=MethodName.QUERY, args={"query": {"poolParameters": pools}}
+        method=Method.QUERY, params={"query": {"poolParameters": pools}}
     )
 
     try:

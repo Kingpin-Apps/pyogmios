@@ -6,7 +6,7 @@ from types import UnionType
 from typing import Optional, Dict, List, Union
 
 from pydantic import conint, Field, constr, confloat, AnyUrl, RootModel
-from typing_extensions import Annotated, Literal
+from typing_extensions import Annotated, Literal, TypedDict
 
 from pyogmios_client.enums import (
     RewardPot,
@@ -22,6 +22,8 @@ from pyogmios_client.models.base_model import BaseModel
 
 Slot = int
 
+DigestAny = str
+
 
 class Origin(RootModel):
     root: str = "origin"
@@ -30,6 +32,11 @@ class Origin(RootModel):
 BlockNo = int
 
 Metadatum: UnionType = int | str | bytes | List | Dict
+
+StakePoolId = str
+
+DigestBlake2B224 = str
+"""A Blake2b 28-byte hash digest, encoded in base16."""
 
 
 class Address(RootModel):
@@ -148,7 +155,7 @@ class ChainCode(RootModel):
 
 
 class CostModel(RootModel):
-    root: Optional[Dict[str, Int64]] = None
+    root: Optional[List[Int64]] = None
 
 
 class CostModels(RootModel):
@@ -159,12 +166,12 @@ class Datum(RootModel):
     root: str
 
 
-class DelegationsAndRewardsByAccounts(RootModel):
-    root: Optional[Dict[str, DelegationsAndRewards]] = None
+class RewardAccountSummaries(RootModel):
+    root: Optional[Dict[str, RewardAccountSummary]] = None
 
 
-class DelegationsAndRewards(BaseModel):
-    delegate: PoolId
+class RewardAccountSummary(BaseModel):
+    delegate: TypedDict("id", {"id": StakePoolId})
     rewards: Lovelace
 
 
@@ -289,9 +296,9 @@ class Epoch(RootModel):
     )
 
 
-class ExUnits(BaseModel):
+class ExecutionUnits(BaseModel):
     memory: UInt64
-    steps: UInt64
+    cpu: UInt64
 
 
 class GenesisVerificationKey(RootModel):
@@ -320,8 +327,8 @@ class KesVerificationKey(RootModel):
     root: str
 
 
-class Lovelace(RootModel):
-    root: int = Field(
+class Lovelace(BaseModel):
+    lovelace: int = Field(
         ..., description="A number of lovelace, possibly large when summed up."
     )
 
@@ -396,6 +403,11 @@ class Prices(BaseModel):
     steps: Ratio
 
 
+class ScriptExecutionPrices(BaseModel):
+    memory: Ratio
+    cpu: Ratio
+
+
 class Ratio(RootModel):
     root: Annotated[
         str,
@@ -407,9 +419,57 @@ class Ratio(RootModel):
     ]
 
 
+class ProtocolParametersUpdate(BaseModel):
+    network: Optional[Ratio] = None
+    economic: Optional[Ratio] = None
+    technical: Optional[Ratio] = None
+    governance: Optional[Ratio] = None
+
+
+class DelegateRepresentativeVotingThresholds(BaseModel):
+    no_confidence: Optional[Ratio] = Field(None, alias="noConfidence")
+    constitution: Optional[Ratio] = None
+    constitutional_committee: Optional[ConstitutionalCommittee] = Field(
+        None, alias="constitutionalCommittee"
+    )
+    hard_fork_initiation: Optional[Ratio] = Field(None, alias="hardForkInitiation")
+    protocol_parameters_update: Optional[ProtocolParametersUpdate] = Field(
+        None, alias="protocolParametersUpdate"
+    )
+    treasury_withdrawals: Optional[Ratio] = Field(None, alias="treasuryWithdrawals")
+
+
+class Size(BaseModel):
+    bytes: Int64
+
+
+class Mandate(BaseModel):
+    epoch: Epoch
+
+
+class ConstitutionalCommitteeMember(BaseModel):
+    id: DigestBlake2B224
+    mandate: Mandate
+
+
+class ConstitutionalCommittee(BaseModel):
+    default: Optional[Ratio] = None
+    state_of_no_confidence: Optional[Ratio] = Field(None, alias="stateOfNoConfidence")
+    members: Optional[List[ConstitutionalCommitteeMember]]
+    quorum: Optional[Ratio]
+
+
+class StakePoolVotingThresholds(BaseModel):
+    no_confidence: Optional[Ratio] = Field(None, alias="noConfidence")
+    constitutional_committee: Optional[ConstitutionalCommittee] = Field(
+        None, alias="constitutionalCommittee"
+    )
+    hard_fork_initiation: Optional[Ratio] = Field(None, alias="hardForkInitiation")
+
+
 class Redeemer(BaseModel):
     redeemer: RedeemerData
-    executionUnits: ExUnits
+    executionUnits: ExecutionUnits
 
 
 class RedeemerData(RootModel):
@@ -420,9 +480,8 @@ class RedeemerPointer(RootModel):
     root: Annotated[str, Field(pattern=r"^(spend|mint|certificate|withdrawal):[0-9]+$")]
 
 
-class RelativeTime(RootModel):
-    root: confloat(ge=0.0) = Field(
-        ...,
+class RelativeTime(BaseModel):
+    seconds: int = Field(
         description="A time in seconds relative to another one (typically, system start or era start). Starting from v5.5.4, this can be a floating number. Before v5.5.4, the floating value would be rounded to the nearest second.",
     )
 
@@ -635,6 +694,7 @@ class DlgCertificate(BaseModel):
 
 
 class GenesisByron(BaseModel):
+    era: Literal["byron"]
     genesisKeyHashes: List[DigestBlake2bVerificationKey]
     genesisDelegations: Dict[str, DlgCertificate]
     systemStart: UtcTime
@@ -646,12 +706,13 @@ class GenesisByron(BaseModel):
 
 
 class GenesisAlonzo(BaseModel):
+    era: Literal["alonzo"]
     coinsPerUtxoWord: UInt64
     collateralPercentage: UInt64
     costModels: CostModels
     maxCollateralInputs: NullableUInt64
-    maxExecutionUnitsPerBlock: ExUnits
-    maxExecutionUnitsPerTransaction: ExUnits
+    maxExecutionUnitsPerBlock: ExecutionUnits
+    maxExecutionUnitsPerTransaction: ExecutionUnits
     maxValueSize: NullableUInt64
     prices: Prices
 
@@ -662,6 +723,7 @@ class GenesisDelegate(BaseModel):
 
 
 class GenesisShelley(BaseModel):
+    era: Literal["shelley"]
     systemStart: UtcTime
     networkMagic: NetworkMagic
     network: Network
@@ -677,6 +739,36 @@ class GenesisShelley(BaseModel):
     initialDelegates: Dict[str, GenesisDelegate] = Field(..., title="InitialDelegates")
     initialFunds: Dict[str, Lovelace] = Field(..., title="InitialFunds")
     initialPools: GenesisPools
+
+
+class Anchor(BaseModel):
+    hash: DigestAny
+    url: str
+
+
+class Constitution(BaseModel):
+    hash: DigestBlake2B224
+    anchor: Anchor
+
+
+class UpdatableParameters(BaseModel):
+    stakePoolVotingThresholds: StakePoolVotingThresholds
+    constitutionalCommitteeMinSize: UInt64
+    constitutionalCommitteeMaxTermLength: UInt64
+    governanceActionLifetime: Epoch
+    governanceActionDeposit: Lovelace
+    delegateRepresentativeVotingThresholds: DelegateRepresentativeVotingThresholds
+    delegateRepresentativeDeposit: Lovelace
+    delegateRepresentativeMaxIdleTime: Epoch
+
+
+class GenesisConway(BaseModel):
+    era: Literal["conway"]
+    constitution: Constitution
+    constitutional_committee: ConstitutionalCommittee = Field(
+        ..., alias="constitutionalCommittee"
+    )
+    updatable_parameters: UpdatableParameters = Field(..., alias="updatableParameters")
 
 
 class GenesisPools(BaseModel):
@@ -707,8 +799,8 @@ class ProtocolParametersAlonzo(BaseModel):
     protocolVersion: ProtocolVersion | Null
     costModels: CostModels | Null
     prices: Prices | Null
-    maxExecutionUnitsPerTransaction: ExUnits | Null
-    maxExecutionUnitsPerBlock: ExUnits | Null
+    maxExecutionUnitsPerTransaction: ExecutionUnits | Null
+    maxExecutionUnitsPerBlock: ExecutionUnits | Null
 
 
 class ProtocolParametersBabbage(BaseModel):
@@ -732,8 +824,8 @@ class ProtocolParametersBabbage(BaseModel):
     protocolVersion: ProtocolVersion | Null
     costModels: CostModels | Null
     prices: Prices | Null
-    maxExecutionUnitsPerTransaction: ExUnits | Null
-    maxExecutionUnitsPerBlock: ExUnits | Null
+    maxExecutionUnitsPerTransaction: ExecutionUnits | Null
+    maxExecutionUnitsPerBlock: ExecutionUnits | Null
 
 
 class ProtocolParametersByron(BaseModel):
@@ -771,6 +863,84 @@ class ProtocolParametersShelley(BaseModel):
     minPoolCost: NullableUInt64
     extraEntropy: Nonce | Null
     protocolVersion: ProtocolVersion | Null
+
+
+class ProtocolParameters(BaseModel):
+    min_fee_coefficient: Optional[NullableUInt64] = Field(
+        None, alias="minFeeCoefficient"
+    )
+    min_fee_constant: Optional[Lovelace] = Field(None, alias="minFeeConstant")
+    min_utxo_deposit_coefficient: Optional[NullableUInt64] = Field(
+        None, alias="minUtxoDepositCoefficient"
+    )
+    min_utxo_deposit_constant: Optional[Lovelace | int] = Field(
+        None, alias="minUtxoDepositConstant"
+    )
+    max_block_body_size: Optional[Size] = Field(None, alias="maxBlockBodySize")
+    max_block_header_size: Optional[Size] = Field(None, alias="maxBlockHeaderSize")
+    max_transaction_size: Optional[Size] = Field(None, alias="maxTransactionSize")
+    max_value_size: Optional[Size] = Field(None, alias="maxValueSize")
+    extra_entropy: Optional[Nonce] = Field(None, alias="extraEntropy")
+    stake_credential_deposit: Optional[Lovelace] = Field(
+        None, alias="stakeCredentialDeposit"
+    )
+    stake_pool_deposit: Optional[Lovelace] = Field(None, alias="stakePoolDeposit")
+    stake_pool_retirement_epoch_bound: Optional[NullableUInt64] = Field(
+        None, alias="stakePoolRetirementEpochBound"
+    )
+    stake_pool_pledge_influence: Optional[NullableRatio] = Field(
+        None, alias="stakePoolPledgeInfluence"
+    )
+    min_stake_pool_cost: Optional[Lovelace] = Field(None, alias="minStakePoolCost")
+    desired_number_of_stake_pools: Optional[NullableUInt64] = Field(
+        None, alias="desiredNumberOfStakePools"
+    )
+    federated_block_production_ratio: Optional[NullableRatio] = Field(
+        None, alias="federatedBlockProductionRatio"
+    )
+    monetary_expansion: Optional[NullableRatio] = Field(None, alias="monetaryExpansion")
+    treasury_expansion: Optional[NullableRatio] = Field(None, alias="treasuryExpansion")
+    collateral_percentage: Optional[NullableUInt64] = Field(
+        None, alias="collateralPercentage"
+    )
+    max_collateral_inputs: Optional[NullableUInt64] = Field(
+        None, alias="maxCollateralInputs"
+    )
+    plutus_cost_models: Optional[CostModels] = Field(None, alias="plutusCostModels")
+    script_execution_prices: Optional[ScriptExecutionPrices] = Field(
+        None, alias="scriptExecutionPrices"
+    )
+    max_execution_units_per_transaction: Optional[ExecutionUnits] = Field(
+        None, alias="maxExecutionUnitsPerTransaction"
+    )
+    max_execution_units_per_block: Optional[ExecutionUnits] = Field(
+        None, alias="maxExecutionUnitsPerBlock"
+    )
+    stake_pool_voting_thresholds: Optional[StakePoolVotingThresholds] = Field(
+        None, alias="stakePoolVotingThresholds"
+    )
+    constitutional_committee_min_size: Optional[NullableUInt64] = Field(
+        None, alias="constitutionalCommitteeMinSize"
+    )
+    constitutional_committee_max_term_length: Optional[NullableUInt64] = Field(
+        None, alias="constitutionalCommitteeMaxTermLength"
+    )
+    governance_action_lifetime: Optional[Epoch] = Field(
+        None, alias="governanceActionLifetime"
+    )
+    governance_action_deposit: Optional[Lovelace] = Field(
+        None, alias="governanceActionDeposit"
+    )
+    delegate_representative_voting_thresholds: Optional[
+        DelegateRepresentativeVotingThresholds
+    ] = Field(None, alias="delegateRepresentativeVotingThresholds")
+    delegate_representative_deposit: Optional[Lovelace] = Field(
+        None, alias="delegateRepresentativeDeposit"
+    )
+    delegate_representative_max_idle_time: Optional[Epoch] = Field(
+        None, alias="delegateRepresentativeMaxIdleTime"
+    )
+    version: Optional[ProtocolVersion] = None
 
 
 class Allegra(BaseModel):
@@ -882,7 +1052,7 @@ class Mary(BaseModel):
 
 class Point(BaseModel):
     slot: Slot
-    hash: DigestBlake2bBlockHeader
+    id: DigestBlake2bBlockHeader
 
 
 class RedeemWitness(BaseModel):
@@ -1498,8 +1668,8 @@ class SubmitTxErrorExtraScriptWitnesses(BaseModel):
 
 
 class ExecutionUnitsTooLarge(BaseModel):
-    maximumExecutionUnits: ExUnits
-    actualExecutionUnits: ExUnits
+    maximumExecutionUnits: ExecutionUnits
+    actualExecutionUnits: ExecutionUnits
 
 
 class SubmitTxErrorExecutionUnitsTooLarge(BaseModel):
@@ -1664,24 +1834,24 @@ class EraSummary(BaseModel):
     parameters: EraParameters
 
 
-class SlotLength(RootModel):
-    root: float = Field(
-        ...,
-        description="A slot length, in seconds. Starting from v5.5.4, this can be a floating number. Before v5.5.4, the floating value would be rounded to the nearest second.",
+class SlotLength(BaseModel):
+    milliseconds: int = Field(
+        description="A slot length, in seconds. Starting from v5.5.4, this can be a floating number. Before v5.5.4, "
+        "the floating value would be rounded to the nearest second.",
     )
 
 
 class SafeZone(RootModel):
     root: conint(ge=0, le=18446744073709552999) = Field(
-        ...,
-        description="Number of slots from the tip of the ledger in which it is guaranteed that no hard fork can take place. This should be (at least) the number of slots in which we are guaranteed to have k blocks.",
+        description="Number of slots from the tip of the ledger in which it is guaranteed that no hard fork can take "
+        "place. This should be (at least) the number of slots in which we are guaranteed to have k blocks.",
     )
 
 
 class EraParameters(BaseModel):
-    epochLength: Epoch
-    slotLength: SlotLength
-    safeZone: Optional[SafeZone]
+    epoch_length: Epoch = Field(alias="epochLength")
+    slot_length: SlotLength = Field(alias="slotLength")
+    safe_zone: Optional[SafeZone] = Field(alias="safeZone")
 
 
 class PoolRank(BaseModel):
@@ -1693,7 +1863,7 @@ class PoolsRanking(RootModel):
     root: Optional[Dict[str, PoolRank]] = None
 
 
-GenesisConfig = GenesisByron | GenesisShelley | GenesisAlonzo
+GenesisConfig = GenesisByron | GenesisShelley | GenesisAlonzo | GenesisConway
 
 
 class RewardInfoPool(BaseModel):
@@ -1819,7 +1989,7 @@ class PoolDistributions(RootModel):
 
 
 class EvaluationResult(BaseModel):
-    EvaluationResult: Dict[str, ExUnits]
+    EvaluationResult: Dict[str, ExecutionUnits]
 
 
 class MissingRequiredScripts(BaseModel):
@@ -1853,7 +2023,7 @@ class NonScriptInputReferencedByRedeemer(BaseModel):
 
 
 class IllFormedExecutionBudget(BaseModel):
-    illFormedExecutionBudget: Union[ExUnits, Null]
+    illFormedExecutionBudget: Union[ExecutionUnits, Null]
 
 
 class ScriptFailure(RootModel):
@@ -1909,6 +2079,14 @@ class EvaluationFailure(BaseModel):
     ]
 
 
+Base16 = str
+"""A stake key or script hash in base16."""
+
+Bech32 = str
+"""A Blake2b 28-byte hash digest of a verification key or script."""
+
+AnyStakeCredential = Base16 | Bech32 | StakeAddress
+
 AuxiliaryData.model_rebuild()
 AuxiliaryDataBody.model_rebuild()
 BlockAllegra.model_rebuild()
@@ -1919,11 +2097,11 @@ BlockProof.model_rebuild()
 BlockShelley.model_rebuild()
 Byron.model_rebuild()
 CostModel.model_rebuild()
-DelegationsAndRewards.model_rebuild()
-DelegationsAndRewardsByAccounts.model_rebuild()
+RewardAccountSummary.model_rebuild()
+RewardAccountSummaries.model_rebuild()
 EpochBoundaryBlock.model_rebuild()
 EraSummary.model_rebuild()
-ExUnits.model_rebuild()
+ExecutionUnits.model_rebuild()
 GenesisAlonzo.model_rebuild()
 GenesisByron.model_rebuild()
 GenesisShelley.model_rebuild()

@@ -3,7 +3,7 @@ import pytest
 from pyogmios_client.connection import (
     create_interaction_context,
 )
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import PyOgmiosError
 from pyogmios_client.models.response_model import Response
 from pyogmios_client.ouroboros_mini_protocols.state_query.query import (
@@ -16,8 +16,8 @@ from pyogmios_client.ouroboros_mini_protocols.state_query.query import (
 async def test_query_success(mocker, fake_query_response):
     # Arrange
     request_args = RequestArgs(
-        method_name=MethodName.QUERY,
-        args={"query": "test-query"},
+        method=Method.QUERY,
+        params={"query": "test-query"},
         mirror={"mirror": "test-mirror", "requestId": "test-request-id"},
     )
     context = await create_interaction_context()
@@ -38,8 +38,8 @@ async def test_query_success(mocker, fake_query_response):
 async def test_query_error(mocker):
     # Arrange
     request_args = RequestArgs(
-        method_name=MethodName.QUERY,
-        args={"query": "test-query"},
+        method=Method.QUERY,
+        params={"query": "test-query"},
         mirror={"mirror": "test-mirror", "requestId": "test-request-id"},
     )
     context = await create_interaction_context()

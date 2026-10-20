@@ -1,7 +1,7 @@
 from typing import Dict
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -30,7 +30,7 @@ async def proposed_protocol_parameters(
     :return: The proposed protocol parameters.
     """
     request_args = RequestArgs(
-        method_name=MethodName.QUERY, args={"query": "proposedProtocolParameters"}
+        method=Method.QUERY, params={"query": "proposedProtocolParameters"}
     )
 
     try:

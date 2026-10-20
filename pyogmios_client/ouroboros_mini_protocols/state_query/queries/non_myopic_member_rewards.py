@@ -1,7 +1,7 @@
 from typing import List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import (
     QueryUnavailableInCurrentEraError,
     EraMismatchError,
@@ -33,8 +33,8 @@ async def non_myopic_member_rewards(
     :return: The non-myopic member rewards for the given stake key hashes.
     """
     request_args = RequestArgs(
-        method_name=MethodName.QUERY,
-        args={"query": {"nonMyopicMemberRewards": input_list}},
+        method=Method.QUERY,
+        params={"query": {"nonMyopicMemberRewards": input_list}},
     )
 
     try:

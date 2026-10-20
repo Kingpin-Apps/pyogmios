@@ -1,7 +1,7 @@
 from typing import List
 
 from pyogmios_client.connection import InteractionContext
-from pyogmios_client.enums import MethodName
+from pyogmios_client.enums import Method
 from pyogmios_client.exceptions import UnknownResultError, EraMismatchError
 from pyogmios_client.models import (
     TxId,
@@ -161,7 +161,7 @@ async def submit_tx(
     :return: The tx id
     """
     request = Request.from_base_request(
-        method_name=MethodName.SUBMIT_TX,
+        method_name=Method.SUBMIT_TRANSACTION,
         args={"submit": bytes_},
     )
     try:

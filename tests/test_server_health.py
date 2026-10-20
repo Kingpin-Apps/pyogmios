@@ -8,9 +8,7 @@ from pyogmios_client.server_health import get_server_health
 
 
 @pytest.mark.asyncio
-async def test_get_server_health_happy_path(
-    fake_server_health, mock_server_health_options
-):
+async def test_get_server_health(fake_server_health, mock_server_health_options):
     # Arrange
     mock_get = AsyncMock()
     mock_get.__aenter__.return_value.status = 200
@@ -26,7 +24,7 @@ async def test_get_server_health_happy_path(
 
 
 @pytest.mark.asyncio
-async def test_get_server_health_error_cases(mock_server_health_options):
+async def test_get_server_health_error(mock_server_health_options):
     # Arrange
     status_code = 500
     mock_get = AsyncMock()

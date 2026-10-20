@@ -11,21 +11,18 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta"
 ]
-
-[project.urls]
-"Homepage" = "https://github.com/KINGH242/pyogmios"
-"Bug Tracker" = "https://github.com/KINGH242/pyogmios/issues"
+homepage = "https://github.com/KINGH242/pyogmios"
 
 [tool.poetry.dependencies]
-python = ">=3.8.10, <3.12"
-requests = "^2.31.0"
-pydantic = "^2.5.1"
-aiohttp = "^3.9.0"
-aiodns = "^3.1.1"
+python = "^3.10"
+requests = ">=2.32.4"
+pydantic = "^2.11.7"
+aiohttp = "^3.12.13"
+aiodns = "^3.5.0"
 websocket-client = "^1.6.4"
 promise = "^2.3"
 nanoid = "^2.0.0"
-pyee = "^11.0.1"
+pyee = "^13.0.0"
 rel = "^0.4.9"
 
 
