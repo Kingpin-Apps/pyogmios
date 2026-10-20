@@ -9,7 +9,7 @@ from pyogmios.connection import (
     create_interaction_context,
 )
 from pyogmios.server_health import Connection
-from tests.conftest import ConnectionConfigFactory
+from tests.legacy.conftest import ConnectionConfigFactory
 
 
 def test_create_connection_object():

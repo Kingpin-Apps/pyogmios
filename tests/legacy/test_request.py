@@ -17,7 +17,7 @@ from pyogmios.exceptions import JsonwspFaultError, PyOgmiosError
 from pyogmios.models.request_model import Request
 from pyogmios.models.response_model import Response
 from pyogmios.request import send, send_request
-from tests.conftest import ConnectionFactory
+from tests.legacy.conftest import ConnectionFactory
 
 
 @pytest.mark.asyncio

@@ -11,41 +11,40 @@ from pyogmios.models import (
     Era,
     EraMismatch,
     QueryUnavailableInCurrentEra,
-    RewardsProvenanceNew,
+    RewardsProvenance,
 )
 from pyogmios.models.response_model import (
     QueryResponseReflection,
-    RewardsProvenanceNewResponse,
+    RewardsProvenanceResponse,
 )
 from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
-from tests.conftest import RewardsProvenanceNewFactory
+from tests.legacy.conftest import RewardsProvenanceFactory
 
 
 @pytest.mark.asyncio
-async def test_rewards_provenance_new(mocker):
+async def test_rewards_provenance(mocker):
     mocker.patch(
-        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
-        return_value=RewardsProvenanceNewResponse.from_base_response(
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance.query",
+        return_value=RewardsProvenanceResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
-            result=RewardsProvenanceNewFactory.build(),
+            result=RewardsProvenanceFactory.build(),
         ),
     )
-
     interaction_context = await create_interaction_context()
     client = await create_state_query_client(interaction_context)
-    rewards_provenance_new = await client.rewards_provenance_new()
+    rewards_provenance = await client.rewards_provenance()
     await client.shutdown()
-    assert isinstance(rewards_provenance_new, RewardsProvenanceNew)
+    assert isinstance(rewards_provenance, RewardsProvenance)
 
 
 @pytest.mark.asyncio
-async def test_rewards_provenance_new_query_unavailable(mocker):
+async def test_rewards_provenance_query_unavailable(mocker):
     mocker.patch(
-        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
-        return_value=RewardsProvenanceNewResponse.from_base_response(
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance.query",
+        return_value=RewardsProvenanceResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result="QueryUnavailableInCurrentEra",
         ),
@@ -55,18 +54,18 @@ async def test_rewards_provenance_new_query_unavailable(mocker):
     with pytest.raises(QueryUnavailableInCurrentEraError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        rewards_provenance_new = await client.rewards_provenance_new()
+        rewards_provenance = await client.rewards_provenance()
         client.shutdown()
-        assert isinstance(rewards_provenance_new, QueryUnavailableInCurrentEra)
-    assert exc_info.value.query_name == "rewardsProvenance'"
-    assert exc_info.value.message == "QueryUnavailableInCurrentEra. rewardsProvenance'"
+        assert isinstance(rewards_provenance, QueryUnavailableInCurrentEra)
+    assert exc_info.value.query_name == "rewardsProvenance"
+    assert exc_info.value.message == "QueryUnavailableInCurrentEra. rewardsProvenance"
 
 
 @pytest.mark.asyncio
-async def test_rewards_provenance_new_era_mismatch(mocker, fake_era_mismatch_result):
+async def test_rewards_provenance_era_mismatch(mocker, fake_era_mismatch_result):
     mocker.patch(
-        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance_new.query",
-        return_value=RewardsProvenanceNewResponse.from_base_response(
+        "pyogmios.ouroboros_mini_protocols.state_query.queries.rewards_provenance.query",
+        return_value=RewardsProvenanceResponse.from_base_response(
             reflection=QueryResponseReflection(requestId="test-request-id"),
             result=EraMismatch(**fake_era_mismatch_result["eraMismatch"]),
         ),
@@ -76,9 +75,9 @@ async def test_rewards_provenance_new_era_mismatch(mocker, fake_era_mismatch_res
     with pytest.raises(EraMismatchError) as exc_info:
         interaction_context = await create_interaction_context()
         client = await create_state_query_client(interaction_context)
-        rewards_provenance_new = await client.rewards_provenance_new()
+        rewards_provenance = await client.rewards_provenance()
         client.shutdown()
-        assert isinstance(rewards_provenance_new, EraMismatchResult)
+        assert isinstance(rewards_provenance, EraMismatchResult)
 
     query_era = Era(fake_era_mismatch_result["eraMismatch"]["queryEra"]).value
     ledger_era = Era(fake_era_mismatch_result["eraMismatch"]["ledgerEra"]).value

@@ -18,7 +18,7 @@ from pyogmios.models.result_models import EraMismatchResult
 from pyogmios.ouroboros_mini_protocols.state_query.state_query_client import (
     create_state_query_client,
 )
-from tests.conftest import (
+from tests.legacy.conftest import (
     ProtocolParametersAlonzoFactory,
     ProtocolParametersBabbageFactory,
     ProtocolParametersShelleyFactory,
