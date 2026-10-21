@@ -2,7 +2,7 @@
 
 A rewrite for **Ogmios v7**, which replaced the protocol 0.7 used (Ogmios v5). Breaking: the import is
 `pyogmios` (was `pyogmios_client`), Python 3.11+ is required, and the API is new. See
-[Migrating from 0.7](https://kingpin-apps.github.io/pyogmios/migration/).
+[Migrating from 0.7](https://kingpin-apps.github.io/pyogmios/latest/migration/).
 
 ### Feat
 

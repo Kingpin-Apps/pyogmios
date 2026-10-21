@@ -54,7 +54,7 @@ pip install "pyogmios[speedups]"   # with orjson, for faster JSON
 ```
 
 You need an Ogmios v7 server connected to a `cardano-node`: see
-[Getting started](https://kingpin-apps.github.io/pyogmios/getting-started/).
+[Getting started](https://kingpin-apps.github.io/pyogmios/latest/getting-started/).
 
 ## Contributing
 
