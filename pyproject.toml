@@ -100,6 +100,7 @@ branch = true
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
+fail_under = 95
 
 [tool.ruff]
 target-version = "py311"

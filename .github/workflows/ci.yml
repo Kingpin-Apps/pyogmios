@@ -71,6 +71,15 @@ jobs:
           name: coverage
           path: coverage.xml
 
+  speedups:
+    name: unit tests with orjson (pyogmios[speedups])
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv run --extra speedups python -c "import orjson"
+      - run: uv run --extra speedups pytest -m "not integration and not devnet and not properties"
+
   properties:
     name: property-based tests
     runs-on: ubuntu-latest
