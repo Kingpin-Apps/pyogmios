@@ -111,3 +111,11 @@ test-devnet *args:
 # Property-based tests: random schema-valid documents for every type (PYOGMIOS_HYPOTHESIS_EXAMPLES)
 test-properties *args:
     uv run pytest -m properties -n auto {{args}}
+
+# Build the docs (strict: every warning fails)
+docs:
+    uv run --group docs mkdocs build --strict
+
+# Serve the docs at http://127.0.0.1:8000, rebuilding on changes
+docs-serve:
+    uv run --group docs mkdocs serve

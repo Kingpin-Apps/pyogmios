@@ -98,6 +98,8 @@ class JsonRpcError(ResponseError):
 
 
 class ParseError(JsonRpcError):
+    """The server could not parse the request as JSON."""
+
     codes = (-32700,)
 
 
@@ -108,14 +110,20 @@ class InvalidRequestError(JsonRpcError):
 
 
 class MethodNotFoundError(JsonRpcError):
+    """The method does not exist. (Ogmios usually answers -32600 for this.)"""
+
     codes = (-32601,)
 
 
 class InvalidParamsError(JsonRpcError):
+    """The params are invalid for the method."""
+
     codes = (-32602,)
 
 
 class InternalError(JsonRpcError):
+    """The server failed while handling the request."""
+
     codes = (-32603,)
 
 
@@ -146,10 +154,14 @@ class AcquireLedgerStateError(LedgerStateQueryError):
 
 
 class EraMismatchError(LedgerStateQueryError):
+    """The query was made for an era other than the ledger's current era."""
+
     codes = (2001,)
 
 
 class UnavailableInCurrentEraError(LedgerStateQueryError):
+    """The query is not available in the ledger's current era."""
+
     codes = (2002,)
 
 
@@ -186,6 +198,8 @@ class MempoolError(ResponseError):
 
 
 class MustAcquireMempoolFirstError(MempoolError):
+    """The mempool must be acquired (``acquireMempool``) before this request."""
+
     codes = (4000,)
 
 

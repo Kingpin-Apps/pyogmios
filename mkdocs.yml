@@ -1,0 +1,114 @@
+site_name: pyogmios
+site_description: A Python client for Ogmios v7, the JSON-RPC bridge to cardano-node.
+site_url: https://kingpin-apps.github.io/pyogmios/
+repo_url: https://github.com/Kingpin-Apps/pyogmios
+repo_name: Kingpin-Apps/pyogmios
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; Kingpin Apps. Apache-2.0.
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Guide:
+      - Clients and connections: guide/clients.md
+      - Queries: guide/queries.md
+      - Following the chain: guide/chain-sync.md
+      - The ledger at a point: guide/ledger-state-at.md
+      - The mempool: guide/mempool.md
+      - Transactions: guide/transactions.md
+      - Types: guide/types.md
+      - Errors: guide/errors.md
+      - Command line: guide/cli.md
+  - Recipes: recipes.md
+  - Compatibility: compatibility.md
+  - Migrating from 0.7: migration.md
+  - API reference:
+      - Clients: reference/clients.md
+      - Queries: reference/queries.md
+      - Protocols: reference/protocols.md
+      - Errors: reference/errors.md
+      - Health: reference/health.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+
+hooks:
+  - docs/hooks.py
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: sphinx
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            members_order: source
+            merge_init_into_class: true
+            show_if_no_docstring: false
+            filters: ["!^_"]
+
+extra:
+  version:
+    provider: mike
+    default: latest
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Kingpin-Apps/pyogmios
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+watch:
+  - src/pyogmios

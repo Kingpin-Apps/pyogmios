@@ -289,3 +289,6 @@ testing/
 
 # Devnet state, including its generated keys (just devnet-up)
 devnet/.state/
+
+# Built docs (mkdocs build)
+site/
