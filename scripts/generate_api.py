@@ -114,9 +114,11 @@ def keywords(spec: Any) -> list[tuple[str, str, bool, str]]:
     ]
 
 
+#: Every query also takes a per-call timeout, as AsyncClient.call does.
+TIMEOUT = 'timeout: float | Literal["default"] | None = "default"'
+
+
 def signature(kws: list[tuple[str, str, bool, str]]) -> str:
-    if not kws:
-        return "self"
     parts = []
     for name, annotation, required, _ in sorted(kws, key=lambda kw: not kw[2]):
         if required:
@@ -124,28 +126,26 @@ def signature(kws: list[tuple[str, str, bool, str]]) -> str:
         else:
             optional = annotation if annotation.endswith("| None") else f"{annotation} | None"
             parts.append(f"{name}: {optional} = None")
-    return "self, *, " + ", ".join(parts)
+    return "self, *, " + ", ".join([*parts, TIMEOUT])
 
 
 def docstring(description: str, kws: list[tuple[str, str, bool, str]], indent: str) -> list[str]:
     text = " ".join(description.replace("\u2019", "'").split()) or "Query Ogmios."
-    lines = [f'{indent}"""{text}']
-    documented = [kw for kw in kws if kw[3]]
-    if documented:
-        lines += ["", f"{indent}Args:"]
-        lines += [f"{indent}    {name}: {desc}" for name, _, _, desc in documented]
-    if len(lines) == 1:
-        lines[0] += '"""'
-    else:
-        lines.append(f'{indent}"""')
+    lines = [f'{indent}"""{text}', ""]
+    lines += [f"{indent}:param {name}: {desc}" for name, _, _, desc in kws if desc]
+    lines += [
+        f"{indent}:param timeout: Seconds to wait for the answer; ``None`` waits forever. By default, the",
+        f"{indent}    client's ``timeout``.",
+        f'{indent}"""',
+    ]
     return lines
 
 
 def call_args(method: str, kws: list[tuple[str, str, bool, str]]) -> str:
     if not kws:
-        return f'"{method}"'
+        return f'"{method}", timeout=timeout'
     pairs = ", ".join(f'"{name}": {name}' for name, *_ in kws)
-    return f'"{method}", _params({{{pairs}}})'
+    return f'"{method}", _params({{{pairs}}}), timeout=timeout'
 
 
 def write_errors(ogmios: dict[str, Any]) -> None:
@@ -275,7 +275,7 @@ def main() -> None:
             kws = keywords(spec)
             method = snake(name.split("/", 1)[1])
             result = model_name(spec.result) or "Any"
-            forward = ", ".join(f"{kw[0]}={kw[0]}" for kw in kws)
+            forward = ", ".join([*(f"{kw[0]}={kw[0]}" for kw in kws), "timeout=timeout"])
             lines.append(f"    def {method}({signature(kws)}) -> {result}:")
             lines += docstring(descriptions.get(spec.schema_name, ""), kws, "        ")
             lines += [f"        return self._run(self._queries.{method}({forward}))", ""]
