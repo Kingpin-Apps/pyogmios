@@ -1,0 +1,8 @@
+{
+  "id": "nextTransaction:ok",
+  "jsonrpc": "2.0",
+  "method": "nextTransaction",
+  "result": {
+    "transaction": null
+  }
+}

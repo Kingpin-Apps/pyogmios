@@ -1,0 +1,97 @@
+{
+  "id": "queryLedgerState/stakePools:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/stakePools",
+  "result": {
+    "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th": {
+      "cost": {
+        "ada": {
+          "lovelace": 340000000
+        }
+      },
+      "id": "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th",
+      "margin": "0/1",
+      "metadata": {
+        "hash": "75a1562ee7700c3330a65c650efe1efd9f33fc4fa003be130d5abaaa03c43f65",
+        "url": "https://example.com/MPP6"
+      },
+      "owners": [
+        "0470daa17236a4291be26c24d9b4bb9ed023e282077572458cdfcf1a"
+      ],
+      "pledge": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "relays": [
+        {
+          "ipv4": "0.0.0.0",
+          "port": 3533,
+          "type": "ipAddress"
+        }
+      ],
+      "rewardAccount": "stake_test1uqz8pk4pwgm2g2gmufkzfkd5hw0dqglzsgrh2uj93n0u7xst6kt6w",
+      "vrfVerificationKeyHash": "52a8535d6b2e69025d188d13c10c3940a1ead314ca67cd9b400b3e36472164e0"
+    },
+    "pool1qzhrd5sd0v0r6q2kqmaz07tvgry72whcjw0xsmnttgyuxtzpkkx": {
+      "cost": {
+        "ada": {
+          "lovelace": 170000000
+        }
+      },
+      "id": "pool1qzhrd5sd0v0r6q2kqmaz07tvgry72whcjw0xsmnttgyuxtzpkkx",
+      "margin": "3/40",
+      "metadata": {
+        "hash": "54d16ff83a27bc484f1f5bcd6eb2c025b44009bc455c25233535ca5d3da7e015",
+        "url": "https://tinyurl.com/5f3shy3z"
+      },
+      "owners": [
+        "63cbae1d048699429ac48f5e15ee2abfc3cf7685e6add78a29dc3bdc"
+      ],
+      "pledge": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "relays": [
+        {
+          "ipv4": "192.168.64.9",
+          "port": 6001,
+          "type": "ipAddress"
+        }
+      ],
+      "rewardAccount": "stake_test1up3uhtsaqjrfjs56cj84u90w92lu8nmkshn2m4u298wrhhqjsenwy",
+      "vrfVerificationKeyHash": "58bb0fda33fe95083ffdae0a3a3b9601fd5eed2fe26771bd461e75c3b2483c86"
+    },
+    "pool1qzq896ke4meh0tn9fl0dcnvtn2rzdz75lk3h8nmsuew8z5uln7r": {
+      "cost": {
+        "ada": {
+          "lovelace": 170000000
+        }
+      },
+      "id": "pool1qzq896ke4meh0tn9fl0dcnvtn2rzdz75lk3h8nmsuew8z5uln7r",
+      "margin": "1/100",
+      "metadata": {
+        "hash": "5b2a75e8eafb6c3098688c9f54354ed61743a2f34b22985377b6525b9e1afd93",
+        "url": "https://hivestaking.com/poolmeta.json"
+      },
+      "owners": [
+        "c776e34b0e61fa2a7af2cee84043f6f3d16d4af904b13dfd8c609d7c"
+      ],
+      "pledge": {
+        "ada": {
+          "lovelace": 1000000000
+        }
+      },
+      "relays": [
+        {
+          "hostname": "relay2.hivestaking.com",
+          "port": 4001,
+          "type": "hostname"
+        }
+      ],
+      "rewardAccount": "stake_test1urrhdc6tpesl52n67t8wsszr7meazm22lyztz00a33sf6lq49r7cu",
+      "vrfVerificationKeyHash": "a6de347b502fc5acffc430e1e92b30b5c8ac7ecfcd6546e96e9122182412387b"
+    }
+  }
+}

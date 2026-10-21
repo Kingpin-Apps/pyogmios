@@ -1,0 +1,24 @@
+{
+  "id": "queryLedgerState/rewardAccountSummaries:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/rewardAccountSummaries",
+  "result": [
+    {
+      "credential": "0470daa17236a4291be26c24d9b4bb9ed023e282077572458cdfcf1a",
+      "deposit": {
+        "ada": {
+          "lovelace": 2000000
+        }
+      },
+      "from": "verificationKey",
+      "rewards": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "stakePool": {
+        "id": "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th"
+      }
+    }
+  ]
+}

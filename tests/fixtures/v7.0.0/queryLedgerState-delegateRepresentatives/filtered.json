@@ -1,0 +1,79 @@
+{
+  "id": "queryLedgerState/delegateRepresentatives:filtered",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/delegateRepresentatives",
+  "result": [
+    {
+      "delegators": [
+        {
+          "credential": "e1d3db284a94ec4800fe1ea8bc6bfe778b53f70130d8f0ffead60bab",
+          "from": "verificationKey"
+        }
+      ],
+      "deposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "from": "verificationKey",
+      "id": "000e058ed523b3c64865089580f1604e13178f5df2bee538e1b96203",
+      "mandate": {
+        "epoch": 1068
+      },
+      "metadata": {
+        "hash": "b5f8f69913ca29e453f2ac9fd0d2a906e2f50f75d14ee78d2afb08cbb5a96294",
+        "url": "https://metadata-govtool.cardanoapi.io/data/Justine"
+      },
+      "stake": {
+        "ada": {
+          "lovelace": 296313592949
+        }
+      },
+      "type": "registered"
+    },
+    {
+      "delegators": [
+        {
+          "credential": "0270c28368b0784a3304bab24dfb679c4815983f646783debe75c5f0",
+          "from": "script"
+        },
+        {
+          "credential": "02cff4a7388a338f71938c18f5aaa7ee94b3193446d2d3df9b8b0aec",
+          "from": "script"
+        },
+        {
+          "credential": "2f1452a4c276f3f9738a41ab6ff44a67e484bb687c17d1c43ddab686",
+          "from": "script"
+        }
+      ],
+      "stake": {
+        "ada": {
+          "lovelace": 145698494160231
+        }
+      },
+      "type": "abstain"
+    },
+    {
+      "delegators": [
+        {
+          "credential": "643cfe555d64ab03057d9ce99e3dd64f036cb951a7b01b2da964013b",
+          "from": "script"
+        },
+        {
+          "credential": "6b33000550c0c8d7e6c1a9a067b3a77ea57201f849115815f97e2c3b",
+          "from": "script"
+        },
+        {
+          "credential": "0000c862b7cda2e46b3b0eb5f17d1de67d8dd26fe7cc9f91a044bea6",
+          "from": "verificationKey"
+        }
+      ],
+      "stake": {
+        "ada": {
+          "lovelace": 3767235369984
+        }
+      },
+      "type": "noConfidence"
+    }
+  ]
+}

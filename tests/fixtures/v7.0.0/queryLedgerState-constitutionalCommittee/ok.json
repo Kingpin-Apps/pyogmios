@@ -1,0 +1,49 @@
+{
+  "id": "queryLedgerState/constitutionalCommittee:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/constitutionalCommittee",
+  "result": {
+    "members": [
+      {
+        "delegate": {
+          "from": "script",
+          "id": "3ecd2ec198f40aeb3348cdd7b6cc4986b893e99d4098663768f92f76",
+          "status": "authorized"
+        },
+        "from": "script",
+        "id": "6a0cd9563908692460413e08bef26eda0265ec23868fd1560d5cd42f",
+        "mandate": {
+          "epoch": 1720
+        },
+        "status": "active"
+      },
+      {
+        "delegate": {
+          "from": "script",
+          "id": "a11f594d3004a2a40b8837872493a54379e8898dfa3b9847d115e20a",
+          "status": "authorized"
+        },
+        "from": "script",
+        "id": "886659e5bd42b14c8c909c2178837f0e612fec1c3469368acba4e331",
+        "mandate": {
+          "epoch": 1720
+        },
+        "status": "active"
+      },
+      {
+        "delegate": {
+          "from": "script",
+          "id": "b996abb93b739c70cb17142000c1b999d5204e3b14afe0d20e24daac",
+          "status": "authorized"
+        },
+        "from": "script",
+        "id": "be4d67a5dd8de49543cc489aca920a377ea7a7e9855c8934d33e5765",
+        "mandate": {
+          "epoch": 1720
+        },
+        "status": "active"
+      }
+    ],
+    "quorum": "2/3"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "queryLedgerState/utxo:by-address",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/utxo",
+  "result": [
+    {
+      "address": "addr_test1wr2kmsldrt67j77z42n6ghjax3nfc5madwqwjqxcc2ktkwc0rlqw5",
+      "datum": "d8799f5820025ee26cd0457e571e6bc41e2afcf2cc1a243edd59cc9c2131e96fa9ccbeec1f00581caa846c92ea957a4afe17fc185f6092b1ae9a94cd5480f7a55cb5c5f658207d19a261654bcf8cd3e2bcdd5386892e0aa59023e977ff6c079a3d943eec8b2e05020158205d370ab795b5e6e4ef298efb209569c7019ebd08bb5430dbd1bf154db4a075af01011820045820ff303772ea018b9fcd26f40e35d5ee44002e91a8cd766fc4af53ee306cf3a06a18201b000001a15b4058b3ff",
+      "index": 0,
+      "transaction": {
+        "id": "b62e83fb47e5d3628e890f02fed4937486c3a64f48c149dc240780ca5eba416f"
+      },
+      "value": {
+        "aa846c92ea957a4afe17fc185f6092b1ae9a94cd5480f7a55cb5c5f6": {
+          "7d19a261654bcf8cd3e2bcdd5386892e0aa59023e977ff6c079a3d943eec8b2e": 1
+        },
+        "ada": {
+          "lovelace": 10000000
+        }
+      }
+    }
+  ]
+}

@@ -283,3 +283,12 @@ config.toml
 testing/
 /.idea/ruff.xml
 /.idea/GitlabLint.xml
+
+# Per-version test environments (just test-all)
+.venvs/
+
+# Devnet state, including its generated keys (just devnet-up)
+devnet/.state/
+
+# Built docs (mkdocs build)
+site/

@@ -1,0 +1,6 @@
+{
+  "id": "queryNetwork/blockHeight:ok",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/blockHeight",
+  "result": 4778265
+}

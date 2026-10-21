@@ -1,0 +1,16 @@
+{
+  "id": "sizeOfMempool:ok",
+  "jsonrpc": "2.0",
+  "method": "sizeOfMempool",
+  "result": {
+    "currentSize": {
+      "bytes": 0
+    },
+    "maxCapacity": {
+      "bytes": 178176
+    },
+    "transactions": {
+      "count": 0
+    }
+  }
+}

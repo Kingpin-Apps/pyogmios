@@ -1,0 +1,9 @@
+{
+  "id": "queryLedgerState/tip:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/tip",
+  "result": {
+    "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+    "slot": 125889604
+  }
+}

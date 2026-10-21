@@ -1,0 +1,19 @@
+{
+  "id": "queryLedgerState/liveStakeDistribution:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/liveStakeDistribution",
+  "result": {
+    "pool1qqa8tkycj4zck4sy7n8mqr22x5g7tvm8hnp9st95wmuvvtw28th": {
+      "stake": "2698484066/312894804334005",
+      "vrf": "52a8535d6b2e69025d188d13c10c3940a1ead314ca67cd9b400b3e36472164e0"
+    },
+    "pool1qzhrd5sd0v0r6q2kqmaz07tvgry72whcjw0xsmnttgyuxtzpkkx": {
+      "stake": "3746472301/1564474021670025",
+      "vrf": "58bb0fda33fe95083ffdae0a3a3b9601fd5eed2fe26771bd461e75c3b2483c86"
+    },
+    "pool1qzq896ke4meh0tn9fl0dcnvtn2rzdz75lk3h8nmsuew8z5uln7r": {
+      "stake": "221959966/173830446852225",
+      "vrf": "a6de347b502fc5acffc430e1e92b30b5c8ac7ecfcd6546e96e9122182412387b"
+    }
+  }
+}

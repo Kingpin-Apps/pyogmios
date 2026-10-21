@@ -1,0 +1,116 @@
+{
+  "id": "queryNetwork/genesisConfiguration:byron",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/genesisConfiguration",
+  "result": {
+    "era": "byron",
+    "genesisDelegations": {
+      "021e737009040bf7f1e7b1bcc148f29d748d4a6b561902c95e4a9f36": {
+        "delegate": {
+          "verificationKey": "2449d25504cf1ab893c75fa500c90a84236c3010cd3c6c3e36212f34f878ba2e8876fc6b3be5a440f4f2e54f3ae57078545be2ff36fb77e1f56e2967ced40d06"
+        },
+        "issuer": {
+          "verificationKey": "ea14850a8b62bc3d3cb74da7e3744c89a17d2f3c2d615ac532efd65fa4a17c4b317dd5c52f963a73e0f01d264e0b2c14d11273e5eaf689c20ed37532b42f4d4e"
+        }
+      },
+      "0bc82ced9544980b9ffe7f64b1538bbda6804a5cc32c8035485e184b": {
+        "delegate": {
+          "verificationKey": "8703bb3492fb2df024e5efd01bad4529c74e4682bad2dbe9ac4df4eb732e8781102ab580ea5eeddb70761b388af03d2144ed23e56d46ce99fc596ebd5cb22528"
+        },
+        "issuer": {
+          "verificationKey": "309ec8b24294f062a4d047a0df385f48e2b50c355738c1c3d95ff3844a4e0d4b4bf5807463bb179db65f837f837f4e61b243f9273f9d66f742e831ff74ff6399"
+        }
+      },
+      "18ed9844deef98cf9ba8b39791dede0538d2d2fa79bf67ef37dcc826": {
+        "delegate": {
+          "verificationKey": "adb240669de458252fa7c7672d1eaab20a4653ea8a005a30e0d1d829688a0a47e6d6a14214e3686f9d0dd486cd582196021837f193d3bc16b34dab23b1f8fac9"
+        },
+        "issuer": {
+          "verificationKey": "a576d6e096a4f2669eb968a8b2faeeaf290a9ea0d21ecc148eba289d20d2ddf4e7592f8129efaf8d3e3364934a850df729b6a0887549e4225436081fb02b46da"
+        }
+      }
+    },
+    "genesisKeyHashes": [
+      "021e737009040bf7f1e7b1bcc148f29d748d4a6b561902c95e4a9f36",
+      "0bc82ced9544980b9ffe7f64b1538bbda6804a5cc32c8035485e184b",
+      "18ed9844deef98cf9ba8b39791dede0538d2d2fa79bf67ef37dcc826"
+    ],
+    "initialFunds": {
+      "FHnt4NL7yPXjpZtYj1YUiX9QYYUZGXDT9gA2PJXQFkTSMx3EgawXK5BUrCHdhe2": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPXk7D87qAWEmfnL7wSQ9AzBU2mjZt3eM48NSCbygxgzAU6vCGiRZEW": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPXpazQsTdJ3Gp1twQUo4N5rrgGbRNSzchjchPiApc1k4CvqDMcdd7H": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPXtNo1wLCLZyGTMfAvB14h8onafiYkM7B69ZwvGgXeUyQWfi7FPrif": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPXtmi4mAjD43V3NB3shDs1gCuHNcMLPsRWjaw1b2yRV2xad8S8V6aq": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPXvDWHa8bVs73UEUdJd64VxWXSFNqetECtYfTd9TtJguJ14Lu3feth": {
+        "ada": {
+          "lovelace": 30000000000000000
+        }
+      },
+      "FHnt4NL7yPXvNSRpCYydjRr7koQCrsTtkovk5uYMimgqMJX2DyrEEBqiXaTd8rG": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "FHnt4NL7yPY9rTvdsCeyRnsbzp4bN7XdmAZeU5PzA1qR2asYmN6CsdxJw4YoDjG": {
+        "ada": {
+          "lovelace": 0
+        }
+      }
+    },
+    "initialVouchers": {},
+    "networkMagic": 2,
+    "securityParameter": 432,
+    "startTime": "2022-10-25T00:00:00Z",
+    "updatableParameters": {
+      "heavyDelegationThreshold": "3/10000",
+      "maxBlockBodySize": {
+        "bytes": 2000000
+      },
+      "maxBlockHeaderSize": {
+        "bytes": 2000000
+      },
+      "maxTransactionSize": {
+        "bytes": 4096
+      },
+      "maxUpdateProposalSize": {
+        "bytes": 700
+      },
+      "minFeeCoefficient": 44,
+      "minFeeConstant": {
+        "ada": {
+          "lovelace": 155381
+        }
+      },
+      "multiPartyComputationThreshold": "1/50",
+      "scriptVersion": 0,
+      "slotDuration": 20000,
+      "softForkDecrementThreshold": "1/20",
+      "softForkInitThreshold": "9/10",
+      "softForkMinThreshold": "3/5",
+      "unlockStakeEpoch": 18446744073709551615,
+      "updateProposalThreshold": "1/10",
+      "updateProposalTimeToLive": 10000,
+      "updateVoteThreshold": "1/1000"
+    }
+  }
+}

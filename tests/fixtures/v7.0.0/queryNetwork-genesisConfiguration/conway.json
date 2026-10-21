@@ -1,0 +1,84 @@
+{
+  "id": "queryNetwork/genesisConfiguration:conway",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/genesisConfiguration",
+  "result": {
+    "constitution": {
+      "guardrails": {
+        "hash": "fa24fb305126805cf2164c161d852a0e7330cf988f1fe558cf7d4a64"
+      },
+      "metadata": {
+        "hash": "ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2",
+        "url": "ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm"
+      }
+    },
+    "constitutionalCommittee": {
+      "members": [
+        {
+          "from": "script",
+          "id": "ff9babf23fef3f54ec29132c07a8e23807d7b395b143ecd8ff79f4c7",
+          "mandate": {
+            "epoch": 1000
+          }
+        }
+      ],
+      "quorum": "2/3"
+    },
+    "era": "conway",
+    "updatableParameters": {
+      "constitutionalCommitteeMaxTermLength": 365,
+      "constitutionalCommitteeMinSize": 0,
+      "delegateRepresentativeDeposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "delegateRepresentativeMaxIdleTime": 20,
+      "delegateRepresentativeVotingThresholds": {
+        "constitution": "3/4",
+        "constitutionalCommittee": {
+          "default": "67/100",
+          "stateOfNoConfidence": "3/5"
+        },
+        "hardForkInitiation": "3/5",
+        "noConfidence": "67/100",
+        "protocolParametersUpdate": {
+          "economic": "67/100",
+          "governance": "3/4",
+          "network": "67/100",
+          "technical": "67/100"
+        },
+        "treasuryWithdrawals": "67/100"
+      },
+      "governanceActionDeposit": {
+        "ada": {
+          "lovelace": 100000000000
+        }
+      },
+      "governanceActionLifetime": 30,
+      "minFeeReferenceScripts": {
+        "base": 15.0,
+        "multiplier": 1.2,
+        "range": 25600
+      },
+      "plutusCostModels": {
+        "plutus:v3": [
+          100788,
+          420,
+          1
+        ]
+      },
+      "stakePoolVotingThresholds": {
+        "constitutionalCommittee": {
+          "default": "51/100",
+          "stateOfNoConfidence": "51/100"
+        },
+        "hardForkInitiation": "51/100",
+        "noConfidence": "51/100",
+        "protocolParametersUpdate": {
+          "security": "51/100"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "id": "queryNetwork/genesisConfiguration:shelley",
+  "jsonrpc": "2.0",
+  "method": "queryNetwork/genesisConfiguration",
+  "result": {
+    "activeSlotsCoefficient": "1/20",
+    "epochLength": 86400,
+    "era": "shelley",
+    "initialDelegates": [
+      {
+        "delegate": {
+          "id": "7c54a168c731f2f44ced620f3cca7c2bd90731cab223d5167aa994e6",
+          "vrfVerificationKeyHash": "62d546a35e1be66a2b06e29558ef33f4222f1c466adbb59b52d800964d4e60ec"
+        },
+        "issuer": {
+          "id": "12b0f443d02861948a0fce9541916b014e8402984c7b83ad70a834ce"
+        }
+      },
+      {
+        "delegate": {
+          "id": "c44bc2f3cc7e98c0f227aa399e4035c33c0d775a0985875fff488e20",
+          "vrfVerificationKeyHash": "4f9d334decadff6eba258b2df8ae1f02580a2628bce47ae7d957e1acd3f42a3c"
+        },
+        "issuer": {
+          "id": "3df542796a64e399b60c74acfbdb5afa1e114532fa36b46d6368ef3a"
+        }
+      },
+      {
+        "delegate": {
+          "id": "82a02922f10105566b70366b07c758c8134fa91b3d8ae697dfa5e8e0",
+          "vrfVerificationKeyHash": "8a57e94a9b4c65ec575f35d41edb1df399fa30fdf10775389f5d1ef670ca3f9f"
+        },
+        "issuer": {
+          "id": "93fd5083ff20e7ab5570948831730073143bea5a5d5539852ed45889"
+        }
+      }
+    ],
+    "initialFunds": {},
+    "initialParameters": {
+      "desiredNumberOfStakePools": 150,
+      "extraEntropy": "neutral",
+      "federatedBlockProductionRatio": "1/1",
+      "maxBlockBodySize": {
+        "bytes": 65536
+      },
+      "maxBlockHeaderSize": {
+        "bytes": 1100
+      },
+      "maxTransactionSize": {
+        "bytes": 16384
+      },
+      "minFeeCoefficient": 44,
+      "minFeeConstant": {
+        "ada": {
+          "lovelace": 155381
+        }
+      },
+      "minStakePoolCost": {
+        "ada": {
+          "lovelace": 340000000
+        }
+      },
+      "minUtxoDepositCoefficient": 0,
+      "minUtxoDepositConstant": {
+        "ada": {
+          "lovelace": 1000000
+        }
+      },
+      "monetaryExpansion": "3/1000",
+      "stakeCredentialDeposit": {
+        "ada": {
+          "lovelace": 2000000
+        }
+      },
+      "stakePoolDeposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "stakePoolPledgeInfluence": "3/10",
+      "stakePoolRetirementEpochBound": 18,
+      "treasuryExpansion": "1/5",
+      "version": {
+        "major": 6,
+        "minor": 0
+      }
+    },
+    "initialStakePools": {
+      "delegators": {},
+      "stakePools": {}
+    },
+    "maxKesEvolutions": 62,
+    "maxLovelaceSupply": 45000000000000000,
+    "network": "testnet",
+    "networkMagic": 2,
+    "securityParameter": 432,
+    "slotLength": {
+      "milliseconds": 1000
+    },
+    "slotsPerKesPeriod": 129600,
+    "startTime": "2022-10-25T00:00:00Z",
+    "updateQuorum": 5
+  }
+}

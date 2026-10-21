@@ -1,0 +1,47 @@
+{
+  "id": "nextBlock:recent-01",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "96237f6b2123c1f586d7a56112ffa1dac458b2c36831a77acd11d59eb000b6ac",
+      "era": "conway",
+      "height": 4777766,
+      "id": "1e2227dcd6c51e71e64a5069d4b91803dfd8ab49570061f9299c6a0cf39b11c2",
+      "issuer": {
+        "leaderValue": {
+          "output": "3f205e40447b41f6730247dece07c4c30f19ac90f4730c5611876d5d92fdde9f67c0533bb7a3e1ee793d7f9c8a2ae429f76f67201641766215eecec0de6c333b",
+          "proof": "e9a401707c876a44d9f77b498831cc26b54c12a738864f77b5a97fccd4f6d11fc824bd498f1d65c2860005fe842459987b854dc58d3cdce709dfeae441170197cf2dc840b00bd9a5011374d660de2b07"
+        },
+        "operationalCertificate": {
+          "count": 3,
+          "kes": {
+            "period": 923,
+            "verificationKey": "924ddff767972a7f970f3c234cd5a0568911b842f6ea12bee28f7a83266e48b1"
+          },
+          "sigma": "d8b44efca497303498d37f11ac1e9e69b4d379991980f0f0793ea3624da4e0a438ffd9587069b034c2d1cb56d071b0ce122f912a7d0690f4759a8c46de115a06"
+        },
+        "verificationKey": "0e59a2de115ff04a66f336c66c773a18868c213ded532bae461574268df3782b",
+        "vrfVerificationKey": "768ab85657884f159bbdde295895fb9a03b5d4dee3f77ecb85a345621e0b9b97"
+      },
+      "protocol": {
+        "version": {
+          "major": 11,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 4
+      },
+      "slot": 125876184,
+      "transactions": [],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4778265,
+      "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+      "slot": 125889604
+    }
+  }
+}

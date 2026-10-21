@@ -1,0 +1,86 @@
+{
+  "id": "queryLedgerState/delegateRepresentatives:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/delegateRepresentatives",
+  "result": [
+    {
+      "delegators": [
+        {
+          "credential": "e1d3db284a94ec4800fe1ea8bc6bfe778b53f70130d8f0ffead60bab",
+          "from": "verificationKey"
+        }
+      ],
+      "deposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "from": "verificationKey",
+      "id": "000e058ed523b3c64865089580f1604e13178f5df2bee538e1b96203",
+      "mandate": {
+        "epoch": 1068
+      },
+      "metadata": {
+        "hash": "b5f8f69913ca29e453f2ac9fd0d2a906e2f50f75d14ee78d2afb08cbb5a96294",
+        "url": "https://metadata-govtool.cardanoapi.io/data/Justine"
+      },
+      "stake": {
+        "ada": {
+          "lovelace": 296313592949
+        }
+      },
+      "type": "registered"
+    },
+    {
+      "delegators": [
+        {
+          "credential": "912eaf6b75b6969356699a4cdf2d050ff4f424be54cad0fa748c4393",
+          "from": "verificationKey"
+        }
+      ],
+      "deposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "from": "verificationKey",
+      "id": "001bffceb333ff596890d2a6b9445d6427f0f6b98b0efd76d01a8f28",
+      "mandate": {
+        "epoch": 1116
+      },
+      "metadata": {
+        "hash": "f945167db70462265697d71a868fc202e3908ca943c022a3ca5c10b166a2513e",
+        "url": "https://metadata-govtool.cardanoapi.io/data/Dana.jsonld"
+      },
+      "stake": {
+        "ada": {
+          "lovelace": 19815183
+        }
+      },
+      "type": "registered"
+    },
+    {
+      "delegators": [],
+      "deposit": {
+        "ada": {
+          "lovelace": 500000000
+        }
+      },
+      "from": "verificationKey",
+      "id": "001de4e0b5f2ebffa06031123dc1879faa86525ee8b30550e75c2c25",
+      "mandate": {
+        "epoch": 765
+      },
+      "metadata": {
+        "hash": "9bd5062600912d8e4882c2f62d6d32bd5f473b65a768af34083ba9aa286764c1",
+        "url": "https://metadata-govtool.cardanoapi.io/data/Neil"
+      },
+      "stake": {
+        "ada": {
+          "lovelace": 0
+        }
+      },
+      "type": "registered"
+    }
+  ]
+}

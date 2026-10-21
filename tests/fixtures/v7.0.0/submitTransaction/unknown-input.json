@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": 3997,
+    "data": {
+      "error": "All inputs are spent. Transaction has probably already been included"
+    },
+    "message": "The transaction couldn't be added to the mempool. A justification is given as 'data.error'."
+  },
+  "id": "submitTransaction:unknown-input",
+  "jsonrpc": "2.0",
+  "method": "submitTransaction"
+}

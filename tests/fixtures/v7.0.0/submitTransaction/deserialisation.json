@@ -1,0 +1,15 @@
+{
+  "error": {
+    "code": -32602,
+    "data": {
+      "alonzo": "invalid or incomplete value of type 'Transaction': expected list len or indef",
+      "babbage": "invalid or incomplete value of type 'Transaction': expected list len or indef",
+      "conway": "invalid or incomplete value of type 'Transaction': expected list len or indef",
+      "dijkstra": "invalid or incomplete value of type 'Transaction': expected list len"
+    },
+    "message": "Invalid transaction; It looks like the given transaction wasn't well-formed. Note that I try to decode the transaction in multiple possible eras and it was malformed in ALL eras. Yet, I can't pinpoint the exact issue for I do not know in which era / format you intended the transaction to be. The 'data' field, therefore, contains errors for each era."
+  },
+  "id": "submitTransaction:deserialisation",
+  "jsonrpc": "2.0",
+  "method": "submitTransaction"
+}

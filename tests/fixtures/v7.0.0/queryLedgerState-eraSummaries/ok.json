@@ -1,0 +1,76 @@
+{
+  "id": "queryLedgerState/eraSummaries:ok",
+  "jsonrpc": "2.0",
+  "method": "queryLedgerState/eraSummaries",
+  "result": [
+    {
+      "end": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      },
+      "parameters": {
+        "epochLength": 4320,
+        "safeZone": 864,
+        "slotLength": {
+          "milliseconds": 20000
+        }
+      },
+      "start": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "end": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      },
+      "parameters": {
+        "epochLength": 86400,
+        "safeZone": 25920,
+        "slotLength": {
+          "milliseconds": 1000
+        }
+      },
+      "start": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      }
+    },
+    {
+      "end": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      },
+      "parameters": {
+        "epochLength": 86400,
+        "safeZone": 25920,
+        "slotLength": {
+          "milliseconds": 1000
+        }
+      },
+      "start": {
+        "epoch": 0,
+        "slot": 0,
+        "time": {
+          "seconds": 0
+        }
+      }
+    }
+  ]
+}

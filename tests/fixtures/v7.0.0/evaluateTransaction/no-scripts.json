@@ -1,0 +1,6 @@
+{
+  "id": "evaluateTransaction:no-scripts",
+  "jsonrpc": "2.0",
+  "method": "evaluateTransaction",
+  "result": []
+}

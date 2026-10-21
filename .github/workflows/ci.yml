@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [main, v7]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_FROZEN: "1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run --only-group lint ruff check .
+      - run: uv run --only-group lint ruff format --check .
+
+  generated:
+    name: generated code is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run python scripts/generate.py
+      - name: Fail if the generated code differs from the pinned schema
+        run: git diff --exit-code -- src/pyogmios/_generated
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run ty check
+
+  test:
+    name: test (${{ matrix.os }}, ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.11", "3.12", "3.13", "3.14", "3.15"]
+        include:
+          - os: ubuntu-latest
+            python: "3.14t"
+          - os: ubuntu-latest
+            python: "3.15t"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Import check
+        run: uv run python -c "import pyogmios; print(pyogmios.__version__)"
+      - name: Unit tests
+        run: uv run pytest -m "not integration and not devnet and not properties" --cov --cov-report=xml
+      - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.15'
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: coverage.xml
+
+  speedups:
+    name: unit tests with orjson (pyogmios[speedups])
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run --extra speedups python -c "import orjson"
+      - run: uv run --extra speedups pytest -m "not integration and not devnet and not properties"
+
+  properties:
+    name: property-based tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run pytest -m properties -n auto
+
+  devnet:
+    name: live tests on a devnet (cardano-node + Ogmios v7)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - name: Start the devnet
+        run: docker compose -f devnet/docker-compose.yml up -d --wait
+      - name: Live and devnet tests
+        env:
+          OGMIOS_URL: ws://localhost:1338
+          DEVNET_OGMIOS_URL: ws://localhost:1338
+        run: uv run pytest -m "integration or devnet"
+      - name: Devnet logs
+        if: failure()
+        run: docker compose -f devnet/docker-compose.yml logs --tail 200
+      - name: Stop the devnet
+        if: always()
+        run: docker compose -f devnet/docker-compose.yml down
+
+  docs:
+    name: docs build (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv run --group docs mkdocs build --strict
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - run: uv build
+      - name: Check the wheel installs and imports
+        run: uv run --isolated --no-project --with dist/*.whl python -c "import pyogmios"

@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": 1000,
+    "data": {
+      "tip": {
+        "height": 4778265,
+        "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+        "slot": 125889604
+      }
+    },
+    "message": "No intersection found."
+  },
+  "id": "findIntersection:not-found",
+  "jsonrpc": "2.0",
+  "method": "findIntersection"
+}

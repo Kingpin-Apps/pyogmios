@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": 4000,
+    "message": "You must acquire a mempool snapshot prior to accessing it."
+  },
+  "id": "sizeOfMempool:not-acquired",
+  "jsonrpc": "2.0",
+  "method": "sizeOfMempool"
+}

@@ -1,0 +1,154 @@
+{
+  "id": "nextBlock:early-03",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "64608f1607d876aa976507a69476f1aa750d70c61f922789dd0c147103fea10d",
+      "era": "alonzo",
+      "height": 16,
+      "id": "f4217a065ec70a058315bdbf37f2f8809e3f91deb5edd96e81b2eecb28d10426",
+      "issuer": {
+        "leaderValue": {
+          "output": "fda40775ee5d30c88c2ec408578dc420167f9562e93c85d6ddb3f0194ae0eaff70f4fae1745afc19b285badee97dba1940af8483c183df023cebbcf0357748c8",
+          "proof": "4b4e2f4316d51428a75215ae507b2656e39823cc02188f98d9b6a16a1c08c4053e81cb58de10a8c805f5c182605678718cfc37c3ffaf79d3d4395badd8d35bd252fc702e34d7ca516a133f1d63e5e90a"
+        },
+        "operationalCertificate": {
+          "count": 0,
+          "kes": {
+            "period": 0,
+            "verificationKey": "348ae693aa8e13dbe94c5dc92358d4c249b3c538f4de70a14c7b618497c5d0c0"
+          },
+          "sigma": "557b02de8338b3c9cfd80df8b2510d3b09e635ac85252cd661d145c4e0a7add51048c40cbe249f74cc57003e9fdf585cf817fc8ebdd15af3402f8a920ae1e00d"
+        },
+        "verificationKey": "15a2c7d9be47fd74b7d584679bdf0de9f3f812dc7a9be19b9e25405ccc0ea7c2",
+        "vrfVerificationKey": "6896c1311d321b8c0d628c4acd261e734c57377f44a2d2adcd3fb202fa8c9e3a"
+      },
+      "nonce": {
+        "output": "4cc97757a0d6b1ecae28d986daa97312973c06afa22e2463f601aefac6c6c7f51388e7b8922e96b8dfd8afc303d1b135c074bdddc898e6b62a68da911ea00ad4",
+        "proof": "434ea9462a062384336633b0c088a529d7aa07427e67eca5373362352bd19d5b3a96fc9c37ca29b63da9524170cb97300cc1ab546d5731cf7af754dd90fc97a74a5eb9b52c1be62c02032bc197fa1e0b"
+      },
+      "protocol": {
+        "version": {
+          "major": 7,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 1875
+      },
+      "slot": 320,
+      "transactions": [
+        {
+          "certificates": [
+            {
+              "credential": "ba149e2e2379097e65f0c03f2733d3103151e7f100d36dfdb01a0b22",
+              "from": "verificationKey",
+              "type": "stakeCredentialRegistration"
+            },
+            {
+              "stakePool": {
+                "cost": {
+                  "ada": {
+                    "lovelace": 500000000
+                  }
+                },
+                "id": "pool16h8ugt8k0a4kxa5g6x062zjrgfjc7cehpw0ze8374axlul76932",
+                "margin": "1/1",
+                "owners": [
+                  "ba149e2e2379097e65f0c03f2733d3103151e7f100d36dfdb01a0b22"
+                ],
+                "pledge": {
+                  "ada": {
+                    "lovelace": 100000000000000
+                  }
+                },
+                "relays": [
+                  {
+                    "hostname": "preview-node.world.dev.cardano.org",
+                    "port": 30002,
+                    "type": "hostname"
+                  }
+                ],
+                "rewardAccount": "stake_test1uzuklnhnhy634a5rf0v9pcaf0pva002mw2wjf0ekg6h2encat3ykr",
+                "vrfVerificationKeyHash": "4331f2905796fd9a028c17896ce5305dc1daf710ad448a3872df75722f2cc41d"
+              },
+              "type": "stakePoolRegistration"
+            },
+            {
+              "credential": "ba149e2e2379097e65f0c03f2733d3103151e7f100d36dfdb01a0b22",
+              "from": "verificationKey",
+              "stakePool": {
+                "id": "pool16h8ugt8k0a4kxa5g6x062zjrgfjc7cehpw0ze8374axlul76932"
+              },
+              "type": "stakeDelegation"
+            }
+          ],
+          "fee": {
+            "ada": {
+              "lovelace": 237793
+            }
+          },
+          "id": "e3ca57e8f323265742a8f4e79ff9af884c9ff8719bd4f7788adaea4c33ba07b6",
+          "inputs": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "a8fa4293645facb2a0332f4dfc442dff3fc9ca021c95ee908df5d9605e3825be"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1qp8cprhse9pnnv7f4l3n6pj0afq2hjm6f7r2205dz0583ed6zj0zugmep9lxtuxq8unn85csx9g70ugq6dklmvq6pv3qa0n8cl",
+              "value": {
+                "ada": {
+                  "lovelace": 100000000000000
+                }
+              }
+            },
+            {
+              "address": "addr_test1qp8cprhse9pnnv7f4l3n6pj0afq2hjm6f7r2205dz0583etc3nc9ry6glma083epch6m6c93jk6yf7sd3769ztwztxlqmf8cjn",
+              "value": {
+                "ada": {
+                  "lovelace": 100000000000000
+                }
+              }
+            },
+            {
+              "address": "addr_test1qp8cprhse9pnnv7f4l3n6pj0afq2hjm6f7r2205dz0583e0kxymsejrcs2l4u99twff5etex2hg29fg2n29rsg9mda9qrpmnfn",
+              "value": {
+                "ada": {
+                  "lovelace": 100000000000000
+                }
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "key": "ea57c6a09d6aa733d8fc16781253d92c60c99730565a58afc2a0c657a25e0c9d",
+              "signature": "0f32d18e93b13b8eddbd0480bf617b79ff674383720a1cd482e859076f487cb9826e7c9258b04ed237d948221b7a7799ed750a811828366672dca911c390e503"
+            },
+            {
+              "key": "dcb652342677e64c89a8feda74413002088dc4181041d4e83b6103b7002f857b",
+              "signature": "f3fc848da21f869dcd59561ff571f562323618cb0cdfba43b2dcbade9f4c6714eabb3bee4e42e41ec9874f6838e0c78f9452f3b90264b5dcbd0ba6172bb8f809"
+            },
+            {
+              "key": "efc4a56325e95a2c08b3747d26bfefcbf57be323a47a5853ee51b28fb4caafba",
+              "signature": "ba7316d3e8f031b4453831d20b5efafb362067730cce34aca74c7323b9e660c001abd742fa2ebcc5d7ac79ee3cd2ed54a2edb178de7c800bb50f2f0193894205"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {}
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4778265,
+      "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+      "slot": 125889604
+    }
+  }
+}

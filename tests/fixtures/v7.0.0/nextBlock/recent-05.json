@@ -1,0 +1,164 @@
+{
+  "id": "nextBlock:recent-05",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "3e58a21afb4fb235a4eeab9138937afb7fa706183ccf10784109790ed645dd04",
+      "era": "conway",
+      "height": 4777793,
+      "id": "bb000889853a70888283b97440009b1a305e6c84fde5f72835b5b428e9f1e528",
+      "issuer": {
+        "leaderValue": {
+          "output": "28aead966b6ef5f0e40fbfa367fdc04d8d6f237fb9a28c10ced5cd93675aee5c46662cff2338c89f85a343f58afb0369d96e4ebe853ffde9d500a4b9ebbc275b",
+          "proof": "0fa9e2436e7b11f511b8d6888d4d4392e30fd523a3e85e1c42037bb91c244efedba24ba20a0a15c49e2c397e1e427a72a1bd14214d9735dc57bc43c703c8fcd04865251f85baa8b773d27713c8535b09"
+        },
+        "operationalCertificate": {
+          "count": 540,
+          "kes": {
+            "period": 970,
+            "verificationKey": "98f13ce03494e54b4c71877a8b44f5e44b537ee1f68da9d10dec120394d224bb"
+          },
+          "sigma": "ee1d1eba9a938ec4502ad48de888deced5cbcff433dc0cb4be4a1cfad7fd3928677ca58ce490bcf820b4b282318471d1910902d9fa3347855f35a0b569e2ef09"
+        },
+        "verificationKey": "e5a48d9abc9d6a943c5fe65f2f376b6ff9c3d9b534fa74d99fd2171ca16b51be",
+        "vrfVerificationKey": "94e35b4efadba0693ed823f30bf1c08378c96ede64666fcb391f3c6e5cb4a8e3"
+      },
+      "protocol": {
+        "version": {
+          "major": 11,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 1252
+      },
+      "slot": 125876851,
+      "transactions": [
+        {
+          "fee": {
+            "ada": {
+              "lovelace": 210293
+            }
+          },
+          "id": "d9e576a8fcd9eb7ab5d80b34a66f80f41f6a62507c383538d4cace31d40c702d",
+          "inputs": [
+            {
+              "index": 0,
+              "transaction": {
+                "id": "00c2067ed8561be1c7fe162cbda9656af3ddb79fcee67eadb2977e8276d2d3b8"
+              }
+            },
+            {
+              "index": 0,
+              "transaction": {
+                "id": "94a64978d2c4c35577d710b9e46be434cab90661116c5e0b90f21b02b715ee21"
+              }
+            }
+          ],
+          "metadata": {
+            "hash": "c4693290d9aea9f0f834dae985513d63d38437955b494d2b665cf68a0c43fc1a",
+            "labels": {
+              "674": {
+                "json": {
+                  "msg": [
+                    "IR_TEACH_HOLD open (Preview teaching)",
+                    "Braden message sha256 (tripwire-checked, not verification):",
+                    "8f9c16bfb5fdcf6159b28a9505343b85f5c7ae5538e70086ce5dfc79d7b2d1d7"
+                  ]
+                }
+              }
+            }
+          },
+          "mint": {
+            "e838f15bfdc22c4244f7bdd851036a2ed6f420d391b3e4e5560d2cdd": {
+              "49525f54454143485f524f4f54": 2
+            }
+          },
+          "outputs": [
+            {
+              "address": "addr_test1wr5r3u2mlhpzcsjy777as5grdghddapq6wgm8e892cxjehgtzelcd",
+              "datum": "d8799f582024493e6adafa2ef2c14cb97060bba1a5b6f2bb02ade872a215fc4aa880fb17b81a07806900d8799f19012cff1b000001a15b799c784f49525f54454143485f484f4c445f41ff",
+              "value": {
+                "ada": {
+                  "lovelace": 3000000
+                },
+                "e838f15bfdc22c4244f7bdd851036a2ed6f420d391b3e4e5560d2cdd": {
+                  "49525f54454143485f524f4f54": 1
+                }
+              }
+            },
+            {
+              "address": "addr_test1wr5r3u2mlhpzcsjy777as5grdghddapq6wgm8e892cxjehgtzelcd",
+              "datum": "d8799f58200a2655d56f1c92dfc5f1d9cdbeefbf7d6e7d5022d93dcf52b6cf1d33179fe4e91a07806900d8799f190708ff1b000001a15b799c784f49525f54454143485f484f4c445f42ff",
+              "value": {
+                "ada": {
+                  "lovelace": 3000000
+                },
+                "e838f15bfdc22c4244f7bdd851036a2ed6f420d391b3e4e5560d2cdd": {
+                  "49525f54454143485f524f4f54": 1
+                }
+              }
+            },
+            {
+              "address": "addr_test1vrmaqvm7lr5lt8mmxvf0g5fk3wlckylds6rqe8e9g8lqcagan8y0l",
+              "value": {
+                "ada": {
+                  "lovelace": 1734601
+                }
+              }
+            }
+          ],
+          "scripts": {
+            "e838f15bfdc22c4244f7bdd851036a2ed6f420d391b3e4e5560d2cdd": {
+              "json": {
+                "atLeast": 2,
+                "clause": "some",
+                "from": [
+                  {
+                    "clause": "signature",
+                    "from": "3732df21e7f7f04b84021c70d3d1a9fc850c17d77d4c98dd45a38701"
+                  },
+                  {
+                    "clause": "signature",
+                    "from": "3a15cdce3a6da2f506ab62b42b355624537d8a0b6ded578fd6c749ea"
+                  },
+                  {
+                    "clause": "signature",
+                    "from": "1e6b968f2836dd3fbd857eceb3ab5224619df75cbc9a5b5b48777c7d"
+                  }
+                ]
+              },
+              "language": "native"
+            }
+          },
+          "signatories": [
+            {
+              "key": "85b1ae21f4832630ac3ce52b20c04dcabdd14201c784c1004f3235a22d0df8c6",
+              "signature": "4e01407cdcc59b3d338d684de5c02241655c007a237da604e20896feb967a098aec8fe1706ab0db0b15a1a1c6ec4edf14b505974f4fd4e3643a2cc248ec2f305"
+            },
+            {
+              "key": "956a97657197824b0708e6c652ff05f8dd8d48602cd63dadb9325a22ea45dc80",
+              "signature": "41fabc24fdc4f75c88fdd17f1d782a07a8af32d6759e573e4176f822791ec9a8643a7447217577cf7e5f5f110c2a97d7eb7c5b48c7139e71bed7894cde37bb09"
+            },
+            {
+              "key": "6eff74f738792ec43120cdfb3f20dffe3b4321231607721929a5018f2c9c7935",
+              "signature": "522e5757d602c22706d01f47566616c3ad3f9a1c56796a36a7d63160b3baa3d0d5717ba66a4d9ba0b7baffaa1ad47e9372ec3a5ae15f308516b909aebaf49904"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {
+            "invalidAfter": 125880059
+          }
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4778265,
+      "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+      "slot": 125889604
+    }
+  }
+}

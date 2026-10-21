@@ -1,0 +1,41 @@
+name: Docs
+
+# Publishes the docs to GitHub Pages (the gh-pages branch) with mike: pushes to main update the "dev"
+# version; a v* tag publishes that version and points "latest" at it.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # mike commits to gh-pages
+      - uses: astral-sh/setup-uv@v10.3.0
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Build (strict)
+        run: uv run --group docs mkdocs build --strict
+      - name: Publish dev
+        if: github.ref_type == 'branch'
+        run: uv run --group docs mike deploy --push dev
+      - name: Publish the release and point latest at it
+        if: github.ref_type == 'tag'
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          uv run --group docs mike deploy --push --update-aliases "${version%.*}" latest
+          uv run --group docs mike set-default --push latest
