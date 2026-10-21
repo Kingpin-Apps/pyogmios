@@ -286,3 +286,6 @@ testing/
 
 # Per-version test environments (just test-all)
 .venvs/
+
+# Devnet state, including its generated keys (just devnet-up)
+devnet/.state/

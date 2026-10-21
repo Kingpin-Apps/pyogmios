@@ -58,6 +58,7 @@ lint = [
 test = [
     "cbor2>=5.6",
     "jsonschema>=4.25",
+    "pynacl>=1.5",
     "pytest>=8.4",
     "pytest-asyncio>=1.2",
     "pytest-cov>=7",
@@ -85,6 +86,7 @@ addopts = ["-ra", "--strict-markers"]
 filterwarnings = ["error"]
 markers = [
     "integration: needs a live Ogmios server (deselect with '-m \"not integration\"')",
+    "devnet: needs the local devnet (just devnet-up), whose keys it signs transactions with",
 ]
 
 [tool.coverage.run]

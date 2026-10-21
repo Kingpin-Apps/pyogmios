@@ -13,7 +13,7 @@ sync:
 
 # Run the unit tests on the default Python
 test *args:
-    uv run pytest -m "not integration" {{args}}
+    uv run pytest -m "not integration and not devnet" {{args}}
 
 # Run the unit tests on every supported Python, each in its own environment
 test-all *args:
@@ -22,7 +22,7 @@ test-all *args:
     failed=()
     for py in {{pythons}}; do
         echo "==> Python $py"
-        UV_PROJECT_ENVIRONMENT=.venvs/py$py uv run --python "$py" pytest -q -m "not integration" {{args}} || failed+=("$py")
+        UV_PROJECT_ENVIRONMENT=.venvs/py$py uv run --python "$py" pytest -q -m "not integration and not devnet" {{args}} || failed+=("$py")
     done
     if [ ${#failed[@]} -gt 0 ]; then echo "Failed on: ${failed[*]}"; exit 1; fi
 
@@ -33,7 +33,7 @@ test-free-threaded *args:
     failed=()
     for py in {{free_threaded}}; do
         echo "==> Python $py"
-        UV_PROJECT_ENVIRONMENT=.venvs/py$py uv run --python "$py" pytest -q -m "not integration" {{args}} || failed+=("$py")
+        UV_PROJECT_ENVIRONMENT=.venvs/py$py uv run --python "$py" pytest -q -m "not integration and not devnet" {{args}} || failed+=("$py")
     done
     if [ ${#failed[@]} -gt 0 ]; then echo "Failed on: ${failed[*]}"; exit 1; fi
 
@@ -43,7 +43,7 @@ test-integration *args:
 
 # Run the unit tests with a coverage report
 cov:
-    uv run pytest -m "not integration" --cov --cov-report=term-missing --cov-report=html
+    uv run pytest -m "not integration and not devnet" --cov --cov-report=term-missing --cov-report=html
 
 # Check linting and formatting
 lint:
@@ -95,3 +95,15 @@ record-fixtures:
 # Check blocks from across the chain against the schema and models (add --full for every block)
 sweep *args:
     OGMIOS_URL={{ogmios_url}} uv run python scripts/sweep_blocks.py {{args}}
+
+# Start a fresh local devnet (cardano-node + Ogmios v7, Ogmios on port 1338)
+devnet-up:
+    docker compose -f devnet/docker-compose.yml up -d --wait
+
+# Stop and remove the local devnet
+devnet-down:
+    docker compose -f devnet/docker-compose.yml down
+
+# Run the live and devnet tests against the local devnet (start it with `just devnet-up`)
+test-devnet *args:
+    OGMIOS_URL=ws://localhost:1338 DEVNET_OGMIOS_URL=ws://localhost:1338 uv run pytest -m "integration or devnet" {{args}}

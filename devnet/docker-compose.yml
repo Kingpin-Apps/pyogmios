@@ -1,0 +1,21 @@
+# A throwaway Cardano devnet with Ogmios v7, for pyogmios' integration tests: `just devnet-up`.
+# Ogmios is published on host port 1338 (DEVNET_OGMIOS_PORT), so it does not clash with a local 1337.
+name: pyogmios-devnet
+
+services:
+  devnet:
+    image: cardanosolutions/cardano-node-ogmios:v7.0.0_11.0.1
+    platform: linux/amd64
+    entrypoint: ["/tini", "-g", "--", "bash", "/scripts/start.sh"]
+    environment:
+      DEVNET_MAGIC: "42"
+    volumes:
+      - ./start.sh:/scripts/start.sh:ro
+      - ./.state:/devnet
+    ports:
+      - "${DEVNET_OGMIOS_PORT:-1338}:1337"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:1337/health | jq -e '.connectionStatus == \"connected\" and .lastKnownTip.height >= 1'"]
+      interval: 2s
+      timeout: 3s
+      retries: 90
