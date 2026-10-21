@@ -91,3 +91,7 @@ check-generated: regen-models
 # Record fixtures from a live Ogmios server (OGMIOS_URL, default ws://localhost:1337)
 record-fixtures:
     OGMIOS_URL={{ogmios_url}} uv run python scripts/record_fixtures.py
+
+# Check blocks from across the chain against the schema and models (add --full for every block)
+sweep *args:
+    OGMIOS_URL={{ogmios_url}} uv run python scripts/sweep_blocks.py {{args}}
