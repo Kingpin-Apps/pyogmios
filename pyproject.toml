@@ -81,6 +81,8 @@ testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 addopts = ["-ra", "--strict-markers"]
+# Every warning fails the test that raised it: deprecations and resource leaks are caught early.
+filterwarnings = ["error"]
 markers = [
     "integration: needs a live Ogmios server (deselect with '-m \"not integration\"')",
 ]

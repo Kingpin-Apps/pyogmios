@@ -111,6 +111,10 @@ class FakeOgmios:
         return Response(200, "OK", headers, body)
 
     async def handler(self, connection: ServerConnection) -> None:
+        with suppress(ConnectionClosed):  # the client may close while an answer is being sent
+            await self._handle(connection)
+
+    async def _handle(self, connection: ServerConnection) -> None:
         self.connections += 1
         number = self.connections
         held: list[dict[str, Any]] = []

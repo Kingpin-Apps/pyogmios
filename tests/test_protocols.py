@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import gc
 import inspect
 import re
 import threading
@@ -363,3 +364,20 @@ def test_sync_client_protocols(sync_fake: FakeOgmios) -> None:
         with ogmios.mempool_snapshot() as snapshot:
             assert isinstance(snapshot.size(), MempoolSizeAndCapacity)
             assert snapshot.slot is not None
+
+
+async def test_resuming_leaves_no_unretrieved_errors() -> None:
+    """Requests in flight when the connection drops all fail; none may log "never retrieved"."""
+    lost: list[str] = []
+    asyncio.get_running_loop().set_exception_handler(
+        lambda loop, context: lost.append(context["message"])
+    )
+    fake = FakeOgmios(sequences={"nextBlock": [BACKWARD, *(forward(h) for h in range(1, 60))]})
+    async with running(fake), client(fake) as ogmios, ogmios.chain_sync(pipeline=5) as sync:
+        await drain(sync, 3)
+        fake.drop_after = len(fake.received) + 1
+        await drain(sync, 3)
+    del sync
+    gc.collect()
+    await asyncio.sleep(0)
+    assert not [message for message in lost if "never retrieved" in message]
