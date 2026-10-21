@@ -352,6 +352,8 @@ def test_sync_client_protocols(sync_fake: FakeOgmios) -> None:
     with pyogmios.Client(sync_fake.ws_url, reconnect=FAST_RECONNECT) as ogmios:
         assert ogmios.ledger_state.epoch() == recorded("queryLedgerState/epoch")["result"]
         with ogmios.chain_sync(pipeline=3) as sync:
+            assert sync.intersection is not None
+            assert sync.tip is not None
             events = [next(sync) for _ in range(4)]
         assert [type(event).__name__ for event in events] == [
             "RollBackward",

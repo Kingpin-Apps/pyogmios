@@ -179,13 +179,13 @@ class Client:
         pipeline: int = 50,
         resume: bool = True,
         raw: bool = False,
-    ) -> SyncStream[ChainSync]:
+    ) -> SyncChainSync:
         """Follow the chain: ``with client.chain_sync(points) as sync: for event in sync: ...``.
 
         See :meth:`AsyncClient.chain_sync`.
         """
         sync = self._client.chain_sync(points, pipeline=pipeline, resume=resume, raw=raw)
-        return SyncStream(sync, self._portal)
+        return SyncChainSync(sync, self._portal)
 
     def ledger_state_at(self, point: PointLike) -> SyncLedgerStateAt:
         """Query the ledger as it was at ``point``: ``with client.ledger_state_at(point) as ledger``."""
@@ -230,6 +230,20 @@ class SyncStream(Generic[S]):
             return self._portal.run(self.stream.__anext__())
         except StopAsyncIteration:
             raise StopIteration from None
+
+
+class SyncChainSync(SyncStream[ChainSync]):
+    """A synchronous chain sync; see :class:`~pyogmios.protocols.ChainSync`."""
+
+    @property
+    def intersection(self) -> models.PointOrOrigin | None:
+        """The intersection found: a point, or ``"origin"``."""
+        return self.stream.intersection
+
+    @property
+    def tip(self) -> models.TipOrOrigin | None:
+        """The server's tip when the intersection was found."""
+        return self.stream.tip
 
 
 class SyncMempoolSnapshot(SyncStream[MempoolSnapshot]):
