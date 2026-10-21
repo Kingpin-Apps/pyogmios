@@ -6,16 +6,19 @@ import itertools
 import logging
 import ssl
 import warnings
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from types import TracebackType
 from typing import Any, Literal, Self
 
 import httpx
 
 from . import _jsonrpc
+from ._generated import models
+from ._generated.api import AsyncLedgerStateQueries, AsyncNetworkQueries
 from ._transport import DEFAULT_RECONNECT, HttpTransport, Reconnect, Transport, WebSocketTransport
 from .errors import OgmiosConnectionError, OgmiosError, ServerVersionError, StatefulOverHttpError
 from .health import SUPPORTED_MAJOR, Health, health_url
+from .protocols import ChainSync, LedgerStateAt, MempoolMonitor, MempoolSnapshot, PointLike
 
 logger = logging.getLogger("pyogmios")
 
@@ -72,6 +75,11 @@ class AsyncClient:
         self.server_health: Health | None = None
         self._ids = itertools.count(1)
         self._connected = False
+        self._reconnect = reconnect
+        #: The ledger state queries: ``await client.ledger_state.epoch()``.
+        self.ledger_state = AsyncLedgerStateQueries(self)
+        #: The network queries: ``await client.network.tip()``.
+        self.network = AsyncNetworkQueries(self)
 
     def _transport_for(self, url: str, reconnect: Reconnect | None) -> Transport:
         scheme = url.partition("://")[0].lower()
@@ -221,6 +229,80 @@ class AsyncClient:
             )
         return response
 
+    # Transactions --------------------------------------------------------------------------------
+
+    async def submit_transaction(self, transaction: str | bytes) -> models.SubmitTransactionResult:
+        """Submit a signed transaction (CBOR, as bytes or hex) and return its id.
+
+        A rejection raises a :class:`~pyogmios.errors.SubmitTransactionError` subclass for the ledger
+        rule that failed, for example :class:`~pyogmios.errors.UnknownOutputReferencesError`, with the
+        ledger's details in ``details``.
+        """
+        return await self.call("submitTransaction", {"transaction": {"cbor": _hex(transaction)}})
+
+    async def evaluate_transaction(
+        self,
+        transaction: str | bytes,
+        *,
+        additional_utxo: models.Utxo | Sequence[Any] | None = None,
+    ) -> models.EvaluateTransactionResult:
+        """Run a transaction's scripts and return the execution units each redeemer needs.
+
+        ``additional_utxo`` adds outputs the node does not know yet, such as those of a transaction
+        still being built; they take precedence over the node's own.
+        """
+        params: dict[str, Any] = {"transaction": {"cbor": _hex(transaction)}}
+        if additional_utxo is not None:
+            params["additional_utxo"] = list(additional_utxo)
+        return await self.call("evaluateTransaction", params)
+
+    # Stateful protocols, each on its own connection ----------------------------------------------
+
+    def chain_sync(
+        self,
+        points: Sequence[PointLike] = ("origin",),
+        *,
+        pipeline: int = 50,
+        resume: bool = True,
+        raw: bool = False,
+    ) -> ChainSync:
+        """Follow the chain from the most recent of ``points`` that is on it; see :class:`ChainSync`.
+
+        ``raw=True`` yields plain JSON instead of models, which is faster for indexers.
+        """
+        return ChainSync(self, points, pipeline=pipeline, resume=resume, raw=raw)
+
+    def ledger_state_at(self, point: PointLike) -> LedgerStateAt:
+        """Query the ledger as it was at ``point``; see :class:`LedgerStateAt`."""
+        return LedgerStateAt(self, point)
+
+    def mempool_snapshot(self, *, full: bool = False) -> MempoolSnapshot:
+        """A snapshot of the node's mempool; see :class:`MempoolSnapshot`."""
+        return MempoolSnapshot(self, full=full)
+
+    def mempool(self, *, full: bool = False) -> MempoolMonitor:
+        """Every transaction that enters the mempool; see :class:`MempoolMonitor`."""
+        return MempoolMonitor(self, full=full)
+
+    def _dedicated(self) -> AsyncClient:
+        """A client on its own connection, for state that must not be shared or silently lost.
+
+        It never reconnects by itself: losing the connection loses the state, so it raises instead.
+        """
+        if not self.transport.stateful:
+            raise StatefulOverHttpError(
+                "chain sync, an acquired ledger state and the mempool need a ws:// or wss:// URL"
+            )
+        return AsyncClient(
+            self.url,
+            timeout=self.timeout,
+            headers=self.headers,
+            reconnect=None,
+            check_version="off",
+            open_timeout=self.open_timeout,
+            ssl_context=self.ssl_context,
+        )
+
     @property
     def generation(self) -> int:
         """How many WebSocket connections have been opened; increases on every reconnect.
@@ -229,3 +311,8 @@ class AsyncClient:
         connection: when this changes, they are gone.
         """
         return getattr(self.transport, "generation", 0)
+
+
+def _hex(transaction: str | bytes) -> str:
+    """Transaction CBOR as lowercase hex."""
+    return transaction.hex() if isinstance(transaction, bytes) else transaction.lower()
