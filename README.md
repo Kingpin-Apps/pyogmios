@@ -29,14 +29,17 @@ You need a running Ogmios v7 connected to a `cardano-node`; see the
 
 ## Usage
 
+Every Ogmios query is a typed method, grouped as in Ogmios (`queryLedgerState/*`, `queryNetwork/*`):
+
 ```python
 import pyogmios
 
 with pyogmios.Client("ws://localhost:1337") as client:
-    epoch = client.call("queryLedgerState/epoch")
-    tip = client.call("queryNetwork/tip")
-    parameters = client.call("queryLedgerState/protocolParameters")
-    print(epoch, tip.slot, parameters.max_transaction_size)
+    epoch = client.ledger_state.epoch()
+    tip = client.network.tip()
+    parameters = client.ledger_state.protocol_parameters()
+    utxos = client.ledger_state.utxo(addresses=["addr_test1..."])
+    print(epoch, parameters.max_transaction_size, len(utxos))
 ```
 
 With asyncio, requests run concurrently on one connection:
@@ -48,35 +51,62 @@ import pyogmios
 
 async def main() -> None:
     async with pyogmios.AsyncClient("ws://localhost:1337") as client:
-        epoch, tip = await asyncio.gather(
-            client.call("queryLedgerState/epoch"),
-            client.call("queryNetwork/tip"),
-        )
+        epoch, tip = await asyncio.gather(client.ledger_state.epoch(), client.network.tip())
         print(epoch, tip)
 
 
 asyncio.run(main())
 ```
 
-Params can be a model from `pyogmios.types` or a dict, with either Python or Ogmios field names, and are checked
-before they are sent:
+### Following the chain
 
 ```python
-utxos = client.call("queryLedgerState/utxo", {"addresses": ["addr_test1..."]})
+from pyogmios.types import RollForward
+
+async with client.chain_sync(["origin"]) as sync:
+    async for event in sync:
+        if isinstance(event, RollForward):
+            print(event.block.height, event.block.id)
+        else:
+            print("rolled back to", event.point)
 ```
 
-Errors from the server are exceptions:
+Chain sync keeps up to 50 requests in flight (`pipeline=`), and if the connection drops it reconnects and carries on
+from the last block it saw. Chain sync, an acquired ledger state and the mempool each use their own connection, so
+they never affect the client's other requests.
+
+### The ledger at a point, and the mempool
 
 ```python
-from pyogmios.errors import AcquireLedgerStateError
+async with client.ledger_state_at(point) as ledger:
+    print(await ledger.epoch(), await ledger.stake_pools())
+
+async with client.mempool() as transactions:  # every transaction entering the mempool
+    async for transaction_id in transactions:
+        print(transaction_id)
+```
+
+### Transactions
+
+```python
+from pyogmios.errors import SubmitTransactionError
 
 try:
-    client.call("acquireLedgerState", {"point": {"slot": 1, "id": "0" * 64}})
-except AcquireLedgerStateError as error:
-    print(error.code, error.message, error.details)
+    submitted = await client.submit_transaction(signed_cbor)  # bytes or hex
+    print(submitted.transaction.id)
+except SubmitTransactionError as error:
+    # A subclass per ledger rule, for example MissingSignatoriesError or ValueNotConservedError.
+    print(type(error).__name__, error.code, error.details)
+
+budgets = await client.evaluate_transaction(transaction_cbor, additional_utxo=[...])
 ```
 
-`client.health()` reads the server's sync progress, tip, era and version.
+Every error from the server is an exception chosen by its Ogmios error code (`pyogmios.errors`), carrying `code`,
+`message`, `data` and `details` (the data parsed into a model). Results are Pydantic models from `pyogmios.types`, with
+Python field names: `parameters.max_transaction_size` is `maxTransactionSize` on the wire.
+
+`client.call(method, params)` calls any method by its Ogmios name, and `client.health()` reads the server's sync
+progress, tip, era and version.
 
 ## Development
 
@@ -92,6 +122,7 @@ just test-integration    # live tests against Ogmios (OGMIOS_URL, default ws://l
 just check               # lint, type-check and test
 just regen-models        # regenerate the types from the pinned Ogmios schema
 just record-fixtures     # record test fixtures from a live Ogmios
+just sweep               # check blocks from across the whole chain against the schema and models
 ```
 
 Run `uv run pre-commit install` once to lint and format on commit and check commit messages
