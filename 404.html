@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pyogmios</title>
+<script>
+  // mike serves each version under its own folder; send unversioned links to latest.
+  (function () {
+    var base = "/pyogmios/";
+    var path = location.pathname;
+    if (path.indexOf(base) !== 0) return;
+    var rest = path.slice(base.length);
+    if (/^(latest|dev|\d+\.\d+)(\/|$)/.test(rest)) return;
+    location.replace(base + "latest/" + rest + location.search + location.hash);
+  })();
+</script>
+</head>
+<body>
+<p>Page not found. <a href="/pyogmios/latest/">Go to the pyogmios documentation</a>.</p>
+</body>
+</html>
