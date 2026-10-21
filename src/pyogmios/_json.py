@@ -7,7 +7,7 @@ import re
 from typing import Any
 
 try:
-    import orjson
+    import orjson  # ty: ignore[unresolved-import]  # optional: pyogmios[speedups]
 except ImportError:  # pragma: no cover - exercised when the speedups extra is not installed
     orjson = None  # type: ignore[assignment]
 

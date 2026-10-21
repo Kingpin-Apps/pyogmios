@@ -130,6 +130,8 @@ class AsyncClient:
     async def _check_version(self) -> None:
         try:
             self.server_health = await self.health()
+        except OgmiosConnectionError:
+            return  # the server is unreachable: connecting will report that, more clearly
         except OgmiosError as error:
             if self.check_version == "strict":
                 raise ServerVersionError(

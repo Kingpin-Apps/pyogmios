@@ -34,6 +34,9 @@ dependencies = [
 # Faster JSON encoding and decoding; used automatically when installed.
 speedups = ["orjson>=3.10"]
 
+[project.scripts]
+pyogmios = "pyogmios.cli:main"
+
 [project.urls]
 Homepage = "https://github.com/Kingpin-Apps/pyogmios"
 Source = "https://github.com/Kingpin-Apps/pyogmios"

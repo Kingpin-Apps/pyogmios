@@ -108,6 +108,21 @@ Python field names: `parameters.max_transaction_size` is `maxTransactionSize` on
 `client.call(method, params)` calls any method by its Ogmios name, and `client.health()` reads the server's sync
 progress, tip, era and version.
 
+## Command line
+
+```shell
+pyogmios health                       # version, network, sync progress and tip
+pyogmios tip
+pyogmios query epoch
+pyogmios query utxo '{"addresses": ["addr_test1..."]}'
+pyogmios follow --from origin --headers  # chain events, one JSON document per line
+pyogmios mempool                      # transaction ids as they enter the mempool
+pyogmios submit tx.signed             # hex, CBOR, or a cardano-cli text envelope
+```
+
+The server is `--url`, `$OGMIOS_URL` or `ws://localhost:1337`. Output is JSON, indented in a terminal. Exit codes are
+0 on success, 1 for an error from the server, 2 for a usage error and 3 when the server cannot be reached.
+
 ## Development
 
 PyOgmios uses [uv](https://docs.astral.sh/uv/) and [just](https://just.systems/). It supports Python 3.11 to 3.15,
