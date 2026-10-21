@@ -63,13 +63,21 @@ jobs:
       - name: Import check
         run: uv run python -c "import pyogmios; print(pyogmios.__version__)"
       - name: Unit tests
-        run: uv run pytest -m "not integration and not devnet" --cov --cov-report=xml
+        run: uv run pytest -m "not integration and not devnet and not properties" --cov --cov-report=xml
       - name: Upload coverage
         if: matrix.os == 'ubuntu-latest' && matrix.python == '3.15'
         uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage.xml
+
+  properties:
+    name: property-based tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv run pytest -m properties -n auto
 
   devnet:
     name: live tests on a devnet (cardano-node + Ogmios v7)

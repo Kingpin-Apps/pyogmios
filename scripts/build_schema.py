@@ -80,7 +80,9 @@ class Builder:
         error = self.rewrite(envelope["properties"]["error"])
         return self.add(type_name(envelope.get("title") or fallback), error)
 
-    def build(self) -> None:
+    def build(self, *, lenient: bool = True) -> None:
+        """Build the definitions. ``lenient=False`` keeps ``additionalProperties: false`` everywhere,
+        to generate test data that matches the models exactly."""
         for key, schema in self.cardano["definitions"].items():
             self.add(type_name(key), self.rewrite(schema))
         for key, schema in self.ogmios["definitions"].items():
@@ -123,7 +125,8 @@ class Builder:
                     entry["errors"].append(self.add_error(branch, f"{key}Error"))
             self.methods[method] = entry
 
-        self.allow_new_fields()
+        if lenient:
+            self.allow_new_fields()
         self.lift_referenced_branches()
         self.lift_titled_objects()
         self.lift_inline_objects()

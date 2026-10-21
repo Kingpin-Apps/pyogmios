@@ -57,11 +57,14 @@ lint = [
 ]
 test = [
     "cbor2>=5.6",
+    "hypothesis>=6.170",
+    "hypothesis-jsonschema>=0.23",
     "jsonschema>=4.25",
     "pynacl>=1.5",
     "pytest>=8.4",
     "pytest-asyncio>=1.2",
     "pytest-cov>=7",
+    "pytest-xdist>=3.8",
 ]
 docs = [
     "mike>=2.1",
@@ -87,6 +90,7 @@ filterwarnings = ["error"]
 markers = [
     "integration: needs a live Ogmios server (deselect with '-m \"not integration\"')",
     "devnet: needs the local devnet (just devnet-up), whose keys it signs transactions with",
+    "properties: property-based tests over every type; slow (just test-properties)",
 ]
 
 [tool.coverage.run]
