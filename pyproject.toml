@@ -9,7 +9,7 @@ authors = [{ name = "Hareem Adderley", email = "hadderley@kingpinapps.com" }]
 requires-python = ">=3.11"
 keywords = ["cardano", "ogmios", "blockchain", "json-rpc", "websocket"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -129,7 +129,7 @@ version_provider = "uv"
 tag_format = "v$version"
 legacy_tag_formats = ["$version"]
 update_changelog_on_bump = true
-major_version_zero = true
+major_version_zero = false
 version_files = ["src/pyogmios/__init__.py:__version__"]
 
 # Model generation (`just regen-models`): scripts/generate.py passes --input and --output.
