@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING, Any, Literal, Self
 
 from ._generated import models
 from ._generated.api import AsyncLedgerStateQueries
+from ._transport import DEFAULT_RECONNECT
 from .errors import OgmiosConnectionError, OgmiosError
 
 if TYPE_CHECKING:
@@ -51,9 +52,9 @@ class ChainSync:
     ``nextBlock`` requests are kept in flight, which makes catching up much faster. At the tip, Ogmios
     holds each request until a new block arrives, so there is no timeout.
 
-    If the connection drops and ``resume`` is on, it reconnects and finds an intersection again,
-    starting from the most recent points it has seen, then carries on: you see a roll backward to that
-    point, as after any intersection.
+    If the connection drops and ``resume`` is on, it reconnects (retrying as the client's ``reconnect``
+    policy says) and finds an intersection again, starting from the most recent points it has seen,
+    then carries on: you see a roll backward to that point, as after any intersection.
     """
 
     def __init__(
@@ -160,16 +161,18 @@ class ChainSync:
                 self._recent.pop()
 
     async def _resume(self) -> None:
+        """Find an intersection again, retrying as the client's ``reconnect`` policy says."""
         points = [*reversed(self._recent), *self._points]
         logger.warning("chain sync connection lost; finding an intersection again")
-        for attempt in range(1, 6):
+        delays = (self._parent._reconnect or DEFAULT_RECONNECT).delays()
+        for delay in [*delays, None]:
             try:
                 await self._intersect(points)
                 return
             except OgmiosConnectionError:
-                if attempt == 5:
+                if delay is None:
                     raise
-                await asyncio.sleep(min(10.0, 0.5 * 2**attempt))
+                await asyncio.sleep(delay)
 
 
 class LedgerStateAt:
