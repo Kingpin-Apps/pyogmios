@@ -18,7 +18,7 @@ from referencing.jsonschema import DRAFT7
 
 from pyogmios._generated.methods import OGMIOS_VERSION
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 SCHEMAS = ROOT / "schemas" / f"v{OGMIOS_VERSION}"
 FIXTURES = ROOT / "tests" / "fixtures" / f"v{OGMIOS_VERSION}"
 
