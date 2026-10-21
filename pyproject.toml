@@ -1,6 +1,6 @@
 [project]
 name = "pyogmios"
-version = "0.7.4"
+version = "1.0.0"
 description = "Python client for Ogmios, the WebSocket JSON-RPC bridge to cardano-node"
 readme = "README.md"
 license = "Apache-2.0"

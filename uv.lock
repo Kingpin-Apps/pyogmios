@@ -1588,7 +1588,7 @@ wheels = [
 
 [[package]]
 name = "pyogmios"
-version = "0.7.4"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },
