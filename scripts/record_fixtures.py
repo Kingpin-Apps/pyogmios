@@ -183,11 +183,11 @@ async def record_all(url: str) -> None:
         await r.record("findIntersection", "not-found", {"points": [bogus_point]})
         await r.record("findIntersection", "ok", {"points": [tip]})
         await r.record("nextBlock", "backward")
-        # Ogmios cannot seek by slot, so start from the origin for Byron blocks, then from a recent block
+        # Ogmios cannot seek by slot, so start from the origin for the earliest blocks, then from a recent block
         # whose hash comes from Koios's public preview API, for blocks with today's transactions.
         await r.call("findIntersection", {"points": ["origin"]})
         await r.call("nextBlock")
-        await scan_blocks(r, "byron", 30, 3)
+        await scan_blocks(r, "early", 30, 3)
         height = (await r.call("queryNetwork/blockHeight"))["result"]
         recent = recent_point(height - BLOCKS_TO_SCAN - 100)
         await r.call("findIntersection", {"points": [recent]})

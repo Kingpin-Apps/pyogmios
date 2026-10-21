@@ -1,5 +1,5 @@
 {
-  "id": "nextBlock:byron-01",
+  "id": "nextBlock:early-01",
   "jsonrpc": "2.0",
   "method": "nextBlock",
   "result": {
