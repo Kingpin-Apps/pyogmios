@@ -3,6 +3,7 @@
 1. ``build_schema.py`` combines ``ogmios.json`` and ``cardano.json`` into one schema with named definitions.
 2. datamodel-code-generator turns it into Pydantic models (options in ``[tool.datamodel-codegen]``).
 3. This script writes the method table, ``methods.py``, from ``methods.json``.
+4. ``generate_api.py`` writes ``api.py``: a typed method for every query.
 
 Usage: python scripts/generate.py [ogmios version]   (default: the version in schemas/VERSION)
 """
@@ -115,6 +116,8 @@ def main() -> None:
     (OUTPUT / "__init__.py").write_text(
         HEADER.format(what="Generated code", version=version) + "\n"
     )
+    # A fresh interpreter, so it imports the models just written.
+    run(sys.executable, "scripts/generate_api.py")
     run("ruff", "format", "--quiet", str(OUTPUT))
     run("ruff", "check", "--quiet", "--fix", str(OUTPUT))
     print(f"Generated {OUTPUT.relative_to(ROOT)} for Ogmios v{version} ({len(methods)} methods)")

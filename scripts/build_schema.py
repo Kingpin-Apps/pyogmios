@@ -273,19 +273,25 @@ class Builder:
         Objects whose extra keys carry data (``Value``'s asset policies) keep their typed
         ``additionalProperties`` and so keep those keys. Forcing ``extra="ignore"`` on every model instead
         silently dropped native assets.
+
+        Request params shapes stay strict: they are what the client sends, and in a union of shapes a
+        lenient empty one (``WholeUtxo``) would otherwise accept ``{"addresses": [...]}`` by dropping
+        the addresses, turning a filtered query into a query for everything.
         """
 
-        def visit(node: Any) -> None:
+        def visit(node: Any, strict: bool = False) -> None:
             if isinstance(node, dict):
-                if node.get("additionalProperties") is False:
+                if node.get("additionalProperties") is False and not strict:
                     del node["additionalProperties"]
-                for value in node.values():
-                    visit(value)
+                for key, value in node.items():
+                    # A strict params shape's direct union branches are param shapes too.
+                    visit(value, strict and key in ("oneOf", "anyOf"))
             elif isinstance(node, list):
                 for item in node:
-                    visit(item)
+                    visit(item, strict)
 
-        visit(self.definitions)
+        for name, schema in self.definitions.items():
+            visit(schema, strict=name.endswith("Params"))
 
     def schema(self) -> Schema:
         return {
@@ -394,6 +400,28 @@ def genesis_configuration_error(ogmios: Schema, cardano: Schema) -> None:
     }
 
 
+def pre_conway_parameter_updates(ogmios: Schema, cardano: Schema) -> None:
+    """GovernanceAction<ProtocolParametersUpdate>: ``guardrails`` is absent before Conway.
+
+    Pre-Conway update proposals have no guardrails script; Ogmios reports them as this action without
+    the field (preview block 4330, Alonzo era), but the schema requires it.
+    """
+    for branch in cardano["definitions"]["GovernanceAction"]["oneOf"]:
+        if branch.get("title") == "GovernanceAction<ProtocolParametersUpdate>":
+            branch["required"].remove("guardrails")
+
+
+def genesis_delegate_voter_origin(ogmios: Schema, cardano: Schema) -> None:
+    """Voter<GenesisDelegate>: ``from`` is absent.
+
+    Pre-Conway votes by genesis delegates carry only the delegate's key hash; Ogmios omits ``from``
+    (preview block 4330, Alonzo era), but the schema requires it.
+    """
+    for branch in cardano["definitions"]["GovernanceVoter"]["oneOf"]:
+        if branch.get("title") == "Voter<GenesisDelegate>":
+            branch["required"].remove("from")
+
+
 CORRECTIONS = [
     projected_rewards_pool_ids,
     reward_transfer_stake_addresses,
@@ -402,6 +430,8 @@ CORRECTIONS = [
     byron_genesis_updatable_parameters,
     value_ada_key,
     genesis_configuration_error,
+    pre_conway_parameter_updates,
+    genesis_delegate_voter_origin,
 ]
 
 ADJUSTMENTS = [

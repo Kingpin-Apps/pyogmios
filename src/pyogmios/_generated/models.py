@@ -546,6 +546,7 @@ Neutral = TypeAliasType("Neutral", Annotated[Literal["neutral"], Field(title="Ne
 
 class NextTransactionParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     fields: Literal["all"] | None = None
@@ -610,6 +611,7 @@ class QueryLedgerStateAcquiredExpired(BaseModel):
 
 class QueryLedgerStateDumpParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     to: Annotated[
@@ -645,6 +647,7 @@ QueryNetworkBlockHeightResult = TypeAliasType("QueryNetworkBlockHeightResult", B
 
 class QueryNetworkGenesisConfigurationParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     era: EraWithGenesis
@@ -1321,6 +1324,7 @@ UtcTime = TypeAliasType("UtcTime", Annotated[AwareDatetime, Field(title="UtcTime
 
 class UtxoByAddresses(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     addresses: list[Address]
@@ -1408,7 +1412,7 @@ class VoterGenesisDelegate(BaseModel):
     )
     role: Literal["genesisDelegate"]
     id: DigestBlake2b224
-    from_: Annotated[CredentialOrigin, Field(alias="from")]
+    from_: Annotated[CredentialOrigin | None, Field(alias="from")] = None
 
 
 class VoterStakePoolOperator(BaseModel):
@@ -1439,12 +1443,14 @@ VrfProof = TypeAliasType(
 
 class WholeGovernanceProposals(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
 
 
 class WholeUtxo(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
 
@@ -1830,6 +1836,7 @@ GovernanceVoter = TypeAliasType(
 
 class HasTransactionParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     id: TransactionId
@@ -1929,6 +1936,7 @@ class ProtocolVersion(BaseModel):
 
 class QueryLedgerStateDelegateRepresentativesParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     scripts: list[AnyDelegateRepresentativeCredential] | None = None
@@ -1942,6 +1950,7 @@ QueryLedgerStateEraSummariesResult = TypeAliasType(
 
 class QueryLedgerStateRewardAccountSummariesParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     scripts: list[AnyStakeCredential] | None = None
@@ -2388,6 +2397,7 @@ class SubmitTransactionFailureUnknownVotersData(BaseModel):
 
 class SubmitTransactionParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     transaction: SubmitTransactionParamsTransaction
@@ -2410,6 +2420,7 @@ class TransactionOutputReference(BaseModel):
 
 class UtxoByOutputReferences(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     output_references: Annotated[list[TransactionOutputReference], Field(alias="outputReferences")]
@@ -2482,6 +2493,7 @@ class AccountBalanceIntervalWithin(BaseModel):
 
 class AcquireLedgerStateParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     point: PointOrOrigin
@@ -2748,6 +2760,7 @@ class EvaluateTransactionResultItem(BaseModel):
 
 class FindIntersectionParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     points: list[PointOrOrigin] | None = None
@@ -2863,6 +2876,7 @@ class GovernanceProposalReference(BaseModel):
 
 class GovernanceProposalsByReferences(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     proposals: list[GovernanceProposalReference]
@@ -3147,6 +3161,7 @@ QueryLedgerStateGovernanceProposalsParams = TypeAliasType(
 
 class QueryLedgerStateProjectedRewardsParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     stake: list[ValueAdaOnly] | None = None
@@ -3156,6 +3171,7 @@ class QueryLedgerStateProjectedRewardsParams(BaseModel):
 
 class QueryLedgerStateStakePoolsParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     include_stake: Annotated[
@@ -3848,7 +3864,7 @@ class GovernanceActionProtocolParametersUpdate(BaseModel):
     type: Literal["protocolParametersUpdate"]
     ancestor: GovernanceProposalReference | None = None
     parameters: ProposedProtocolParameters
-    guardrails: Null | GovernanceActionProtocolParametersUpdateGuardrailsValue
+    guardrails: Null | GovernanceActionProtocolParametersUpdateGuardrailsValue | None = None
 
 
 class GovernanceActionTreasuryWithdrawals(BaseModel):
@@ -4426,6 +4442,7 @@ class ClauseSome(BaseModel):
 
 class EvaluateTransactionParams(BaseModel):
     model_config = ConfigDict(
+        extra="forbid",
         populate_by_name=True,
     )
     transaction: EvaluateTransactionParamsTransaction

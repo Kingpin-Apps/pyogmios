@@ -31,7 +31,10 @@ matches one.
         │   └── InvalidGenesisError              2004
         ├── TransactionError                     3000s
         │   ├── EvaluateTransactionError         (evaluateTransaction)
+        │   │   └── one class per failure: IncompatibleEraError (3000) ... ScriptExecutionFailureError (3010)
         │   └── SubmitTransactionError           (submitTransaction)
+        │       └── one class per ledger rejection: SubmitEraMismatchError (3005),
+        │           InvalidSignatoriesError (3100) ... StakePoolVRFKeyAlreadyRegisteredError (3170)
         └── MempoolError                         4000s
             └── MustAcquireMempoolFirstError     4000
 """
@@ -215,11 +218,9 @@ def error_class(code: int, method: str | None) -> type[ResponseError]:
         if code == -32602:
             return TransactionDeserialisationError
         if 3000 <= code < 4000:
-            return (
-                EvaluateTransactionError
-                if method == "evaluateTransaction"
-                else SubmitTransactionError
-            )
+            if method == "evaluateTransaction":
+                return EVALUATE_ERRORS.get(code, EvaluateTransactionError)
+            return SUBMIT_ERRORS.get(code, SubmitTransactionError)
     if code in _BY_CODE:
         return _BY_CODE[code]
     if -32768 <= code <= -32000:
@@ -233,3 +234,8 @@ def error_class(code: int, method: str | None) -> type[ResponseError]:
         if low <= code < low + 1000:
             return cls
     return ResponseError
+
+
+# The generated per-code classes subclass the ones above, so they are imported last.
+from ._generated.errors import *  # noqa: E402, F403
+from ._generated.errors import EVALUATE_ERRORS, SUBMIT_ERRORS  # noqa: E402
