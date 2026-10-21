@@ -49,6 +49,10 @@ QUERIES = [
 ]
 
 
+def parse(method: str, raw: Any) -> Any:
+    return TypeAdapter(METHODS[method].result).validate_python(raw)
+
+
 def assert_round_trips(method: str, parsed: Any, raw: Any) -> None:
     adapter: TypeAdapter[Any] = TypeAdapter(METHODS[method].result)
     assert adapter.dump_python(parsed, mode="json", by_alias=True, exclude_unset=True) == raw
@@ -68,14 +72,17 @@ async def client() -> Any:
 @pytest.mark.parametrize(("method", "params"), QUERIES, ids=[f"{m}:{p}" for m, p in QUERIES])
 async def test_query_over_websocket(client: pyogmios.AsyncClient, method: str, params: Any) -> None:
     raw = await client.request(method, params)
-    assert_round_trips(method, await client.call(method, params), raw)
+    # Parse that same answer: on a fast chain, a second request can see a newer tip.
+    assert_round_trips(method, parse(method, raw), raw)
+    await client.call(method, params)  # and the typed path parses a fresh answer
 
 
 @pytest.mark.parametrize(("method", "params"), QUERIES, ids=[f"{m}:{p}" for m, p in QUERIES])
 async def test_query_over_http(client: pyogmios.AsyncClient, method: str, params: Any) -> None:
     async with pyogmios.AsyncClient(HTTP_URL, check_version="off") as http:
         raw = await http.request(method, params)
-        assert_round_trips(method, await http.call(method, params), raw)
+        assert_round_trips(method, parse(method, raw), raw)
+        await http.call(method, params)
 
 
 async def test_server_is_v7_and_concurrent_queries_work(client: pyogmios.AsyncClient) -> None:
