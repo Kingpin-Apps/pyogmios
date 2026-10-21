@@ -61,8 +61,12 @@ async def test_errors_raise_the_matching_exception(fixture: Fixture) -> None:
 
 def test_error_classes_by_code() -> None:
     assert errors.error_class(-32602, "submitTransaction") is errors.TransactionDeserialisationError
-    assert errors.error_class(3005, "submitTransaction") is errors.SubmitTransactionError
-    assert errors.error_class(3010, "evaluateTransaction") is errors.EvaluateTransactionError
+    assert errors.error_class(3005, "submitTransaction") is errors.SubmitEraMismatchError
+    assert errors.error_class(3117, "submitTransaction") is errors.UnknownOutputReferencesError
+    assert errors.error_class(3999, "submitTransaction") is errors.SubmitTransactionError
+    assert issubclass(errors.UnknownOutputReferencesError, errors.SubmitTransactionError)
+    assert errors.error_class(3010, "evaluateTransaction") is errors.ScriptExecutionFailureError
+    assert errors.error_class(3099, "evaluateTransaction") is errors.EvaluateTransactionError
     assert errors.error_class(2003, "queryLedgerState/epoch") is errors.AcquiredExpiredError
     assert errors.error_class(1999, None) is errors.ChainSyncError
     assert errors.error_class(-32099, None) is errors.JsonRpcError

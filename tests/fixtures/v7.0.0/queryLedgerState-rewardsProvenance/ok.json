@@ -5,30 +5,30 @@
   "result": {
     "activeStake": {
       "ada": {
-        "lovelace": 1563615257517241
+        "lovelace": 1564035642001465
       }
     },
-    "efficiency": "34/45",
+    "efficiency": "1649/2160",
     "fees": {
       "ada": {
-        "lovelace": 1498602648
+        "lovelace": 528059817
       }
     },
     "incentives": {
       "ada": {
-        "lovelace": 16914464688623
+        "lovelace": 17081952313166
       }
     },
     "stakePools": {
       "pool1p9xu88dzmpp5l8wmjd6f5xfs9z89mky6up86ty2wz4aavmm8f3m": {
-        "blocksMade": 38,
+        "blocksMade": 61,
         "delegators": [
           {
             "credential": "02cff4a7388a338f71938c18f5aaa7ee94b3193446d2d3df9b8b0aec",
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 101811524
+                "lovelace": 101851111
               }
             }
           },
@@ -37,7 +37,7 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 280056199478
+                "lovelace": 280165094331
               }
             }
           },
@@ -46,32 +46,32 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 320729434
+                "lovelace": 320854143
               }
             }
           }
         ],
         "leaderReward": {
           "ada": {
-            "lovelace": 356451468
+            "lovelace": 473224501
           }
         },
-        "relativeStake": "2259072603059/5362533738111964",
+        "relativeStake": "7909944477122/18770768445882465",
         "totalRewards": {
           "ada": {
-            "lovelace": 5048246642
+            "lovelace": 8100527006
           }
         }
       },
       "pool1q65ag8panwayzaqfs6je7jz2ywt8x2032yaunq5hf25t7t8c26e": {
-        "blocksMade": 35,
+        "blocksMade": 36,
         "delegators": [
           {
             "credential": "035a09c79a3a989cbe19911c5daaa7867eb3bb1067ba0117c1b1ae9e",
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 13245484589
+                "lovelace": 13250689798
               }
             }
           },
@@ -80,7 +80,7 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 26527716571
+                "lovelace": 26538141430
               }
             }
           },
@@ -89,32 +89,32 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 3150201
+                "lovelace": 3151438
               }
             }
           }
         ],
         "leaderReward": {
           "ada": {
-            "lovelace": 642289856
+            "lovelace": 651591032
           }
         },
-        "relativeStake": "11989567419511/37537736166783748",
+        "relativeStake": "210431908973/658623454241490",
         "totalRewards": {
           "ada": {
-            "lovelace": 4649680995
+            "lovelace": 4780618470
           }
         }
       },
       "pool1qal80uhlj949mgv0ecvdkmgqjdn5q27wmpaj4crnr5e9v6qmsv7": {
-        "blocksMade": 37,
+        "blocksMade": 27,
         "delegators": [
           {
             "credential": "035182a975d50cc1b1e7ccded588120984442465d07a1c7e9ab4828f",
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 10240925
+                "lovelace": 10244693
               }
             }
           },
@@ -123,7 +123,7 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 9272197918
+                "lovelace": 9275610225
               }
             }
           },
@@ -132,37 +132,37 @@
             "from": "script",
             "stake": {
               "ada": {
-                "lovelace": 2804370
+                "lovelace": 2805402
               }
             }
           }
         ],
         "leaderReward": {
           "ada": {
-            "lovelace": 1144419177
+            "lovelace": 930283270
           }
         },
-        "relativeStake": "382458407430/1340633434527991",
+        "relativeStake": "595193778496/2085640938431385",
         "totalRewards": {
           "ada": {
-            "lovelace": 4915384474
+            "lovelace": 3585469267
           }
         }
       }
     },
     "totalRewards": {
       "ada": {
-        "lovelace": 16915963291271
+        "lovelace": 17082480372983
       }
     },
     "totalStake": {
       "ada": {
-        "lovelace": 37537736166783748
+        "lovelace": 37541536891764930
       }
     },
     "treasuryTax": {
       "ada": {
-        "lovelace": 3383192658254
+        "lovelace": 3416496074596
       }
     }
   }

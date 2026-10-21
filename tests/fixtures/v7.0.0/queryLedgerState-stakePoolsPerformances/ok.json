@@ -5,7 +5,7 @@
   "result": {
     "activeStakeInEpoch": {
       "ada": {
-        "lovelace": 1564490911149206
+        "lovelace": 1564898310282670
       }
     },
     "desiredNumberOfStakePools": 500,
@@ -95,12 +95,12 @@
     },
     "totalRewardsInEpoch": {
       "ada": {
-        "lovelace": 13522255109929
+        "lovelace": 13532770633017
       }
     },
     "totalStakeInEpoch": {
       "ada": {
-        "lovelace": 37537736166783748
+        "lovelace": 37541536891764930
       }
     }
   }

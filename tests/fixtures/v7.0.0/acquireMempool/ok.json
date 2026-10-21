@@ -4,6 +4,6 @@
   "method": "acquireMempool",
   "result": {
     "acquired": "mempool",
-    "slot": 125877034
+    "slot": 125889605
   }
 }

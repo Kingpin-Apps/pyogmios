@@ -57,6 +57,8 @@ class FakeOgmios:
     hold: int = 0
     #: Close the connection after receiving this many requests (once).
     drop_after: int | None = None
+    #: Answers given in turn for a method, before falling back to ``responses`` (shared by all connections).
+    sequences: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
     #: Text sent before every answer, to test messages that are not JSON.
     noise: str | None = None
     #: Methods answered with an error that has no id, as when the server cannot read a request.
@@ -65,6 +67,8 @@ class FakeOgmios:
     health: dict[str, Any] | int = field(default_factory=lambda: dict(HEALTH))
     #: Every request received, in order.
     received: list[dict[str, Any]] = field(default_factory=list)
+    #: The connection (1 for the first) each request in ``received`` arrived on.
+    received_on: list[int] = field(default_factory=list)
     health_requests: int = 0
     connections: int = 0
     server: Server | None = None
@@ -87,7 +91,10 @@ class FakeOgmios:
                 "error": {"code": -32600, "message": "unreadable"},
                 "id": None,
             }
-        response = dict(self.responses.get(method) or recorded(method))
+        if self.sequences.get(method):
+            response = dict(self.sequences[method].pop(0))
+        else:
+            response = dict(self.responses.get(method) or recorded(method))
         response["id"] = request.get("id")
         return response
 
@@ -105,10 +112,12 @@ class FakeOgmios:
 
     async def handler(self, connection: ServerConnection) -> None:
         self.connections += 1
+        number = self.connections
         held: list[dict[str, Any]] = []
         async for raw in connection:
             request = json.loads(raw)
             self.received.append(request)
+            self.received_on.append(number)
             if self.drop_after is not None and len(self.received) >= self.drop_after:
                 self.drop_after = None
                 await connection.close()

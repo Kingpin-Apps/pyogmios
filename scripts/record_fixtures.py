@@ -13,11 +13,13 @@ import asyncio
 import json
 import os
 import re
+import shutil
 import sys
 import urllib.request
 from pathlib import Path
 from typing import Any
 
+import cbor2
 import websockets
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,6 +37,8 @@ KOIOS = "https://preview.koios.rest/api/v1"
 #: Blocks scanned to find a varied set of real blocks.
 BLOCKS_TO_SCAN = 400
 BLOCKS_TO_KEEP = 12
+#: Preview block 4330 (Alonzo) holds a pre-Conway protocol update proposal and genesis delegate votes.
+PRE_CONWAY_PROPOSAL_HEIGHT = 4330
 
 
 def trim(value: Any) -> Any:
@@ -114,6 +118,15 @@ async def scan_blocks(r: Recorder, label: str, scan: int, keep: int) -> None:
                 return
 
 
+def unsigned_transaction(spending: tuple[bytes, int]) -> str:
+    """A minimal, unsigned Conway transaction (hex CBOR): one input, 2 ada out, a fixed fee."""
+    address = bytes([0x60]) + bytes(
+        range(28)
+    )  # enterprise address on a test network, made-up key hash
+    body = {0: [list(spending)], 1: [[address, 2_000_000]], 2: 200_000}
+    return cbor2.dumps([body, {}, True, None]).hex()
+
+
 async def record_all(url: str) -> None:
     async with websockets.connect(url, max_size=None, open_timeout=30) as ws:
         r = Recorder(ws)
@@ -180,9 +193,33 @@ async def record_all(url: str) -> None:
         await r.call("findIntersection", {"points": [recent]})
         await r.call("nextBlock")
         await scan_blocks(r, "recent", BLOCKS_TO_SCAN, BLOCKS_TO_KEEP)
-        # UTxO by address, using an output address from a recorded block.
-        block = json.loads((OUTPUT / "nextBlock" / "recent-01.json").read_text())["result"]["block"]
-        address = next(o["address"] for tx in block["transactions"] for o in tx["outputs"])
+        # A pre-Conway update proposal with genesis-delegate votes (preview only): its schema needed fixes.
+        if (await r.call("queryNetwork/genesisConfiguration", {"era": "shelley"}))["result"][
+            "network"
+        ] == "testnet":
+            await r.call("findIntersection", {"points": ["origin"]})
+            while True:
+                response = await r.call("nextBlock")
+                block = response["result"].get("block", {})
+                if block.get("height") == PRE_CONWAY_PROPOSAL_HEIGHT and "transactions" in block:
+                    save("nextBlock", "pre-conway-update-proposal", response)
+                    break
+                if block.get("height", 0) > PRE_CONWAY_PROPOSAL_HEIGHT:
+                    break
+        # UTxO by address: the first output address in the recorded recent blocks that still holds one.
+        for path in sorted((OUTPUT / "nextBlock").glob("recent-*.json")):
+            block = json.loads(path.read_text())["result"]["block"]
+            addresses = [
+                o["address"] for tx in block.get("transactions", []) for o in tx["outputs"]
+            ]
+            for address in addresses:
+                if (await r.call("queryLedgerState/utxo", {"addresses": [address]}))["result"]:
+                    break
+            else:
+                continue
+            break
+        else:
+            raise RuntimeError("no output address in the recorded blocks holds a UTxO")
         await r.record("queryLedgerState/utxo", "by-address", {"addresses": [address]})
 
         print("Mempool")
@@ -197,6 +234,25 @@ async def record_all(url: str) -> None:
         print("Transaction submission (expected failures)")
         await r.record("submitTransaction", "deserialisation", {"transaction": {"cbor": "00"}})
         await r.record("evaluateTransaction", "deserialisation", {"transaction": {"cbor": "00"}})
+        # Unsigned transactions: one spending a real UTxO (the ledger rejects it, for missing
+        # signatures or scripts), one spending a made-up input (the mempool rejects it first).
+        utxo = json.loads((OUTPUT / "queryLedgerState-utxo" / "by-address.json").read_text())[
+            "result"
+        ][0]
+        real_input = (bytes.fromhex(utxo["transaction"]["id"]), utxo["index"])
+        missing_signatures = unsigned_transaction(real_input)
+        await r.record(
+            "submitTransaction",
+            "ledger-rejection",
+            {"transaction": {"cbor": missing_signatures}},
+        )
+        await r.record(
+            "evaluateTransaction", "no-scripts", {"transaction": {"cbor": missing_signatures}}
+        )
+        unknown_input = unsigned_transaction((bytes(32), 0))
+        await r.record(
+            "submitTransaction", "unknown-input", {"transaction": {"cbor": unknown_input}}
+        )
 
         print("JSON-RPC errors")
         await r.record("queryLedgerState/notAQuery", "unknown-method")
@@ -206,6 +262,8 @@ async def record_all(url: str) -> None:
 def main() -> None:
     url = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("OGMIOS_URL", "ws://localhost:1337")
     print(f"Recording Ogmios v{VERSION} fixtures from {url} into {OUTPUT.relative_to(ROOT)}")
+    # Start empty, so the fixtures are exactly what this script records.
+    shutil.rmtree(OUTPUT, ignore_errors=True)
     asyncio.run(record_all(url))
 
 

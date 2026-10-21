@@ -1,0 +1,143 @@
+{
+  "id": "nextBlock:pre-conway-update-proposal",
+  "jsonrpc": "2.0",
+  "method": "nextBlock",
+  "result": {
+    "block": {
+      "ancestor": "ff0f1657e088674ed81a5e5d1d8e9e49c403d15b4add60d083174c8f72494fa0",
+      "era": "alonzo",
+      "height": 4330,
+      "id": "6df990843be0e16eec6446ce2cfdf2fb33fe9034c09bb91a6badffd8e6d478bb",
+      "issuer": {
+        "leaderValue": {
+          "output": "ae6642d0dda44c096c1d2f43b4f347d8202363d760eb66f95ff5d3900ffc28b0923af4baf14bcd296573b4638379c8ee050fc48a9a97947f8abb44db27cb488f",
+          "proof": "28a2d6a2a76209b46096fb8b5ab249db25189c59977b8862cd92c5f6ca1b94edef1b7b41b4ec24277ac3e11841b305754001bade792998e75cc71693d54ae96eac38db654534eb384856894932f9be06"
+        },
+        "operationalCertificate": {
+          "count": 0,
+          "kes": {
+            "period": 0,
+            "verificationKey": "a71701a75fe43c186987601ccf2f3be58bab554a7e5789cf152cae407111d90d"
+          },
+          "sigma": "9b57f61d620849a0a43424bbac1c9700ae4ecc6391d31cc8cde1cd61aada4b017bbabe5123ee3b91e4a0c8a64e0251098121ab407d879bfb79f53011d2304807"
+        },
+        "verificationKey": "adb240669de458252fa7c7672d1eaab20a4653ea8a005a30e0d1d829688a0a47",
+        "vrfVerificationKey": "5579273d79bdf98457d1d3ba515b487eaadf609d5d5a8d9059e3943a700ee953"
+      },
+      "nonce": {
+        "output": "d7fec821d28c6e52cacd6f4c2b0791c6f4568bd17e39f37602551844a8392684f5aa810ca33be5126539dac0ff57f668ea8579c196d4d60d0a0dc1f776408438",
+        "proof": "4dd27670a0443439235632e871704192aa38da35aab918ecbcc39600608b490f3e28d7fdd9de357068b3143586fa330ae5765d5ed064a4b2638b068ad579034890e1d7bc30c1453feee274df12dee20e"
+      },
+      "protocol": {
+        "version": {
+          "major": 7,
+          "minor": 2
+        }
+      },
+      "size": {
+        "bytes": 1166
+      },
+      "slot": 86600,
+      "transactions": [
+        {
+          "fee": {
+            "ada": {
+              "lovelace": 206597
+            }
+          },
+          "id": "214bdcf674d45db7ecece7e6c7aa020a3741c0fdcf13791af2a1cafbfaf97365",
+          "inputs": [
+            {
+              "index": 3,
+              "transaction": {
+                "id": "e3ca57e8f323265742a8f4e79ff9af884c9ff8719bd4f7788adaea4c33ba07b6"
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "address": "addr_test1vp8cprhse9pnnv7f4l3n6pj0afq2hjm6f7r2205dz0583egagfjah",
+              "value": {
+                "ada": {
+                  "lovelace": 29699998493355610
+                }
+              }
+            }
+          ],
+          "proposals": [
+            {
+              "action": {
+                "parameters": {
+                  "federatedBlockProductionRatio": "0/1"
+                },
+                "type": "protocolParametersUpdate"
+              }
+            },
+            {
+              "action": {
+                "parameters": {
+                  "federatedBlockProductionRatio": "0/1"
+                },
+                "type": "protocolParametersUpdate"
+              }
+            },
+            {
+              "action": {
+                "parameters": {
+                  "federatedBlockProductionRatio": "0/1"
+                },
+                "type": "protocolParametersUpdate"
+              }
+            }
+          ],
+          "signatories": [
+            {
+              "key": "76fc870e45e0f0b16d6f42ba4a2b65f0e1921193ef7c255060b0d1e80bbab7af",
+              "signature": "48d0df1d2c72004eafe9ed12ddc17d4e5d40c80089b42cc1bf08c73f9e360a9845735d0bd88002f2db9d196486508499f6de1bea2377d05ec29ee8d8edebd208"
+            },
+            {
+              "key": "adb240669de458252fa7c7672d1eaab20a4653ea8a005a30e0d1d829688a0a47",
+              "signature": "8e2631f516f76615b2aaa167477e524d0faa2b763982c90f93dc706288cebec8fa2399630a588d121fdba349d426816b325744dfceab6f805b90b64006dd110d"
+            },
+            {
+              "key": "efc4a56325e95a2c08b3747d26bfefcbf57be323a47a5853ee51b28fb4caafba",
+              "signature": "ecda4846ca5e854f4ab118ca9e1739ffb89dc3b24764e3a59fc56e4ff82016927c2f6072afda3f559971e16108ce3787e9b8bd2e1954b50ee89707869172d70f"
+            }
+          ],
+          "spends": "inputs",
+          "validityInterval": {},
+          "votes": [
+            {
+              "issuer": {
+                "id": "12b0f443d02861948a0fce9541916b014e8402984c7b83ad70a834ce",
+                "role": "genesisDelegate"
+              },
+              "vote": "yes"
+            },
+            {
+              "issuer": {
+                "id": "3df542796a64e399b60c74acfbdb5afa1e114532fa36b46d6368ef3a",
+                "role": "genesisDelegate"
+              },
+              "vote": "yes"
+            },
+            {
+              "issuer": {
+                "id": "93fd5083ff20e7ab5570948831730073143bea5a5d5539852ed45889",
+                "role": "genesisDelegate"
+              },
+              "vote": "yes"
+            }
+          ]
+        }
+      ],
+      "type": "praos"
+    },
+    "direction": "forward",
+    "tip": {
+      "height": 4778265,
+      "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+      "slot": 125889604
+    }
+  }
+}

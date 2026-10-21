@@ -7,14 +7,20 @@ parse, and dump back to exactly what the server sent.
 from __future__ import annotations
 
 import asyncio
+import json
 import os
+from pathlib import Path
 from typing import Any
 
+import cbor2
 import pytest
 from pydantic import TypeAdapter
 
 import pyogmios
 from pyogmios._generated.methods import METHODS
+from pyogmios.types import RollBackward
+
+ROOT = Path(__file__).resolve().parents[1]
 
 pytestmark = pytest.mark.integration
 
@@ -123,3 +129,106 @@ def test_sync_client() -> None:
     with ogmios:
         assert isinstance(ogmios.call("queryLedgerState/epoch"), int)
         assert ogmios.health().network is not None
+
+
+# Phase 4: typed queries, stateful protocols and transactions ---------------------------------------
+
+
+async def test_typed_queries(client: pyogmios.AsyncClient) -> None:
+    epoch = await client.ledger_state.epoch()
+    assert isinstance(epoch, int)
+    assert (await client.network.genesis_configuration(era="conway")).era == "conway"
+    pools = await client.ledger_state.stake_pools()
+    some_pool = next(iter(pools))
+    filtered = await client.ledger_state.stake_pools(stake_pools=[{"id": some_pool}])
+    assert list(filtered) == [some_pool]
+    assert (
+        await client.ledger_state.utxo(
+            output_references=[{"transaction": {"id": "0" * 64}, "index": 0}]
+        )
+        == []
+    )
+
+
+async def test_chain_sync_from_origin_and_from_the_tip(client: pyogmios.AsyncClient) -> None:
+    async with client.chain_sync(["origin"], pipeline=100) as sync:
+        events = [await anext(sync) for _ in range(BLOCKS)]
+    assert isinstance(events[0], RollBackward)
+    heights = [event.block.height for event in events[1:]]
+    assert heights == sorted(heights)
+    tip = await client.network.tip()
+    async with client.chain_sync([tip]) as sync:
+        assert sync.intersection == tip
+        assert isinstance(await anext(sync), RollBackward)
+
+
+async def test_ledger_state_at_the_tip(client: pyogmios.AsyncClient) -> None:
+    tip = await client.network.tip()
+    async with client.ledger_state_at(tip) as ledger:
+        assert await ledger.epoch() == await client.ledger_state.epoch()
+        assert await ledger.tip() == tip
+
+
+async def test_mempool_snapshot(client: pyogmios.AsyncClient) -> None:
+    async with client.mempool_snapshot() as snapshot:
+        size = await snapshot.size()
+        assert size.max_capacity.bytes > 0
+        assert len([transaction async for transaction in snapshot]) == size.transactions.count
+
+
+async def test_the_ledger_rejects_an_unsigned_transaction(client: pyogmios.AsyncClient) -> None:
+    """An unsigned transaction spending a real UTxO is rejected by a ledger rule, with typed details."""
+    utxo = None
+    # Find a live UTxO through the recorded recent blocks' output addresses.
+    for fixture in sorted(
+        (ROOT / "tests" / "fixtures" / f"v{pyogmios.OGMIOS_VERSION}" / "nextBlock").glob(
+            "recent-*.json"
+        )
+    ):
+        block = json.loads(fixture.read_text())["result"]["block"]
+        for transaction in block.get("transactions", []):
+            for output in transaction["outputs"]:
+                found = await client.ledger_state.utxo(addresses=[output["address"]])
+                if found:
+                    utxo = found[0]
+                    break
+            if utxo:
+                break
+        if utxo:
+            break
+    if utxo is None:
+        pytest.skip("no UTxO left at the recorded blocks' addresses; run `just record-fixtures`")
+    address = bytes([0x60]) + bytes(range(28))
+    body = {
+        0: [[bytes.fromhex(utxo.transaction.id), utxo.index]],
+        1: [[address, 2_000_000]],
+        2: 200_000,
+    }
+    transaction = cbor2.dumps([body, {}, True, None])
+    with pytest.raises(pyogmios.errors.SubmitTransactionError) as raised:
+        await client.submit_transaction(transaction)
+    assert 3100 <= raised.value.code < 3200
+    assert (
+        type(raised.value) is not pyogmios.errors.SubmitTransactionError
+    )  # a specific ledger rule
+    assert raised.value.details is not None
+    assert await client.evaluate_transaction(transaction) == []  # no scripts to run
+
+
+def test_sync_client_protocols() -> None:
+    ogmios = pyogmios.Client(WS_URL, check_version="strict", reconnect=None)
+    try:
+        ogmios.connect()
+    except pyogmios.OgmiosConnectionError as error:
+        ogmios.close()
+        pytest.skip(f"no Ogmios server at {WS_URL}: {error}")
+    with ogmios:
+        tip = ogmios.network.tip()
+        with ogmios.chain_sync(["origin"]) as sync:
+            assert [type(next(sync)).__name__ for _ in range(3)] == [
+                "RollBackward",
+                "RollForward",
+                "RollForward",
+            ]
+        with ogmios.ledger_state_at(tip) as ledger:
+            assert isinstance(ledger.epoch(), int)

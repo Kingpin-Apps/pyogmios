@@ -2,5 +2,5 @@
   "id": "queryLedgerState/epoch:acquired",
   "jsonrpc": "2.0",
   "method": "queryLedgerState/epoch",
-  "result": 1456
+  "result": 1457
 }

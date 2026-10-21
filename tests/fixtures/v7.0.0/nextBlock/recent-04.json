@@ -4,25 +4,25 @@
   "method": "nextBlock",
   "result": {
     "block": {
-      "ancestor": "17f32fab33bccf1bb9f38480e2289abbe96c5e3b2877c6c8ff0ee53e6689a49b",
+      "ancestor": "fbc97ec68de7f7b129872c141efc51e58e78979c04bf58359484964486aecd22",
       "era": "conway",
-      "height": 4777327,
-      "id": "b3b4c3536597cd810459f5402120a1c2ce7d0f04b0a0b3dcc71f6ebde6ff2dda",
+      "height": 4777781,
+      "id": "267f52cd0fc2325f4958626623d1bd335263cba13a69da0f7027216fa1329723",
       "issuer": {
         "leaderValue": {
-          "output": "582481bb0df458020ad2759cbf99fdbb79e9a2af54fd4330a0d58fad70ba83db485aff0db780bffb823f791fd9d7c12e18a82ff74d1355b81bf9f8c1f3a39721",
-          "proof": "bce048e07b6d2fd6d4e293b032d718307b79ad68c2ae93be3eb0d1ff7fd00779149ce083f727fcb2978c2701c5474a57304826b1bc9f4b49b509883790b3c9732bf4a4e0bfdc44f463977a869619b90c"
+          "output": "9155849db1b15b17f7e10b9b7ae2c0e9728fe59be5105eb75796bcfc8d3ad4885f97b7261f644314e61384f35bc9d4a308399d8c26e9db4b0746db998be09fef",
+          "proof": "629d97cb525c084160b368188752bacdcc72f584e1eab854e91bd2e59baf47167d86644a3a8973f027f5fabed1a1a286112aaa0bd2df508bdd957c81683cbcddea424d7fe5b4e732a0723e1501e35e03"
         },
         "operationalCertificate": {
-          "count": 4,
+          "count": 15,
           "kes": {
-            "period": 940,
-            "verificationKey": "ddc149df3e586060d620d1ba8d6d58035271d336a8245dc8cea6fb29a4ae1633"
+            "period": 948,
+            "verificationKey": "5ea2df63474288ec86cd9cd9a08f0a12a2c74e8d4bfbfbda85ccef9fed850a0c"
           },
-          "sigma": "3e7b4a18a3b4466f63f387ed2b8a365a3c1400d15eb7592408347c577b878d8f74d4d80303791e3d119f9682aae4cae439380dc049d1d8ff26ad3008c684a00c"
+          "sigma": "2f4a1217fc8c45c8218a5ffc5e879aba660953ce9b7da547e6ae0b8f795a1765babcc392a064c5a55b42178f04aacc0910e0fd57746bccf96668646807106a0a"
         },
-        "verificationKey": "bcf12db5f75d568c91e2be5ec65a7bcb3a8cba39c9d1b8a61fe81bbba7191c88",
-        "vrfVerificationKey": "2f9c43aff695c6b86a9d075feec28d28f4d52fabf68fc4f59359afd7ee5d8c9b"
+        "verificationKey": "06ea166962f57abc25aee664e82ae87c1d0f80af5b82e3a93b9847c3bc060a93",
+        "vrfVerificationKey": "78aa8f7d6cfe1dd20b1fecbe2c6d2214ec19e2773442ed815978d7035e937bb1"
       },
       "protocol": {
         "version": {
@@ -31,194 +31,106 @@
         }
       },
       "size": {
-        "bytes": 3592
+        "bytes": 2162
       },
-      "slot": 125865258,
+      "slot": 125876505,
       "transactions": [
         {
-          "fee": {
-            "ada": {
-              "lovelace": 185125
-            }
-          },
-          "id": "051f0d19c7939b71d1b6f3120780da8d9f2e4a43b8c8520a77e1fb455dc66762",
-          "inputs": [
-            {
-              "index": 1,
-              "transaction": {
-                "id": "6657e398fd5ff473875d192f2865ca65f7567becd2f7a54d2196b85263dde7cb"
-              }
-            },
-            {
-              "index": 0,
-              "transaction": {
-                "id": "bd3421ecb61b2e124f5cedfb9a8f829d2c5f667bd1d8fa53ac8af9fc75490704"
-              }
-            }
-          ],
-          "outputs": [
-            {
-              "address": "addr_test1zr866xg5kkvarzll69xjh0tfvqvu9zvuhht2qve9ehmgp0zafffynmgrv98mf53qkrs4eyqzxk05amlhzkpmvza4355sm4z5k2",
-              "datum": "d8799fd8799f581c377b4c93d252c2b5ec8d38a44368d840071f4f95762d1cf567fe90d4ffd8799f581c5d4a5249ed03614fb4d220b0e15c9002359f4eeff71583b60bb58d29ff1a002625a0d8799fd8799fd8799f581cb1a3209d1c162500671647c99e9a0380aa4502d0d85b73af4a3e5f7bffd8799fd8799fd8799f581c5d4a5249ed03614fb4d220b0e15c9002359f4eeff71583b60bb58d29ffffffffd87b9f5820db2891c24d465332af503b066136344889d9fa2a7a90c668f7200f8d8fb0160dffffd87a9f9f581c45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef6302444555344721a00989680ff9f40401a003c5f54ffff01ff",
-              "value": {
-                "45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef63024": {
-                  "55534472": 10000000
-                },
-                "ada": {
-                  "lovelace": 4500000
-                }
-              }
-            },
-            {
-              "address": "addr_test1qzc6xgyarstz2qr8zerun856qwq253gz6rv9kua0fgl9776afffynmgrv98mf53qkrs4eyqzxk05amlhzkpmvza4355sym7wau",
-              "value": {
-                "45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef63024": {
-                  "55534472": 990000000
-                },
-                "ada": {
-                  "lovelace": 15314875
-                }
-              }
-            }
-          ],
-          "signatories": [
-            {
-              "key": "4f50a840506bee2e2dc4bb5ffe124346bd2fba6fd569adf9c350148fa2ccd00f",
-              "signature": "cbb8cbb69c66fe32650ae1b16ac542cf8146a1452ed3ea6551f56088e8f6af67e18a1b10b24439228fc1d8eea4ef8456bff99fe4c11f7f42ff3494bfcaef7c01"
-            }
-          ],
-          "spends": "inputs"
-        },
-        {
-          "fee": {
-            "ada": {
-              "lovelace": 185697
-            }
-          },
-          "id": "86693d397cbea9501249729d4d6e5744c7bff6a68258d7a3c813e6273930068c",
-          "inputs": [
-            {
-              "index": 2,
-              "transaction": {
-                "id": "6657e398fd5ff473875d192f2865ca65f7567becd2f7a54d2196b85263dde7cb"
-              }
-            },
-            {
-              "index": 1,
-              "transaction": {
-                "id": "bd3421ecb61b2e124f5cedfb9a8f829d2c5f667bd1d8fa53ac8af9fc75490704"
-              }
-            }
-          ],
-          "outputs": [
-            {
-              "address": "addr_test1zr866xg5kkvarzll69xjh0tfvqvu9zvuhht2qve9ehmgp0zafffynmgrv98mf53qkrs4eyqzxk05amlhzkpmvza4355sm4z5k2",
-              "datum": "d8799fd8799f581c35a34996f515c5a28c8df9eada81f03f4f2756d92e7f73cde1f4e593ffd8799f581c5d4a5249ed03614fb4d220b0e15c9002359f4eeff71583b60bb58d29ff1a002625a0d8799fd8799fd8799f581cb1a3209d1c162500671647c99e9a0380aa4502d0d85b73af4a3e5f7bffd8799fd8799fd8799f581c5d4a5249ed03614fb4d220b0e15c9002359f4eeff71583b60bb58d29ffffffffd87b9f5820be36d5e19d688ad2bc7bcb0b2f8f57284bf668dfdc022984b436f77de41a5725ffffd87a9f9f581cd8906ca5c7ba124a0407a32dab37b2c82b13b3dcd9111e42940dcea4480014df105553444d1a00989680ff9f40401a00d5b309ffff01ff",
-              "value": {
-                "ada": {
-                  "lovelace": 4500000
-                },
-                "d8906ca5c7ba124a0407a32dab37b2c82b13b3dcd9111e42940dcea4": {
-                  "0014df105553444d": 10000000
-                }
-              }
-            },
-            {
-              "address": "addr_test1qzc6xgyarstz2qr8zerun856qwq253gz6rv9kua0fgl9776afffynmgrv98mf53qkrs4eyqzxk05amlhzkpmvza4355sym7wau",
-              "value": {
-                "ada": {
-                  "lovelace": 15314303
-                },
-                "d8906ca5c7ba124a0407a32dab37b2c82b13b3dcd9111e42940dcea4": {
-                  "0014df105553444d": 990000000
-                }
-              }
-            }
-          ],
-          "signatories": [
-            {
-              "key": "4f50a840506bee2e2dc4bb5ffe124346bd2fba6fd569adf9c350148fa2ccd00f",
-              "signature": "96a888831039a93778036bcb736d64ef81d5f876fba0d5bf23178276b524cfd8307b436f55f15294ec12727590bcaf3bb3928725d6193c4ac2f2a91ff3f04405"
-            }
-          ],
-          "spends": "inputs"
-        },
-        {
           "collateralReturn": {
-            "address": "addr_test1vqp4mmnx647vyutfwugav0yvxhl6pdkyg69x4xqzfl4vwwck92a9t",
+            "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
             "value": {
+              "a5f4f7078fa520cef356ad12f0827495a0028a2a3d51e5d805dd88df": {
+                "51414441": 250000000
+              },
               "ada": {
-                "lovelace": 9505528332
+                "lovelace": 9835753916
+              },
+              "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                "444a4544": 800000,
+                "5348454e": 100100000
               }
             }
           },
           "collaterals": [
             {
-              "index": 2,
+              "index": 3,
               "transaction": {
-                "id": "4be1d438e1757d3531db7f776281627cb08499e9fa92222a24c4cfb4d039faad"
+                "id": "3919effd3b5ef1349ec6a6934532305d8ec225026e7bf27040151ce4e660e097"
               }
             }
           ],
           "fee": {
             "ada": {
-              "lovelace": 593773
+              "lovelace": 1930617
             }
           },
-          "id": "dcdf3203f6a91df5983a8eb213fb26c7cc960936c861fcd19a399a7495f0d6d9",
+          "id": "f972667de6690dac8f771dd52b64c1710582603083784a336033009eea464960",
           "inputs": [
             {
               "index": 0,
               "transaction": {
-                "id": "051f0d19c7939b71d1b6f3120780da8d9f2e4a43b8c8520a77e1fb455dc66762"
-              }
-            },
-            {
-              "index": 0,
-              "transaction": {
-                "id": "0ac8a0c1420013560ea8dd015ab6906e0e32288dd6f4944afe4dd1b28a4acff5"
+                "id": "3919effd3b5ef1349ec6a6934532305d8ec225026e7bf27040151ce4e660e097"
               }
             },
             {
               "index": 2,
               "transaction": {
-                "id": "4be1d438e1757d3531db7f776281627cb08499e9fa92222a24c4cfb4d039faad"
+                "id": "3919effd3b5ef1349ec6a6934532305d8ec225026e7bf27040151ce4e660e097"
+              }
+            },
+            {
+              "index": 3,
+              "transaction": {
+                "id": "3919effd3b5ef1349ec6a6934532305d8ec225026e7bf27040151ce4e660e097"
               }
             }
           ],
           "outputs": [
             {
-              "address": "addr_test1xpz2r6ednav2m48tryet6qzgu6segl59u0ly7v54dggsg9xvy7vq4p2hl6wm9jdvpgn80ax3xpkm7yrgnxphtrct3klq005j2r",
-              "datum": "d8799f581c377b4c93d252c2b5ec8d38a44368d840071f4f95762d1cf567fe90d49f9f4040ff9f581c45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef630244455534472ffff1b0000002f72c92df10505d87a80001a078c2105ff",
+              "address": "addr_test1wqq0ydmhnm6em8mrwkft4zt8hkcwlw70twxcs2t7h875etqmcfwxu",
+              "datum": "d8798b465348454e2d321a0121eac00082011832001a0014bc1300821a106d742d1af2b254d8821a0014bc131a000f42401b000001a15b2be4621b000001a15b47c2c0",
               "value": {
-                "44a1eb2d9f58add4eb1932bd0048e6a1947e85e3fe4f32956a110414": {
-                  "000de140377b4c93d252c2b5ec8d38a44368d840071f4f95762d1cf567fe90d4": 1
-                },
-                "45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef63024": {
-                  "55534472": 319286824608
+                "9e212e916c2e6b2b72a01434aa81c461327ff45f765af5e8d095172b": {
+                  "014d41524b45545354415445": 1
                 },
                 "ada": {
-                  "lovelace": 130882051094
+                  "lovelace": 3000000
+                },
+                "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                  "5348454e": 19000000
                 }
               }
             },
             {
-              "address": "addr_test1qzc6xgyarstz2qr8zerun856qwq253gz6rv9kua0fgl9776afffynmgrv98mf53qkrs4eyqzxk05amlhzkpmvza4355sym7wau",
-              "datum": "5820db2891c24d465332af503b066136344889d9fa2a7a90c668f7200f8d8fb0160d",
+              "address": "addr_test1wqq0ydmhnm6em8mrwkft4zt8hkcwlw70twxcs2t7h875etqmcfwxu",
+              "datum": "d87989d87982d879825820977f20fee869573d340e0b8195632d4fbac69368a481f40d80c908c3162890590002581c0d8ea520b034b33c1188db96486c24eb528167dc9ccd7dd9db0a118e465348454e2d321a0014bc130000821a0014bc131a000f4240d87a8000",
               "value": {
-                "45df5f274b8950b512b08d10656864958659c4ecf3ffad092ef63024": {
-                  "55534472": 1
+                "a5f4f7078fa520cef356ad12f0827495a0028a2a3d51e5d805dd88df": {
+                  "51414441": 250000000
                 },
                 "ada": {
-                  "lovelace": 7993314
+                  "lovelace": 103000000
+                },
+                "ae6bf271c21762491dbd79d538d511f0db2b6676543ff1b5aaaf2f54": {
+                  "044c4f414e": 1
+                },
+                "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                  "444a4544": 300000
                 }
               }
             },
             {
-              "address": "addr_test1vqp4mmnx647vyutfwugav0yvxhl6pdkyg69x4xqzfl4vwwck92a9t",
+              "address": "addr_test1qqxcaffqkq6tx0q33rdevjrvyn449qt8mjwv6lwemv9prrhp6ev8k6u523cxy08he0qcdvckdy2hwr08knacu4a3wwusmktx9u",
               "value": {
+                "a5f4f7078fa520cef356ad12f0827495a0028a2a3d51e5d805dd88df": {
+                  "51414441": 250000000
+                },
                 "ada": {
-                  "lovelace": 9509934559
+                  "lovelace": 9838823299
+                },
+                "b7e779b1a6fbf65f5ff45594c22046e1e0d7367737ae605c2cc9b120": {
+                  "444a4544": 800000,
+                  "5348454e": 99100000
                 }
               }
             }
@@ -226,10 +138,10 @@
           "redeemers": [
             {
               "executionUnits": {
-                "cpu": 8269524,
-                "memory": 28359
+                "cpu": 26312257,
+                "memory": 86218
               },
-              "redeemer": "d87980",
+              "redeemer": "d879820b01",
               "validator": {
                 "index": 0,
                 "purpose": "spend"
@@ -237,10 +149,10 @@
             },
             {
               "executionUnits": {
-                "cpu": 304043668,
-                "memory": 930271
+                "cpu": 26312257,
+                "memory": 86218
               },
-              "redeemer": "d87a9fd8799f00009f9f00d87a8000ffffffff",
+              "redeemer": "d879820b01",
               "validator": {
                 "index": 1,
                 "purpose": "spend"
@@ -248,10 +160,10 @@
             },
             {
               "executionUnits": {
-                "cpu": 10844602,
-                "memory": 35873
+                "cpu": 593805314,
+                "memory": 1810647
               },
-              "redeemer": "d87980",
+              "redeemer": "d879840d058100818100",
               "validator": {
                 "index": 0,
                 "purpose": "withdraw"
@@ -262,36 +174,30 @@
             {
               "index": 0,
               "transaction": {
-                "id": "01b6240a6a992e7216ac27b9114c4f084bf05ea37aa22e4f4b0c179c78b85ef2"
+                "id": "04fa4f4caf59a56f700904db89619ed60590517aea6802fae5b33eabb522a9e9"
               }
             },
             {
               "index": 0,
               "transaction": {
-                "id": "8036a88a61427262aba964a42d0b9924739ffc3214de9a07c54b5a09af7f0d7d"
+                "id": "0fc9889c62be9312a6bd60c6e455aa7fe123be962dbcd36cf58f3351eadf2b3e"
               }
             },
             {
               "index": 0,
               "transaction": {
-                "id": "92ec2274938de291d3837b7facf9eddfaed57cd6ff97e26af57cb7a9978e3887"
+                "id": "29fbd27c915ec7ce50b3bf295c4ae5e4f77cf5dd67c6bfe8c5b265e5193b7543"
               }
             }
           ],
           "requiredExtraSignatories": [
-            "035dee66d57cc271697711d63c8c35ffa0b6c4468a6a98024feac73b"
+            "0d8ea520b034b33c1188db96486c24eb528167dc9ccd7dd9db0a118e"
           ],
-          "scriptIntegrityHash": "f4a6a3370a6df75cdcb1b43f88f728588030672a465336a257092e11d99c2ba5",
-          "scripts": {
-            "ca3073f5df02c60404a1d5a0a4416f0d0288dce99ea887a5ebec18a7": {
-              "cbor": "5901420100003323232323232322322253330053253330063370e900218039baa300130083754004264a66600e66e1d2000300837540022646600200264a66601266e1d2002300a3754002297adef6c6013756601c60166ea8004c8cc004004dd5980218059baa300e300b375400644a66601a0022980103d87a80001323232533300d3371e0166eb8c03800c4cdd2a4000660226e980052f5c026600a00a0046eacc038008c044008c03c004894ccc030004528099299980519b873371c6eb8c02cc03c00920024806852889980180180098078008b1929998050008a6103d87a800013374a9000198059806000a5eb80dd618059806180618041baa300b3008375400429408c02cc03000452613656375c002ae6955ceaab9e5573eae815d0aba24c011e581c44a1eb2d9f58add4eb1932bd0048e6a1947e85e3fe4f32956a1104140001",
-              "language": "plutus:v2"
-            }
-          },
+          "scriptIntegrityHash": "05c0b60e503153171ef65cfce06596def09c1b30e8741a66ce36fed694707796",
           "signatories": [
             {
-              "key": "6f2b757b39b783977e0306bd2751fa3db19f2f8d52d478f44a4a03efb0fa2b29",
-              "signature": "93f734e6691094fa088ab9e2fc997d61759fc0cc872765bf8bd0a1a8be099d352be9e65620ad7ed84ba4f35e3345dc3b082ef0487771e62b8ba5bebe3e6f1a04"
+              "key": "eaca0ab9fee46ecbbaf42f3b23c150ab817a7f44f9581958612cabeb52e27b7e",
+              "signature": "e4d6b0bdafd07848af7ea1667e2eae587ee2312dd4f896ba55a851029c00da6386fa6238e792cafa5bac501e087b19d756997f3e7a46a0680eac4e0f2d1ac203"
             }
           ],
           "spends": "inputs",
@@ -301,11 +207,21 @@
             }
           },
           "validityInterval": {
-            "invalidAfter": 125866154,
-            "invalidBefore": 125864154
+            "invalidAfter": 125876792,
+            "invalidBefore": 125876492
           },
           "withdrawals": {
-            "stake_test17r9rqul4mupvvpqy5826pfzpduxs9zxuax023pa9a0kp3fc28mvvx": {
+            "stake_test17ptwuz5fhzrzdlvegna0fuhfnzl4jgtcgrd5yy6yc9rl3vckp23cj": {
+              "ada": {
+                "lovelace": 0
+              }
+            },
+            "stake_test17pxk8g70getf7mcaj6hpmylw2z26p28nw2j94g5rdhagmaspm88jn": {
+              "ada": {
+                "lovelace": 0
+              }
+            },
+            "stake_test17rr8hfx3cw77fgp0dyyf5j02hamqyenl5vkkttl9zjuc85s2sq6uf": {
               "ada": {
                 "lovelace": 0
               }
@@ -317,9 +233,9 @@
     },
     "direction": "forward",
     "tip": {
-      "height": 4777797,
-      "id": "bb39a88e30373f418c73949b805e2b120e2d9dc64dc24a07549bb28eca5889d0",
-      "slot": 125877033
+      "height": 4778265,
+      "id": "92e5e65f2a454d2ffaecc51792bc8c4d93bd019cb33a3da39e7452532df18b42",
+      "slot": 125889604
     }
   }
 }

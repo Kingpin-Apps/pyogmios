@@ -3,9 +3,9 @@
   "jsonrpc": "2.0",
   "method": "queryLedgerState/nonces",
   "result": {
-    "candidateNonce": "eb044722f14d854e17ed97b3a1661d2a240e8658d78fffc7d21b5943a0cc3fc9",
-    "epochNonce": "cea07fc434cb75afaa3d05c8af2b77bcf4ddbba33be80efb859a213db10dbbf1",
-    "evolvingNonce": "f5c22aafab40fa881da6a4fe54c73fc69e0b6d2356cc15d380b04bb2b12ab1f5",
-    "lastEpochLastAncestor": "a6a555df1b4eb164f0934c59d53fd7c6e466a0af01a9b75cebc4ff922b3335e5"
+    "candidateNonce": "9d6a9c86e5ed1707259dfee9f3738917dd488a2313fb54ace101b23990c6bba3",
+    "epochNonce": "42853d07859b0fac67cd83d1540b11ce269aa8933ac0e4b4c73357058eb192aa",
+    "evolvingNonce": "9d6a9c86e5ed1707259dfee9f3738917dd488a2313fb54ace101b23990c6bba3",
+    "lastEpochLastAncestor": "f1aadfad48000f14af5a12e5b2bed525a03351eb24ed64ec90f2a03f02a7eb43"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "error": {
+    "code": 3102,
+    "data": {
+      "missingScripts": [
+        "d56dc3ed1af5e97bc2aaa7a45e5d34669c537d6b80e900d8c2acbb3b"
+      ]
+    },
+    "message": "Some script witnesses are missing. Indeed, any script used in a transaction (when spending, minting, etc...) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference input should you use plutus:v2 or higher and a format from Babbage and beyond. The field 'data.missingScripts' contain hash digests of required but missing script."
+  },
+  "id": "submitTransaction:ledger-rejection",
+  "jsonrpc": "2.0",
+  "method": "submitTransaction"
+}
