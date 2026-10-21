@@ -139,7 +139,13 @@ class ChainSync:
     def _cancel_in_flight(self) -> None:
         while self._in_flight:
             future = self._in_flight.popleft()
-            future.cancel()
+            if future.done():
+                # Already failed (the connection dropped): retrieve the error, or asyncio logs
+                # "Task exception was never retrieved" in the user's program.
+                if not future.cancelled():
+                    future.exception()
+            else:
+                future.cancel()
 
     def _remember(self, event: Any) -> None:
         """Keep recent points, to find an intersection again after a reconnect."""
