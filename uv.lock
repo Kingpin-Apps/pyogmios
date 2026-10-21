@@ -1382,7 +1382,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "httpx", specifier = ">=0.28" },
+    { name = "httpx", specifier = ">=0.27" },
     { name = "orjson", marker = "extra == 'speedups'", specifier = ">=3.10" },
     { name = "pydantic", specifier = ">=2.11" },
     { name = "typing-extensions", specifier = ">=4.12" },
